@@ -6,7 +6,7 @@ import ComentariosCtrl from "./comentarios.controller.js"
 const router = express.Router();
 
 router.route("/").get(ComputadorasCtrl.apiGetComputadoras);
-router.route("/id/:id").get(ComputadorasCtrl.apiGetComputadorasById)
+router.route("/id/:id").get(ComputadorasCtrl.apiGetComputadoraById)
 
 router
     .route("/comentario")
