@@ -6,28 +6,28 @@ export default class ComputadorasController {
         const pagina = req.query.pagina ? parseInt(req.query.pagina, 10) : 0
 
         let filters = {}  //Definir filtros en base a documento JSON
-        if (req.body.description){
-            filters.description = req.body.description
+        if (req.query.description){
+            filters.description = req.query.description
         }
-        if (req.body.brand){
-            filters.brand = req.body.brand
+        else if  (req.query.brand){
+            filters.brand = req.query.brand
         }
-        if (req.body.price){
-            filters.minPrice = req.body.price.minPrice
-            filters.maxPrice = req.body.price.maxPrice
+        else if (req.query.price){
+            filters.minPrice = req.query.price.minPrice
+            filters.maxPrice = req.query.price.maxPrice
         }
-        if (req.body.RAM){
-            filters.RAM = req.body.RAM
+        else if (req.query.RAM){
+            filters.RAM = req.query.RAM
         }
-        if (req.body.RAM ){
-            filters.RAM = req.body.RAM
+        else if (req.query.name ){
+            filters.name = req.query.name
         }
 
 
         const {computadorasList, totalNumComputadoras} = await ComputadorasDAO.getComputadoras({
             filters,
-            pagina: pagina,
-            computadorasPorPagina: computadorasPorPagina,
+            pagina,
+            computadorasPorPagina,
         })
 
         let response = {

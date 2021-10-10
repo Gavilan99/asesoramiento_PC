@@ -3,12 +3,12 @@ import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
 
 const Computadora = props => {
-  const initialRestaurantState = {
+  const initialComputadoraState = {
     id: null,
     name: "",
     reviews: []
   };
-  const [computadora, setComputadora] = useState(initialRestaurantState);
+  const [computadora, setComputadora] = useState(initialComputadoraState);
 
   const getComputadora = id => {
     ComputadoraDataService.get(id)
@@ -54,23 +54,23 @@ const Computadora = props => {
           <h4> Reviews </h4>
           <div className="row">
             {computadora.reviews.length > 0 ? (
-             computadora.reviews.map((review, index) => {
+             computadora.reviews.map((comentario, index) => {
                return (
                  <div className="col-lg-4 pb-1" key={index}>
                    <div className="card">
                      <div className="card-body">
                        <p className="card-text">
-                         {review.text}<br/>
-                         <strong>User: </strong>{review.name}<br/>
-                         <strong>Date: </strong>{review.date}
+                         {comentario.text}<br/>
+                         <strong>User: </strong>{comentario.name}<br/>
+                         <strong>Date: </strong>{comentario.date}
                        </p>
-                       {props.user && props.user.id === review.user_id &&
+                       {props.user && props.user.id === comentario.user_id &&
                           <div className="row">
-                            <a onClick={() => deleteReview(review._id, index)} className="btn btn-primary col-lg-5 mx-1 mb-1">Delete</a>
+                            <a onClick={() => deleteReview(comentario._id, index)} className="btn btn-primary col-lg-5 mx-1 mb-1">Delete</a>
                             <Link to={{
                               pathname: "/computadoras/" + props.match.params.id + "/comentario",
                               state: {
-                                currentReview: review
+                                currentReview: comentario
                               }
                             }} className="btn btn-primary col-lg-5 mx-1 mb-1">Edit</Link>
                           </div>                   

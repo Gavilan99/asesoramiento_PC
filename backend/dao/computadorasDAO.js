@@ -25,8 +25,8 @@ export default class ComputadorasDAO {
     } = {}) {
         let query
         if (filters){ //Agregar un "and" de filtros a la query
-            if ("description" in filters){
-                query = {$text: {$search: filters["description"]}}
+            if ("name" in filters){
+                query = {$text: {$search: filters["name"]}}
             }
             else if ("brand" in filters){
                 query = {"brand": {$eq: filters["brand"]}}
@@ -36,6 +36,9 @@ export default class ComputadorasDAO {
             }
             else if ("RAM" in filters){
                 query = {"RAM": {$eq: filters["RAM"]}}
+            }
+            else if ("description" in filters){
+                query = {"description": {$eq: filters["description"]}}
             }
         }
 
