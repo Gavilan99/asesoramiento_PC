@@ -25,13 +25,15 @@ function App() {
 
   return (
   <div>
-  <nav className="navbar navbar-expand navbar-dark bg-dark">
 
-    <a href="/computadoras" className="navbar-brand">
-      Asesoramiento de  Computadoras
-    </a>
+
+
+  <nav className="navbar navbar-expand navbar-dark bg-dark"> 
+    
+  
+
+
     <div className="navbar-nav mr-auto">
-      
       
       <li className="nav-item">
         <Link to={"/computadoras"} className="nav-link">
@@ -58,7 +60,9 @@ function App() {
 
 
 
+
   <div className="container mt-3">
+
     <Switch>
       <Route exact path={["/", "/computadoras"]} component={ComputadorasList} />
       <Route 

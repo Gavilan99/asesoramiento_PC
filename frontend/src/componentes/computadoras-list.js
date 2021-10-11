@@ -7,6 +7,10 @@ const ComputadorasList = props => {
     const [buscarNombre, setBuscarNombre ] = useState("");
     const [buscarMarca, setBuscarMarca ] = useState("");
     const [buscarRAM, setBuscarRAM ] = useState("");
+
+
+
+    
     /*AGREGAR MAS BUSCAR POR...*/
   
     useEffect(() => {
@@ -74,7 +78,10 @@ const ComputadorasList = props => {
   
     return (
       <div>
+
         <div className="row pb-1">
+      
+
 
         <div className="input-group col-lg-4">
           <input
@@ -116,7 +123,7 @@ const ComputadorasList = props => {
         </div>
 
 
-        </div>
+       </div>
 
 
 
@@ -132,27 +139,28 @@ const ComputadorasList = props => {
 
                     <h5 className="card-title">{computadora.name}</h5>
 
+
                     <p className="card-text">
-                      <strong>Name: </strong>{address}<br/>
+                      <strong>Nombre: </strong>{address}<br/>
                       <strong>Marca: </strong>{computadora.brand}<br/>
                       <strong>RAM: </strong>{computadora.RAM}<br/>
                       <strong>Precio: </strong>{computadora.price}<br/>
-
+                     
 
 
                     </p>
                     <div className="row">
                     <Link to={"/computadoras/"+computadora._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
-                      View Reviews
+                     Ver Reseña
                     </Link>
                     <a target="_blank" href={"https://www.google.com/maps/place/" + address} className="btn btn-primary col-lg-5 mx-1 mb-1">
-                      View Map</a>
+                      Ver Mapa</a>
 
-                      <a target="_blank" href={"https://www.google.com" } className="btn btn-primary col-lg-5 mx-1 mb-1">
-                      View Shop</a>
+                      <a target="_blank" href={computadora.url} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                      Ver Tienda</a>
                     </div>
 
-
+      
 
 
 

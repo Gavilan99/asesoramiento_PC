@@ -25,10 +25,7 @@ export default class ComputadorasDAO {
     } = {}) {
         let query
         if (filters){ //Agregar un "and" de filtros a la query
-            if ("name" in filters){
-                query = {$text: {$search: filters["name"]}}
-            }
-            else if ("brand" in filters){
+            if  ("brand" in filters){
                 query = {"brand": {$eq: filters["brand"]}}
             }
             else if ("minPrice" in filters && "maxPrice" in filters){
@@ -39,6 +36,9 @@ export default class ComputadorasDAO {
             }
             else if ("description" in filters){
                 query = {"description": {$eq: filters["description"]}}
+            }
+            else if ("name" in filters){
+                query = {"name": {$eq: filters["name"]}}
             }
         }
 
