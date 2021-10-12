@@ -7,7 +7,7 @@ const ComputadorasList = props => {
     const [buscarNombre, setBuscarNombre ] = useState("");
     const [buscarMarca, setBuscarMarca ] = useState("");
     const [buscarRAM, setBuscarRAM ] = useState("");
-
+    const [buscarDisco, setBuscarDisco ] = useState("");
 
 
     
@@ -123,6 +123,67 @@ const ComputadorasList = props => {
         </div>
 
 
+
+        <div className="input-group col-lg-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar por Tipo de Disco"
+            value={buscarMarca}
+            onChange={onChangeSearchMarca}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByBrand}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+
+
+
+        <div className="input-group col-lg-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar por tamaño del disco"
+            value={buscarMarca}
+            onChange={onChangeSearchMarca}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByBrand}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+
+        <div className="input-group col-lg-4">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar por Sistema Operativo"
+            value={buscarMarca}
+            onChange={onChangeSearchMarca}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByBrand}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+
+
        </div>
 
 
@@ -156,7 +217,7 @@ const ComputadorasList = props => {
                     <a target="_blank" href={"https://www.google.com/maps/place/" + address} className="btn btn-primary col-lg-5 mx-1 mb-1">
                       Ver Mapa</a>
 
-                      <a target="_blank" href={computadora.url} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                    <a target="_blank" href={computadora.url} className="btn btn-primary col-lg-5 mx-1 mb-1">
                       Ver Tienda</a>
                     </div>
 

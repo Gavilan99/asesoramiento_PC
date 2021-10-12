@@ -7,7 +7,7 @@ import AgregarComentario from "./componentes/agregarComentario";
 import Computadora from "./componentes/computadoras";
 import ComputadorasList from "./componentes/computadoras-list";
 import Login from "./componentes/login";
-
+import Encuesta from "./componentes/encuesta";
 
 function App() {
   
@@ -34,6 +34,15 @@ function App() {
 
 
     <div className="navbar-nav mr-auto">
+
+
+    <li className="nav-item">
+        <Link to={"/encuesta"} className="nav-link">
+          Encuesta
+        </Link>
+        
+      </li>
+
       
       <li className="nav-item">
         <Link to={"/computadoras"} className="nav-link">
@@ -83,6 +92,14 @@ function App() {
           <Login {...props} login={login} />
         )}
       />
+        <Route 
+        path="/encuesta"
+        render={(props) => (
+          <Encuesta {...props} user={user} />
+        )}
+      />
+      
+
     </Switch>
   </div>
 </div>
