@@ -24,12 +24,14 @@ export default class ComputadorasDAO {
         computadorasPorPagina = 20,
     } = {}) {
         let query
+        console.log("Hace la query")
         if (filters){ //Agregar un "and" de filtros a la query
             if  ("brand" in filters){
                 query = {"brand": {$eq: filters["brand"]}}
             }
             else if ("minPrice" in filters && "maxPrice" in filters){
-                query = {"price": {$lte: filters["maxPrice"], $gte: filters["minPrice"]}}
+                console.log("Entra a la etapa mongo")
+                query = {"price": {$lte: filters["maxPrice"]},"price": {$gte: filters["minPrice"]}}
             }
             else if ("RAM" in filters){
                 query = {"RAM": {$eq: filters["RAM"]}}
@@ -37,9 +39,11 @@ export default class ComputadorasDAO {
             else if ("description" in filters){
                 query = {"description": {$eq: filters["description"]}}
             }
+        }
+
             else if ("name" in filters){
                 query = {"name": {$eq: filters["name"]}}
-            }
+
         }
 
         let cursor

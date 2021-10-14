@@ -10,8 +10,12 @@ class ComputadoraDataService {
   }
 
   find(query, by = "name", page = 0) {
-    return http.get(`?${by}=${query}&page=${page}`);
-  } 
+    console.log("Entro al find ")
+    return http.get(`?${by}=${query}&page=${page}`); /*La query es el valor y by es el nombre del atributo (la columna)
+    Todo eso forma parte de la req
+    No soporta objetos complejos*/
+  }
+
 
   createReview(data) {
     return http.post("/comentario", data);

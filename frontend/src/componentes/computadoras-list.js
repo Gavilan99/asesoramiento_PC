@@ -8,6 +8,8 @@ const ComputadorasList = props => {
     const [buscarMarca, setBuscarMarca ] = useState("");
     const [buscarRAM, setBuscarRAM ] = useState("");
     const [buscarDisco, setBuscarDisco ] = useState("");
+    const [buscarMin, setBuscarPrecioMin ] = useState("");
+    const [buscarMax, setBuscarPrecioMax ] = useState("");
 
 
     
@@ -22,7 +24,17 @@ const ComputadorasList = props => {
       const buscarNombre = e.target.value;
       setBuscarNombre(buscarNombre);
     };
-    
+
+    const onChangeSearchPrecioMin = e => {
+      const buscarMin = e.target.value;
+      console.log(buscarMin);
+      setBuscarPrecioMin(buscarMin);
+    };
+    const onChangeSearchPrecioMax = e => {
+      const buscarMax = e.target.value;
+      console.log(buscarMin);
+      setBuscarPrecioMax(buscarMax);
+    };
  
     const onChangeSearchMarca = e => {
       const buscarMarca = e.target.value;
@@ -33,6 +45,8 @@ const ComputadorasList = props => {
       const buscarRAM = e.target.value;
       setBuscarRAM(buscarRAM);
     };
+
+
 
     const retrieveComputadoras = () => {
         ComputadoraDataService.getAll()
@@ -60,6 +74,9 @@ const ComputadorasList = props => {
           console.log(e);
         });
     };
+
+
+
   
 
 
@@ -74,6 +91,14 @@ const ComputadorasList = props => {
 
     const findByRAM = () => {
       find(buscarRAM, "RAM")
+    };
+
+    const findByPrice = () =>{
+
+      var price = buscarMin + " "+ buscarMax
+      console.log("Precios");
+      console.log(price);
+      find(price,"price")
     };
   
     return (
@@ -184,7 +209,38 @@ const ComputadorasList = props => {
         </div>
 
 
+        <div className="input-group col-lg-4">
+          Filtrar por precio
+          <input
+            type="text"
+            placeholder="Min"
+            value={buscarMin}
+            onChange={onChangeSearchPrecioMin}
+          />
+          $
+          <input
+          type="text"
+          placeholder="Max"
+          value={buscarMax}
+          onChange={onChangeSearchPrecioMax}
+          />
+          $
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={findByPrice}
+            >
+              Buscar
+            </button>
+          </div>
+        </div>
+
+
+
        </div>
+
+   
 
 
 
