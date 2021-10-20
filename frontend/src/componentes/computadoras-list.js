@@ -125,10 +125,6 @@ const ComputadorasList = props => {
     };
 
 
-
-  
-
-
     const findByName = () => {
       find(buscarNombre, "name")
     };
@@ -185,8 +181,6 @@ const ComputadorasList = props => {
       <div>
         <div className="row pb-1">
       
-
-
           <div className="input-group col-lg-4">
             <input
               type="text"
@@ -204,24 +198,25 @@ const ComputadorasList = props => {
                 Buscar
               </button>
             </div>
-        
+          </div>
     
-        <div className="input-group col-lg-4 md-5">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por Marca"
-            value={buscarMarca}
-            onChange={onChangeSearchMarca}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByBrand}
-            >
-              Buscar
-            </button>
+          <div className="input-group col-lg-4 md-5">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar por Marca"
+              value={buscarMarca}
+              onChange={onChangeSearchMarca}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findByBrand}
+              >
+                Buscar
+              </button>
+            </div>
           </div>
 
 

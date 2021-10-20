@@ -39,8 +39,6 @@ export default class ComputadorasDAO {
             else if ("description" in filters){
                 query = {"description": {$eq: filters["description"]}}
             }
-        }
-
             else if ("name" in filters){
                 query = {"name": {$eq: filters["name"]}}
             }
@@ -55,9 +53,12 @@ export default class ComputadorasDAO {
             }
         }
 
+        
+
         let cursor
 
         try {
+            
             cursor = await computadoras.find(query)
         }
         catch (e){
