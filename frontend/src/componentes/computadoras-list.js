@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
+import Teams from "./Teams-Icono.png";
 import robot4 from "../imagenes/robot4.png";
 import compu from "../imagenes/compu.jpg";
 
@@ -12,7 +13,11 @@ const ComputadorasList = props => {
     const [buscarNombre, setBuscarNombre ] = useState("");
     const [buscarMarca, setBuscarMarca ] = useState("");
     const [buscarRAM, setBuscarRAM ] = useState("");
-    const [buscarDisco, setBuscarDisco ] = useState("");
+    const [RAMs, setRAMs] = useState(["RAM"]);
+    const [buscarSO, setBuscarSO ] = useState("");
+    const [SOs, setSOs] = useState(["operatingSystem"]);
+    const [buscarTipoDisco, setBuscarTipoDisco ] = useState("");
+    const [TipoDiscos, setTipoDiscos] = useState(["Tipo Disco"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
 
@@ -22,7 +27,9 @@ const ComputadorasList = props => {
   
     useEffect(() => {
       retrieveComputadoras();
-
+      retrieveRAMs();
+      retrieveSOs();
+      retrieveTipoDiscos();
     }, []);
   
     const onChangeSearchName = e => {
@@ -49,7 +56,15 @@ const ComputadorasList = props => {
       setBuscarRAM(buscarRAM);
     };
 
+    const onChangeSearchSO = e => {
+      const buscarSO = e.target.value;
+      setBuscarSO(buscarSO);
+    };
 
+    const onChangeSearchType = e => {
+      const buscarTipoDisco = e.target.value;
+      setBuscarTipoDisco(buscarTipoDisco);
+    };
 
     const retrieveComputadoras = () => {
         ComputadoraDataService.getAll()
@@ -61,7 +76,40 @@ const ComputadorasList = props => {
           console.log(e);
         });
     };
-  
+    
+    const retrieveRAMs = () => {
+      ComputadoraDataService.getRAMs()
+        .then(response => {
+          console.log(response.data);
+          setRAMs(["RAM"].concat(response.data));          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
+
+    const retrieveSOs = () => {
+      ComputadoraDataService.getSOs()
+        .then(response => {
+          console.log(response.data);
+          setSOs(["operatingSystem"].concat(response.data));          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
+
+    const retrieveTipoDiscos = () => {
+      ComputadoraDataService.getTipoDiscos()
+        .then(response => {
+          console.log(response.data);
+          setTipoDiscos([{type:"Tipo Disco"}].concat(response.data));          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
+
     const refreshList = () => {
       retrieveComputadoras();
     };
@@ -91,9 +139,42 @@ const ComputadorasList = props => {
     };
 
     const findByRAM = () => {
-      find(buscarRAM, "RAM")
+      if (buscarRAM == "RAM"){
+        refreshList();
+      }else{
+        find(buscarRAM, "RAM")
+      }
     };
 
+    const findBySO = () => {
+      if (buscarSO == "operatingSystem"){
+        refreshList();
+      }else{
+        find(buscarSO, "operatingSystem")
+      }
+    };
+
+    const findByTipoDisco = () => {
+      if (buscarTipoDisco == "type"){
+        refreshList();
+      }else{
+        find(buscarTipoDisco, "type")
+      }
+    };
+
+    
+
+    function getCheckboxesSeleccionadas(nombre){
+      var boxes = document.getElementsByName(nombre);
+      var result =[];
+      for (var i=0; i<boxes.length;i++){
+        if (boxes[i].checked){
+          result.push(boxes[i].value);
+        }
+      }
+      console.log(result);
+      return result;
+    }
     const findByPrice = () =>{
 
       var price = buscarMin + " "+ buscarMax
@@ -103,6 +184,26 @@ const ComputadorasList = props => {
     return (
       <div>
         <div className="row pb-1">
+      
+
+
+          <div className="input-group col-lg-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar por Marca"
+              value={buscarMarca}
+              onChange={onChangeSearchMarca}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findByBrand}
+              >
+                Buscar
+              </button>
+            </div>
         
     
         <div className="input-group col-lg-4 md-5">
@@ -122,47 +223,87 @@ const ComputadorasList = props => {
               Buscar
             </button>
           </div>
-        </div>
 
 
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por  RAM"
-            value={buscarRAM}
-            onChange={onChangeSearchRAM}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchRAM}>
+              {RAMs.map(RAM => {
+                return (
+                  <option value={RAM}> {RAM.substr(0,20)} </option>
+                )
+              })}
+            </select>
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findByRAM}
+              >
+                Buscar
+              </button>
+            </div>
           </div>
-        </div>
 
-
-
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por Tipo de Disco"
-            value={buscarNombre}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchSO}>
+              {SOs.map(SO => {
+                return (
+                  <option value={SO}> {SO.substr(0,20)} </option>
+                )
+              })}
+            </select>
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findBySO}
+              >
+                Buscar
+              </button>
+            </div>
           </div>
+
+
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchType}>
+              {TipoDiscos.map(type => {
+                return (
+                  <option value={type.type}> {String(type.type).substr(0,20)} </option>
+                )
+              })}
+            </select>
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findByTipoDisco}
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+
+
+          <div className="input-group col-lg-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar por Tipo de Disco"
+              value={buscarMarca}
+              onChange={onChangeSearchMarca}
+            />
+            <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick={findByBrand}
+              >
+                Buscar
+              </button>
+            </div>
         </div>
 
 
@@ -206,6 +347,18 @@ const ComputadorasList = props => {
         </div>
 
 
+        <div>
+        <img src={Teams} height="20" alt="Its getting bigger!" />
+        Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
+         Discord <input type="checkbox" name="App" value="Discord"/>
+
+         <button
+                className="Boton de radio"
+                type="button"
+                onClick={() => {}}
+              >Enviar </button>
+        </div>
+        
         <div className="input-group col-lg-4">
           Filtrar por precio
           <input

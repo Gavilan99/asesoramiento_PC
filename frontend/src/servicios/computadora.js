@@ -33,6 +33,18 @@ class ComputadoraDataService {
     return http.get(`/computadora`);
   }
 
+  getRAMs(id){
+    return http.get(`/RAM`);
+  }
+
+  getSOs(id){
+    return http.get('/operatingSystem')
+  }
+
+  getTipoDiscos(id){
+    return http.get('/diskType')
+  }
+
 }
 
 export default new ComputadoraDataService();
