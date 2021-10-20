@@ -18,6 +18,8 @@ const ComputadorasList = props => {
     const [SOs, setSOs] = useState(["operatingSystem"]);
     const [buscarTipoDisco, setBuscarTipoDisco ] = useState("");
     const [TipoDiscos, setTipoDiscos] = useState(["Tipo Disco"]);
+    const [buscarCapacidadDisco, setBuscarCapacidadDisco ] = useState("");
+    const [CapacidadDiscos, setCapacidadDiscos] = useState(["Tipo Disco"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
 
@@ -30,6 +32,7 @@ const ComputadorasList = props => {
       retrieveRAMs();
       retrieveSOs();
       retrieveTipoDiscos();
+      retrieveCapacidadDisco();
     }, []);
   
     const onChangeSearchName = e => {
@@ -65,6 +68,13 @@ const ComputadorasList = props => {
       const buscarTipoDisco = e.target.value;
       setBuscarTipoDisco(buscarTipoDisco);
     };
+
+    const onChangeSearchCapacity = e => {
+      const buscarCapacidadDisco = e.target.value;
+      setBuscarCapacidadDisco(buscarCapacidadDisco);
+    };
+
+    
 
     const retrieveComputadoras = () => {
         ComputadoraDataService.getAll()
@@ -110,6 +120,18 @@ const ComputadorasList = props => {
         });
     };
 
+    const retrieveCapacidadDisco = () => {
+      ComputadoraDataService.getCapacidadDiscos()
+        .then(response => {
+          console.log(response.data);
+          setCapacidadDiscos([{capacity:"Capacidad del Disco"}].concat(response.data));          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    };
+
+    
     const refreshList = () => {
       retrieveComputadoras();
     };
@@ -158,6 +180,13 @@ const ComputadorasList = props => {
       }
     };
 
+    const findByCapacidadDisco = () => {
+      if (buscarCapacidadDisco == "capacity"){
+        refreshList();
+      }else{
+        find(buscarCapacidadDisco, "capacity")
+      }
+    };
     
 
     function getCheckboxesSeleccionadas(nombre){
@@ -182,25 +211,6 @@ const ComputadorasList = props => {
         <div className="row pb-1">
       
           <div className="input-group col-lg-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar por Marca"
-              value={buscarMarca}
-              onChange={onChangeSearchMarca}
-            />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={findByBrand}
-              >
-                Buscar
-              </button>
-            </div>
-          </div>
-    
-          <div className="input-group col-lg-4 md-5">
             <input
               type="text"
               className="form-control"
@@ -283,63 +293,25 @@ const ComputadorasList = props => {
 
 
           <div className="input-group col-lg-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar por Tipo de Disco"
-              value={buscarMarca}
-              onChange={onChangeSearchMarca}
-            />
+                      
+            <select onChange={onChangeSearchCapacity}>
+              {CapacidadDiscos.map(capacity => {
+                return (
+                  <option value={capacity.capacity}> {String(capacity.capacity).substr(0,20)} </option>
+                )
+              })}
+            </select>
             <div className="input-group-append">
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick={findByBrand}
+                onClick={findByCapacidadDisco}
               >
                 Buscar
               </button>
             </div>
-        </div>
-
-
-
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por tamaño del disco"
-            value={buscarNombre}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
           </div>
-        </div>
 
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por Sistema Operativo"
-            value={buscarNombre}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
 
 
         <div>

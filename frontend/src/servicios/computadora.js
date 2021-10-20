@@ -45,6 +45,10 @@ class ComputadoraDataService {
     return http.get('/diskType')
   }
 
+  getCapacidadDiscos(id){
+    return http.get('/diskCapacity')
+  }
+
 }
 
 export default new ComputadoraDataService();
