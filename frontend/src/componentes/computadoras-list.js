@@ -27,12 +27,10 @@ const ComputadorasList = props => {
 
     const onChangeSearchPrecioMin = e => {
       const buscarMin = e.target.value;
-      console.log(buscarMin);
       setBuscarPrecioMin(buscarMin);
     };
     const onChangeSearchPrecioMax = e => {
       const buscarMax = e.target.value;
-      console.log(buscarMin);
       setBuscarPrecioMax(buscarMax);
     };
  
@@ -51,7 +49,6 @@ const ComputadorasList = props => {
     const retrieveComputadoras = () => {
         ComputadoraDataService.getAll()
         .then(response => {
-          console.log(response.data);
           setComputadoras(response.data.computadoras);
           
         })
@@ -67,7 +64,6 @@ const ComputadorasList = props => {
     const find = (query, by) => {
       ComputadoraDataService.find(query, by)
         .then(response => {
-          console.log(response.data);
           setComputadoras(response.data.computadoras);
         })
         .catch(e => {
@@ -96,8 +92,6 @@ const ComputadorasList = props => {
     const findByPrice = () =>{
 
       var price = buscarMin + " "+ buscarMax
-      console.log("Precios");
-      console.log(price);
       find(price,"price")
     };
   
