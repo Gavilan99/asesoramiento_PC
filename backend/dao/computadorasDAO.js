@@ -1,5 +1,5 @@
 import mongodb from "mongodb"
-const ObjectId = mongodb.ObjectId
+const ObjectId = mongodb.ObjectID
 
 let computadoras
 
@@ -39,6 +39,15 @@ export default class ComputadorasDAO {
             }
             else if ("name" in filters){
                 query = {"name": {$eq: filters["name"]}}
+            }
+            else if ("operatingSystem" in filters){
+                query = {"operatingSystem": {$eq: filters["operatingSystem"]}}
+            }
+            else if ("type" in filters){
+                query = {"disks.type": {$eq: filters["type"]}}
+            }
+            else if ("capacity" in filters){
+                query = {"disks.capacity": {$eq: filters["capacity"]}}
             }
         }
 
@@ -110,4 +119,47 @@ export default class ComputadorasDAO {
         }
     }
 
+    static async getRAMs() {
+        let RAMs = []
+        try {
+          RAMs = await computadoras.distinct("RAM")
+          return RAMs
+        } catch (e) {
+          console.error(`Unable to get RAMs, ${e}`)
+          return RAMs
+        }
+    }
+
+    static async getSOs() {
+        let SOs = []
+        try {
+          SOs = await computadoras.distinct("operatingSystem")
+          return SOs
+        } catch (e) {
+          console.error(`Unable to get SOs, ${e}`)
+          return SOs
+        }
+    }
+
+    static async getDiskTypes() {
+        let SOs = []
+        try {
+          SOs = await computadoras.distinct("disks")
+          return SOs
+        } catch (e) {
+          console.error(`Unable to get SOs, ${e}`)
+          return SOs
+        }
+    }
+
+    static async getDiskCapacitys() {
+        let SOs = []
+        try {
+          SOs = await computadoras.distinct("disks")
+          return SOs
+        } catch (e) {
+          console.error(`Unable to get SOs, ${e}`)
+          return SOs
+        }
+    }
 }
