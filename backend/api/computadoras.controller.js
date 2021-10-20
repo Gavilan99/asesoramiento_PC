@@ -2,9 +2,11 @@ import ComputadorasDAO from "../dao/computadorasDAO.js";
 
 export default class ComputadorasController {
     static async apiGetComputadoras(req, res, next){
+        console.log("Entro al filters")
         const computadorasPorPagina = req.query.computadorasPorPagina ? parseInt(req.query.computadorasPorPagina, 10) : 20
         const pagina = req.query.pagina ? parseInt(req.query.pagina, 10) : 0
 
+        
         let filters = {}  //Definir filtros en base a documento JSON
         if (req.query.description){
             filters.description = req.query.description
@@ -13,8 +15,18 @@ export default class ComputadorasController {
             filters.brand = req.query.brand
         }
         else if (req.query.price){
-            filters.minPrice = req.query.price.minPrice
-            filters.maxPrice = req.query.price.maxPrice
+            console.log("Valores en back");
+            console.log(req.query.price)
+            var arr = req.query.price.split(" ")
+            var minPrice= arr[0]
+            var maxPrice=arr[1]
+            console.log(minPrice)
+            console.log(maxPrice)
+            minPrice = parseInt(minPrice) 
+            maxPrice = parseInt(maxPrice)
+
+            filters.minPrice = minPrice
+            filters.maxPrice = maxPrice
         }
         else if (req.query.RAM){
             filters.RAM = req.query.RAM
@@ -23,8 +35,8 @@ export default class ComputadorasController {
             filters.name = req.query.name
         }
 
-
-        const {computadorasList, totalNumComputadoras} = await ComputadorasDAO.getComputadoras({
+        //Trae de la base de datos
+        const {computadorasList, totalNumComputadoras} = await ComputadorasDAO.getComputadoras({ 
             filters,
             pagina,
             computadorasPorPagina,
