@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ComputadorastDataService from "../servicios/computadora";
+import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
 
 
@@ -13,7 +13,7 @@ const AgregarComentario = props => {
       initialReviewState = props.location.state.currentReview.text
     }
   
-    const [review, setReview] = useState(initialReviewState);
+    const [comentario, setReview] = useState(initialReviewState);
     const [submitted, setSubmitted] = useState(false);
   
     const handleInputChange = event => {
@@ -22,15 +22,15 @@ const AgregarComentario = props => {
   
     const saveReview = () => {
       var data = {
-        text: review,
+        text: comentario,
         name: props.user.name,
         user_id: props.user.id,
         computadora_id: props.match.params.id
       };
   
       if (editing) {
-        data.review_id = props.location.state.currentReview._id
-        ComputadorastDataService.updateReview(data)
+        data.comentario_id = props.location.state.currentReview._id
+        ComputadoraDataService.updateReview(data)
           .then(response => {
             setSubmitted(true);
             console.log(response.data);
@@ -39,7 +39,7 @@ const AgregarComentario = props => {
             console.log(e);
           });
       } else {
-        ComputadorastDataService.createReview(data)
+        ComputadoraDataService.createReview(data)
           .then(response => {
             setSubmitted(true);
             console.log(response.data);
@@ -59,7 +59,7 @@ const AgregarComentario = props => {
             <div>
               <h4>You submitted successfully!</h4>
               <Link to={"/computadoras/" + props.match.params.id} className="btn btn-success">
-                Back to Restaurant
+                Back to Computadoras
               </Link>
             </div>
           ) : (
@@ -71,7 +71,7 @@ const AgregarComentario = props => {
                   className="form-control"
                   id="text"
                   required
-                  value={review}
+                  value={comentario}
                   onChange={handleInputChange}
                   name="text"
                 />

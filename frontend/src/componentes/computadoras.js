@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Computadora = props => {
   const initialComputadoraState = {
-    id: null,
+     id: null,
     name: "",
-    reviews: []
+    comentarios: []
   };
   const [computadora, setComputadora] = useState(initialComputadoraState);
 
@@ -31,7 +31,7 @@ const Computadora = props => {
     ComputadoraDataService.deleteReview(reviewId, props.user.id)
       .then(response => {
         setComputadora((prevState) => {
-          prevState.reviews.splice(index, 1)
+          prevState.comentarios.splice(index, 1)
           return({
             ...prevState
           })
@@ -48,13 +48,18 @@ const Computadora = props => {
         <div>
           <h5>{computadora.name}</h5>
 
+          <h5> RAM:  {computadora.RAM}</h5>
+
+
+
           <Link to={"/computadoras/" + props.match.params.id + "/comentario"} className="btn btn-primary">
             Add Review
           </Link>
+
           <h4> Reviews </h4>
           <div className="row">
-            {computadora.reviews.length > 0 ? (
-             computadora.reviews.map((comentario, index) => {
+            {computadora.comentarios.length > 0 ? (
+             computadora.comentarios.map((comentario, index) => {
                return (
                  <div className="col-lg-4 pb-1" key={index}>
                    <div className="card">
@@ -63,8 +68,11 @@ const Computadora = props => {
                          {comentario.text}<br/>
                          <strong>User: </strong>{comentario.name}<br/>
                          <strong>Date: </strong>{comentario.date}
+                        
                        </p>
-                       {props.user && props.user.id === comentario.user_id &&
+
+
+                       {props.user && props.user.id == comentario.user_id &&
                           <div className="row">
                             <a onClick={() => deleteReview(comentario._id, index)} className="btn btn-primary col-lg-5 mx-1 mb-1">Delete</a>
                             <Link to={{

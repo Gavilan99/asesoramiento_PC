@@ -1,4 +1,4 @@
-import ComentariosDAO from "../dao/comentariosDAO.js"
+import ReviewsDAO from "../dao/comentariosDAO.js"
 
 export default class ComentariosController {
     static async apiPostComentario(req, res, next){
@@ -11,7 +11,7 @@ export default class ComentariosController {
             }
             const date = new Date()
 
-            const reviewResponse = await ComentariosDAO.addComentario(
+            const reviewResponse = await ReviewsDAO.addComentario(
                 computadoraId,
                 userInfo,
                 comentario,
@@ -30,7 +30,7 @@ export default class ComentariosController {
             const text = req.body.text
             const date = new Date()
 
-            const reviewResponse = await ComentariosDAO.updateComentario(
+            const reviewResponse = await ReviewsDAO.updateComentario(
                 comentarioId,
                 req.body.user_id,
                 text,
@@ -60,7 +60,7 @@ export default class ComentariosController {
             const comentarioId = req.query.id
             const userId = req.body.user_id
             console.log(comentarioId)
-            const reviewResponse = await ComentariosDAO.deleteComentario(
+            const reviewResponse = await ReviewsDAO.deleteComentario(
                 comentarioId,
                 userId,
             )

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
+import robot4 from "../imagenes/robot4.png";
+import compu from "../imagenes/compu.jpg";
+
+
+
 
 const ComputadorasList = props => {
     const [computadoras, setComputadoras] = useState([]);
@@ -78,12 +83,10 @@ const ComputadorasList = props => {
   
     return (
       <div>
-
         <div className="row pb-1">
-      
-
-
-        <div className="input-group col-lg-4">
+        
+    
+        <div className="input-group col-lg-4 md-5">
           <input
             type="text"
             className="form-control"
@@ -129,14 +132,14 @@ const ComputadorasList = props => {
             type="text"
             className="form-control"
             placeholder="Buscar por Tipo de Disco"
-            value={buscarMarca}
-            onChange={onChangeSearchMarca}
+            value={buscarNombre}
+            onChange={onChangeSearchName}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByBrand}
+              onClick={findByRAM}
             >
               Buscar
             </button>
@@ -150,14 +153,14 @@ const ComputadorasList = props => {
             type="text"
             className="form-control"
             placeholder="Buscar por tamaño del disco"
-            value={buscarMarca}
-            onChange={onChangeSearchMarca}
+            value={buscarNombre}
+            onChange={onChangeSearchName}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByBrand}
+              onClick={findByRAM}
             >
               Buscar
             </button>
@@ -169,14 +172,14 @@ const ComputadorasList = props => {
             type="text"
             className="form-control"
             placeholder="Buscar por Sistema Operativo"
-            value={buscarMarca}
-            onChange={onChangeSearchMarca}
+            value={buscarNombre}
+            onChange={onChangeSearchName}
           />
           <div className="input-group-append">
             <button
               className="btn btn-outline-secondary"
               type="button"
-              onClick={findByBrand}
+              onClick={findByRAM}
             >
               Buscar
             </button>
@@ -191,43 +194,61 @@ const ComputadorasList = props => {
 
 
         <div className="row">
+        
           {computadoras.map((computadora) => {
-            const address = `${computadora.name}`;
+            const name = `${computadora.name}`;
             return (
-              <div className="col-lg-4 pb-1">
-                <div className="card">
-                  <div className="card-body">
-
-                    <h5 className="card-title">{computadora.name}</h5>
-
-
-                    <p className="card-text">
-                      <strong>Nombre: </strong>{address}<br/>
+            
+              <div className="col-lg-3 pb-3 md-7">
+                 
+             
+               <div className="card text  ">
+              
+                 <div className="card-body text-dark">
+                    <h5 className="card-title center">{computadora.name}</h5>
+                    <p className="card-text-right">
+                    < img src={computadora.imagenUrl}  class ="d-block w-100 right" /> 
+                      <strong>Nombre: </strong>{name}<br/>
                       <strong>Marca: </strong>{computadora.brand}<br/>
                       <strong>RAM: </strong>{computadora.RAM}<br/>
                       <strong>Precio: </strong>{computadora.price}<br/>
-                     
-
-
                     </p>
-                    <div className="row">
-                    <Link to={"/computadoras/"+computadora._id} className="btn btn-primary col-lg-5 mx-1 mb-1">
+
+
+                   
+                    <div className="row-list-view ">
+                   
+                   
+         
+               
+        
+
+                    <Link to={"/computadoras/"+computadora._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
                      Ver Reseña
                     </Link>
-                    <a target="_blank" href={"https://www.google.com/maps/place/" + address} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                    <a target="_blank" href={"https://www.google.com/maps/place/" + computadora.ubicacion} className="btn  btn-outline-info col-lg-5 mx-1 mb-1">
                       Ver Mapa</a>
 
-                    <a target="_blank" href={computadora.url} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                    <a target="_blank" href={computadora.url} className="btn  btn-outline-secondary col-lg-5 mx-1 mb-1">
                       Ver Tienda</a>
+
+                    <Link to={"/computadoras/"+computadora._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
+                     Favorito
+                    </Link>
+                      
                     </div>
+
 
       
 
-
+                    </div>
 
                   </div>
+
+
                 </div>
-              </div>
+              
+
             );
           })}
   
