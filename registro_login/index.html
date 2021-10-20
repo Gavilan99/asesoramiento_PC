@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <form id="reg-form">
+            <input type="text" autocomplete= "off" id="usuario" placeholder="Usuario" />       
+            <input type="password" id="contraseña" placeholder="Contraseña" />       
+            <input type="cargar" value="Cargar "/>    //llama a la funcion cargar      
+
+
+        
+        </form>
+
+        <script>
+            const form = document.getElementById('reg-form')
+            form.addEventListener('cargar', registerUser)
+
+            async function cargar(event){
+
+                event.preventDefault()    //para que no se refresque sola la página por el form
+                const usuario = document.getElementById('usuario').value
+                const contraseña = document.getElementById('contraseña').value
+
+
+                const result = await fetch('/api/registro', { //para enviar al servidor la informacion como JSON y no como urlencoded
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        usuario,
+                        contraseña
+
+                    })
+                }) .then((res) => res.json())
+            
+                if (result.status === 'ok'){
+                    alert('Éxito')
+                } else {
+                    alert(result.error)
+                }
+            }
+
+        </script>
+    </body>
+</html>
