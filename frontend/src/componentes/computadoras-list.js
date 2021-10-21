@@ -10,18 +10,18 @@ import compu from "../imagenes/compu.jpg";
 
 const ComputadorasList = props => {
     const [computadoras, setComputadoras] = useState([]);
-    const [buscarNombre, setBuscarNombre ] = useState("");
     const [buscarMarca, setBuscarMarca ] = useState("");
     const [buscarRAM, setBuscarRAM ] = useState("");
     const [RAMs, setRAMs] = useState(["RAM"]);
     const [buscarSO, setBuscarSO ] = useState("");
     const [SOs, setSOs] = useState(["operatingSystem"]);
     const [buscarTipoDisco, setBuscarTipoDisco ] = useState("");
-    const [TipoDiscos, setTipoDiscos] = useState(["Tipo Disco"]);
+    const [TipoDiscos, setTipoDiscos] = useState(["type"]);
     const [buscarCapacidadDisco, setBuscarCapacidadDisco ] = useState("");
-    const [CapacidadDiscos, setCapacidadDiscos] = useState(["Tipo Disco"]);
+    const [CapacidadDiscos, setCapacidadDiscos] = useState(["capacity"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
+    const [buscarComb,setBuscarComb] = useState("");
 
 
     
@@ -35,10 +35,6 @@ const ComputadorasList = props => {
       retrieveCapacidadDisco();
     }, []);
   
-    const onChangeSearchName = e => {
-      const buscarNombre = e.target.value;
-      setBuscarNombre(buscarNombre);
-    };
 
     const onChangeSearchPrecioMin = e => {
       const buscarMin = e.target.value;
@@ -102,7 +98,7 @@ const ComputadorasList = props => {
       ComputadoraDataService.getSOs()
         .then(response => {
           console.log(response.data);
-          setSOs(["operatingSystem"].concat(response.data));          
+          setSOs(["Sistema operativo"].concat(response.data));          
         })
         .catch(e => {
           console.log(e);
@@ -113,7 +109,7 @@ const ComputadorasList = props => {
       ComputadoraDataService.getTipoDiscos()
         .then(response => {
           console.log(response.data);
-          setTipoDiscos([{type:"Tipo Disco"}].concat(response.data));          
+          setTipoDiscos([{type:"Tipo de disco"}].concat(response.data));          
         })
         .catch(e => {
           console.log(e);
@@ -124,7 +120,7 @@ const ComputadorasList = props => {
       ComputadoraDataService.getCapacidadDiscos()
         .then(response => {
           console.log(response.data);
-          setCapacidadDiscos([{capacity:"Capacidad del Disco"}].concat(response.data));          
+          setCapacidadDiscos([{capacity:"Capacidad del disco"}].concat(response.data));          
         })
         .catch(e => {
           console.log(e);
@@ -147,10 +143,6 @@ const ComputadorasList = props => {
     };
 
 
-    const findByName = () => {
-      find(buscarNombre, "name")
-    };
-
 
     const findByBrand = () => {
       find(buscarMarca, "brand")
@@ -165,7 +157,7 @@ const ComputadorasList = props => {
     };
 
     const findBySO = () => {
-      if (buscarSO == "operatingSystem"){
+      if (buscarSO == "Sistema operativo"){
         refreshList();
       }else{
         find(buscarSO, "operatingSystem")
@@ -173,7 +165,7 @@ const ComputadorasList = props => {
     };
 
     const findByTipoDisco = () => {
-      if (buscarTipoDisco == "type"){
+      if (buscarTipoDisco == "Tipo de disco"){
         refreshList();
       }else{
         find(buscarTipoDisco, "type")
@@ -181,13 +173,22 @@ const ComputadorasList = props => {
     };
 
     const findByCapacidadDisco = () => {
-      if (buscarCapacidadDisco == "capacity"){
+      if (buscarCapacidadDisco == "Capacidad del disco"){
         refreshList();
       }else{
-        find(buscarCapacidadDisco, "capacity")
+        
       }
     };
-    
+
+
+    const findByAll = () =>{
+      if (buscarRAM == "RAM" && buscarSO == "Sistema operativo" && buscarTipoDisco == "Tipo de disco" && buscarCapacidadDisco == "Capacidad del disco"){
+        refreshList();
+      }else{
+        
+      }
+    }
+
 
     function getCheckboxesSeleccionadas(nombre){
       var boxes = document.getElementsByName(nombre);
@@ -200,6 +201,7 @@ const ComputadorasList = props => {
       console.log(result);
       return result;
     }
+    
     const findByPrice = () =>{
 
       var price = buscarMin + " "+ buscarMax
@@ -219,14 +221,9 @@ const ComputadorasList = props => {
               onChange={onChangeSearchMarca}
             />
             <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={findByBrand}
-              >
-                Buscar
-              </button>
+            
             </div>
+            
           </div>
 
 
@@ -239,15 +236,7 @@ const ComputadorasList = props => {
                 )
               })}
             </select>
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={findByRAM}
-              >
-                Buscar
-              </button>
-            </div>
+            
           </div>
 
           <div className="input-group col-lg-4">
@@ -259,15 +248,7 @@ const ComputadorasList = props => {
                 )
               })}
             </select>
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={findBySO}
-              >
-                Buscar
-              </button>
-            </div>
+           
           </div>
 
 
@@ -280,15 +261,7 @@ const ComputadorasList = props => {
                 )
               })}
             </select>
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={findByTipoDisco}
-              >
-                Buscar
-              </button>
-            </div>
+            
           </div>
 
 
@@ -301,29 +274,17 @@ const ComputadorasList = props => {
                 )
               })}
             </select>
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={findByCapacidadDisco}
-              >
-                Buscar
-              </button>
-            </div>
+            
           </div>
 
 
 
         <div>
         <img src={Teams} height="20" alt="Its getting bigger!" />
-        Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
+         Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
          Discord <input type="checkbox" name="App" value="Discord"/>
 
-         <button
-                className="Boton de radio"
-                type="button"
-                onClick={() => {}}
-              >Enviar </button>
+    
         </div>
         
         <div className="input-group col-lg-4">
@@ -343,17 +304,19 @@ const ComputadorasList = props => {
           />
           $
           <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByPrice}
-            >
-              Buscar
-            </button>
+            
           </div>
         </div>
 
-
+        <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick= {() => {findByAll()}}
+              >
+                Buscar
+              </button>
+            </div>
 
        </div>
 

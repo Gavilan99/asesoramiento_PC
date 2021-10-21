@@ -16,6 +16,9 @@ class ComputadoraDataService {
     No soporta objetos complejos*/
   }
 
+  findPotente(query, page=0){
+    return http.get()
+  }
 
   createReview(data) {
     return http.post("/comentario", data);
