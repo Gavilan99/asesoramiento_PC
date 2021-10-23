@@ -114,4 +114,17 @@ export default class ComputadorasDAO {
         }
     }
 
+    static async filtroMultiple({
+        filters = [],
+        pagina = 0,
+        computadorasPorPagina = 20,
+    } = {}){
+        let query;
+        var primerParametro =false;
+        
+
+
+
+    }
+
 }

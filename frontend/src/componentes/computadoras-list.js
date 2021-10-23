@@ -15,6 +15,7 @@ const ComputadorasList = props => {
     const [buscarDisco, setBuscarDisco ] = useState("");
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
+    const [buscarTodo, setBuscarTodo] = useState("");
 
 
     

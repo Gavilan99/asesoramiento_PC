@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import Chocola from "../assets/Chocola.png";
 import ChocolaHappy from "../assets/ChocolaHappy.png";
 import ComputadoraDataService from "../servicios/computadora";
-import Teams from "../assets/Teams-Icono.png"
+import Teams from "../assets/Teams-Icono.png";
+import Discord from "../assets/Discord.png";
+import Photoshop from "../assets/Photoshop.png";
+import Autocad from "../assets/Autocad.png";
+import Zoom from "../assets/Zoom.png";
+import Skype from "../assets/Skype.png";
 
 
 
@@ -14,11 +19,14 @@ class Encuesta extends React.Component{
 
     this.state = {nroPregunta: 0, finalizada: false,
       preguntas:[
-        "¿Que uso vas a darle a tu computadora?",
-        "¿La usas para trabajar?",
-        "¿Juga al GENSHIN?",
-        "¿Haces tareas de diseño?",
-        "¿Usas alguna de estas apps?"
+        "¿Que uso vas a darle a tu computadora?", //0
+        "¿La usaras para trabajar?", //1
+        "¿Necesitaras alguna de estas aplicaciones?", //2
+        "¿La usaras para jugar Videojuegos(COMO EL GENSHIN)?", //3
+        "¿Necesitaras alguan de estas aplicaciones?", //4
+        "¿La usaras para Estudiar?", //5
+        "¿Necesitaras alguan de estas aplicaciones?", //6
+
     ], respuestas:[], computadoras: []
   };
 
@@ -47,12 +55,14 @@ class Encuesta extends React.Component{
   y traer el resultado traerComputadora
   */
 
+  //Para saltear una pregunta hay que aumentar el numero pregunta y asegurarse de traer las computadoras
+
   almacenarResultado(valor){
     this.state.respuestas[this.state.nroPregunta]= valor;
   }
 
-  incPregunta(){
-    this.setState({nroPregunta: this.state.nroPregunta + 1})
+  incPregunta(n=1){
+    this.setState({nroPregunta: this.state.nroPregunta + n})
   }
 
   getRadioSeleccionado (){ //Pregunta Uso
@@ -84,7 +94,7 @@ class Encuesta extends React.Component{
     return result;
   }
 
-  traerComputadora(){ //Falta bind
+  traerComputadora(){
     this.setState({finalizada: true});
     console.log("Esta es la marca: " + this.state.respuestas[1]);
     ComputadoraDataService.find(this.state.respuestas[1],"brand")
@@ -134,15 +144,15 @@ class Encuesta extends React.Component{
             <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
             <button
-                className="Boton de ¿Trabajar?"
+                className="Boton de Trabajar"
                 type="button"
-                onClick={() => {this.almacenarResultado("Lenovo"); this.incPregunta();}}
-              >Lenovo </button>
+                onClick={() => {this.almacenarResultado("Lenovo"); this.incPregunta();}} //ARREGLAR ESTO
+              >Si </button>
               <button
-                className="Boton de ¿No Trabajar'"
+                className="Boton de No Trabajar"
                 type="button"
-                onClick={() => {this.almacenarResultado(""); this.incPregunta()}}
-              >No capo </button>
+                onClick={() => {this.almacenarResultado(""); this.incPregunta(2);}}
+              >No </button>
             </div>
             <img src={ChocolaHappy} height="500" alt="Its getting bigger!" />
   
@@ -151,6 +161,41 @@ class Encuesta extends React.Component{
       );
     }
     else if (this.state.nroPregunta==2){
+
+      return (
+        <div className="App-sayname">
+        <div>
+          <h2>Pregunta Nro {this.state.nroPregunta}</h2>
+          <br/>
+          <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+          <div>
+          <img src={Teams} height="20" alt="Its getting bigger!" />
+          Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
+          <img src={Discord} height="20" alt="Its getting bigger!" />
+          Discord <input type="checkbox" name="App" value="Discord"/>
+          <img src={Zoom} height="20" alt="Its getting bigger!" />
+          Zoom <input type="checkbox" name="App" value="Zoom"/>
+          <img src={Skype} height="20" alt="Its getting bigger!" />
+          Skype <input type="checkbox" name="App" value="Skype"/>
+
+          <img src={Photoshop} height="20" alt="Its getting bigger!" />
+          Photoshop <input type="checkbox" name="App" value="Photoshop"/>
+          <img src={Autocad} height="20" alt="Its getting bigger!" />
+          Autocad <input type="checkbox" name="App" value="Autocad"/>
+          </div>
+          <div>
+          <button
+              className="Boton de Checkbox"
+              type="button"
+              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta();}}
+            >Aceptar </button>
+          </div>
+          <img src={Chocola} height="500" alt="Its getting bigger!" />
+        </div>
+      </div>
+      )
+
+      /*
       return(
       <div className="App-sayname">
           <div>
@@ -172,25 +217,25 @@ class Encuesta extends React.Component{
             <img src={Chocola} height="500" alt="Its getting bigger!" />
           </div>
         </div>
-      )
+      )*/
     }
     else if (this.state.nroPregunta==3){
       return(
       <div className="App-sayname">
           <div>
-            <h2>Pregunta</h2>
+            <h2>Pregunta Nro {this.state.nroPregunta}</h2>
             <br/>
             <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
             <button
-                className="Boton de Diseño"
+                className="Boton de Videojuegos Si"
                 type="button"
-                onClick={() => {this.almacenarResultado("Diseño-Si"); this.incPregunta();}}
-              >Hentai </button>
+                onClick={() => {this.almacenarResultado("Videojuegos-Si"); this.incPregunta();}}
+              >Si </button>
               <button
-                className="Boton de Genshin No"
+                className="Boton de Videojuegos No"
                 type="button"
-                onClick={() => {this.almacenarResultado("Diseño-No"); this.incPregunta()}}
+                onClick={() => {this.almacenarResultado("Videojuegos-No"); this.incPregunta(2)}}
               >No </button>
             </div>
             <img src={Chocola} height="500" alt="Its getting bigger!" />
@@ -200,9 +245,38 @@ class Encuesta extends React.Component{
     }
     else if (this.state.nroPregunta==4){
       return (
+        <div className="App-sayname">
+        <div>
+          <h2>Pregunta Nro {this.state.nroPregunta}</h2>
+          <br/>
+          <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+          <div>
+          <img src={Teams} height="20" alt="Its getting bigger!" />
+          Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
+           Discord <input type="checkbox" name="App" value="Discord"/>
+           Zoom <input type="checkbox" name="App" value="Zoom"/>
+           Skype <input type="checkbox" name="App" value="Skype"/>
+
+           Photoshop <input type="checkbox" name="App" value="Photoshop"/>
+           Autocad <input type="checkbox" name="App" value="Autocad"/>
+          </div>
+          <div>
+          <button
+              className="Boton de Checkbox Videojuegos"
+              type="button"
+              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta();}}
+            >Aceptar </button>
+          </div>
+          <img src={Chocola} height="500" alt="Its getting bigger!" />
+        </div>
+      </div>
+      )
+
+      /*
+      return (
       <div className="App-sayname">
       <div>
-        <h2>Pregunta</h2>
+        <h2>Pregunta Nro {this.state.nroPregunta}</h2>
         <br/>
         <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
         <div>
@@ -221,16 +295,73 @@ class Encuesta extends React.Component{
       </div>
     </div>
     )
+    */
+
+    }
+    else if (this.state.nroPregunta==5){
+      return (
+        <div className="App-sayname">
+          <div>
+            <h2>Pregunta Nro {this.state.nroPregunta} {this.state.nroPregunta}</h2>
+            <br/>
+            <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+            <div>
+            <button
+                className="Boton de Estudiar"
+                type="button"
+                onClick={() => {this.almacenarResultado("Lenovo"); this.incPregunta();}}
+              >Si </button>
+              <button
+                className="Boton de No Trabajar"
+                type="button"
+                onClick={() => {this.almacenarResultado(""); this.incPregunta(2); this.traerComputadora();}}
+              >No </button>
+            </div>
+            <img src={ChocolaHappy} height="500" alt="Its getting bigger!" />
+  
+          </div>
+          </div>
+      );
+    }
+
+    else if (this.state.nroPregunta==6){
+      return (
+        <div className="App-sayname">
+        <div>
+          <h2>Pregunta Nro {this.state.nroPregunta}</h2>
+          <br/>
+          <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+          <div>
+          <img src={Teams} height="20" alt="Its getting bigger!" />
+          Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
+           Discord <input type="checkbox" name="App" value="Discord"/>
+           Zoom <input type="checkbox" name="App" value="Zoom"/>
+           Skype <input type="checkbox" name="App" value="Skype"/>
+
+           Photoshop <input type="checkbox" name="App" value="Photoshop"/>
+           Autocad <input type="checkbox" name="App" value="Autocad"/>
+          </div>
+          <div>
+          <button
+              className="Boton de Checkbox Estudiar"
+              type="button"
+              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta(); this.traerComputadora();}}
+            >Aceptar </button>
+          </div>
+          <img src={Chocola} height="500" alt="Its getting bigger!" />
+        </div>
+      </div>
+      )
 
     }
 
     else if (this.state.finalizada && this.state.computadoras.length==0){
       console.log(this.state.computadoras);
       return (
-      <div>Chocola is Thinking!</div>
+      <div><h1>Chocola is Thinking!</h1></div>
       );
-
     }
+
     else if (this.state.finalizada && this.state.computadoras.length!=0) {
       console.log(this.state.computadoras);
       return (
