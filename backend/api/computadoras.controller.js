@@ -34,6 +34,15 @@ export default class ComputadorasController {
         else if (req.query.name ){
             filters.name = req.query.name
         }
+        else if (req.query.operatingSystem ){
+            filters.operatingSystem = req.query.operatingSystem
+        }
+        else if (req.query.type ){
+            filters.type = req.query.type
+        }
+        else if (req.query.capacity ){
+            filters.capacity = req.query.capacity
+        }
 
         //Trae de la base de datos
         const {computadorasList, totalNumComputadoras} = await ComputadorasDAO.getComputadoras({ 
@@ -67,5 +76,47 @@ export default class ComputadorasController {
             res.status(500).json({error: e})
         }
     }
+
+    static async apiGetComputadorasRAMs(req, res, next) {
+        try {
+          let RAMs = await ComputadorasDAO.getRAMs()
+          res.json(RAMs)
+        } catch (e) {
+          console.log(`api, ${e}`)
+          res.status(500).json({ error: e })
+        }
+    }
+
+    static async apiGetComputadorasSO(req, res, next) {
+        try {
+          let SOs = await ComputadorasDAO.getSOs()
+          res.json(SOs)
+        } catch (e) {
+          console.log(`api, ${e}`)
+          res.status(500).json({ error: e })
+        }
+    }
+
+    static async apiGetComputadorasDiskType(req, res, next) {
+        try {
+          let type = await ComputadorasDAO.getDiskTypes()
+          res.json(type)
+        } catch (e) {
+          console.log(`api, ${e}`)
+          res.status(500).json({ error: e })
+        }
+    }
+
+    static async apiGetComputadorasDiskCapacity(req, res, next) {
+        try {
+          let capacity = await ComputadorasDAO.getDiskCapacitys()
+          res.json(capacity)
+        } catch (e) {
+          console.log(`api, ${e}`)
+          res.status(500).json({ error: e })
+        }
+    }
+
+    
 
 }

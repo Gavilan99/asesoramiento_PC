@@ -16,6 +16,9 @@ class ComputadoraDataService {
     No soporta objetos complejos*/
   }
 
+  findPotente(query, page=0){
+    return http.get()
+  }
 
   createReview(data) {
     return http.post("/comentario", data);
@@ -31,6 +34,22 @@ class ComputadoraDataService {
 
   getComputadora(id) {
     return http.get(`/computadora`);
+  }
+
+  getRAMs(id){
+    return http.get(`/RAM`);
+  }
+
+  getSOs(id){
+    return http.get('/operatingSystem')
+  }
+
+  getTipoDiscos(id){
+    return http.get('/diskType')
+  }
+
+  getCapacidadDiscos(id){
+    return http.get('/diskCapacity')
   }
 
 }
