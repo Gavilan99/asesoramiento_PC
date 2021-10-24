@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
+import robot4 from "../imagenes/robot4.png";
+import robot1 from "../imagenes/robot1.png";
+
+import { Carousel } from 'react-bootstrap';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Computadora = props => {
   const initialComputadoraState = {
@@ -42,21 +47,71 @@ const Computadora = props => {
       });
   };
 
+
+
+
+  function ControlledCarousel() {
+    const [index, setIndex] = useState(0);
+  
+    const handleSelect = (selectedIndex, e) => {
+      setIndex(selectedIndex);
+    };
+  }
+
+  
   return (
     <div>
       {computadora ? (
         <div>
-          <h5>{computadora.name}</h5>
+          
+
+        <p className= "comentario" >
+        {computadora.name}
+        </p> 
+
+
+        <div>
+        <Carousel>
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src={robot1} class ="d-block w-100 right"
+      alt="First slide"
+    />
+    <Carousel.Caption>
+      <h3>First slide label</h3>
+    
+    </Carousel.Caption>
+  </Carousel.Item>
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src={robot4} class ="d-block w-100 right"
+      alt="Second slide"
+    />
+
+    <Carousel.Caption>
+      <h3>Second slide label</h3>
+      
+    </Carousel.Caption>
+  </Carousel.Item>
+ 
+</Carousel>
+
+
+          </div>
+
+      
 
           <h5> RAM:  {computadora.RAM}</h5>
-
-
-
+          <h5> Sistema Operativo:  {computadora.operatingSystem}</h5>
+          <h5> Marca:  {computadora.brand}</h5>
+        
           <Link to={"/computadoras/" + props.match.params.id + "/comentario"} className="btn btn-primary">
             Add Review
           </Link>
 
-          <h4> Reviews </h4>
+          <h4> Comentarios  </h4>
           <div className="row">
             {computadora.comentarios.length > 0 ? (
              computadora.comentarios.map((comentario, index) => {
@@ -95,6 +150,7 @@ const Computadora = props => {
             )}
 
           </div>
+          < img src={robot1}   /> 
 
         </div>
       ) : (
@@ -105,6 +161,7 @@ const Computadora = props => {
       )}
     </div>
   );
+ 
 };
 
 export default Computadora;

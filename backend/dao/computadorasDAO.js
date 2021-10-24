@@ -24,27 +24,53 @@ export default class ComputadorasDAO {
         computadorasPorPagina = 20,
     } = {}) {
         let query
-        if (filters){ //Agregar un "and" de filtros a la query
-            if  ("brand" in filters){
-                query = {"brand": {$eq: filters["brand"]}}
+        let flag=0
+        if(filters){
+            query= "{"
+            if(filters.RAM!="RAM"){
+                query = query + "RAM: "+ filters.RAM
+                flag=1
             }
-            else if ("minPrice" in filters && "maxPrice" in filters){
-                query = {"price": {$lte: filters["maxPrice"], $gte: filters["minPrice"]}}
+            if(filters.SO!="Sistema operativo"){
+                if(flag==1){
+                    query=query + ","
+                }
+                query=query+ "operatingSystem: "+filters.SO
             }
-            else if ("RAM" in filters){
-                query = {"RAM": {$eq: filters["RAM"]}}
+            if(!("Tipo de disco" in filters.type)){
+                if(flag==1){
+                    query=query + ","
+                }
+                query = query +"{"+"disks.type: {$eq:"+  filters.type +"} }"
+               
             }
-            else if ("description" in filters){
-                query = {"description": {$eq: filters["description"]}}
+            if(!("Tipo de disco" in filters.capacity)){
+                if(flag==1){
+                    query=query + ","
+                }
+                query = query +"{"+"disks.capacity: {$eq:"+  filters.capacity +"} }"
             }
-            else if ("name" in filters){
-                query = {"name": {$eq: filters["name"]}}
+            if(filters.apps.length !=0 ){
+                if(flag==1){
+                    query=query + ","
+                }
+                query=query+"Aplicaciones: {$in: "+ filters.app +"}"
             }
+            if(filters.max!=null && filters.min!=null){
+                if(flag==1){
+                    query=query + ","
+                }
+                query=query+"price: {$lte: "+ filters.min +","+"$gte: "+filters.max+"}"
+            }
+
+            query=query+"}"
+
         }
 
         let cursor
 
         try {
+            
             cursor = await computadoras.find(query)
         }
         catch (e){
@@ -63,7 +89,19 @@ export default class ComputadorasDAO {
             console.error(`Unable to convert cursor to array or problem counting documents, ${e}`)
             return {computadorasList: [], totalNumComputadoras: 0}
         }
+        
     }
+    
+
+   /* 
+    static async getComputadoras({
+        filters = null,
+        pagina = 0,
+ @@ -153,7 +80,7 @@ export default class ComputadorasDAO {
+            console.error(`Unable to convert cursor to array or problem counting documents, ${e}`)
+            return {computadorasList: [], totalNumComputadoras: 0}
+        }
+    }*/
 
     static async getComputadoraByID(id){
         try{

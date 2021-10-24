@@ -8,78 +8,412 @@ import compu from "../imagenes/compu.jpg";
 
 
 const ComputadorasList = props => {
-    const [computadoras, setComputadoras] = useState([]);
-    const [buscarNombre, setBuscarNombre ] = useState("");
-    const [buscarMarca, setBuscarMarca ] = useState("");
-    const [buscarRAM, setBuscarRAM ] = useState("");
-    const [buscarDisco, setBuscarDisco ] = useState("");
+  const [computadoras, setComputadoras] = useState([]);
+  const [computadorasMostar,setComputadorasMostar] = useState([]);
+  const [buscarMarca, setBuscarMarca ] = useState("");
+  const [buscarRAM, setBuscarRAM ] = useState("");
+  const [RAMs, setRAMs] = useState(["RAM"]);
+
+  const ComputadorasList = props => {
+  const [buscarMax, setBuscarPrecioMax ] = useState("");
+  const [buscarComb,setBuscarComb] = useState("");
 
 
+  
+
+  
+
+useEffect(() => {
+retrieveComputadoras();
+retrieveRAMs();
+retrieveSOs();
+retrieveTipoDiscos();
+retrieveCapacidadDisco();
+}, []);
+
+
+const onChangeSearchPrecioMin = e => {
+const buscarMin = e.target.value;
+setBuscarPrecioMin(buscarMin);
+};
+const onChangeSearchPrecioMax = e => {
+const buscarMax = e.target.value;
+setBuscarPrecioMax(buscarMax);
+};
+
+const onChangeSearchMarca = e => {
+const buscarMarca = e.target.value;
+setBuscarMarca(buscarMarca);
+};
+
+const onChangeSearchRAM = e => {
+//const buscarRAM = e.target.value;
+setBuscarRAM(e.target.value);
+};
+
+const onChangeSearchSO = e => {
+const buscarSO = e.target.value;
+setBuscarSO(e.target.value);
+};
+
+const onChangeSearchType = e => {
+const buscarTipoDisco = e.target.value;
+setBuscarTipoDisco(buscarTipoDisco);
+};
+
+const onChangeSearchCapacity = e => {
+const buscarCapacidadDisco = e.target.value;
+setBuscarCapacidadDisco(buscarCapacidadDisco);
+};
+
+
+
+const retrieveComputadoras = () => {
+  ComputadoraDataService.getAll()
+  .then(response => {
+    setComputadoras(response.data.computadoras);
+    setComputadorasMostar(response.data.computadoras)
     
-    /*AGREGAR MAS BUSCAR POR...*/
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
+
+const retrieveRAMs = () => {
+ComputadoraDataService.getRAMs()
+  .then(response => {
+    console.log(response.data);
+    setRAMs(["RAM"].concat(response.data));          
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
+
+const retrieveSOs = () => {
+ComputadoraDataService.getSOs()
+  .then(response => {
+    console.log(response.data);
+    setSOs(["Sistema operativo"].concat(response.data));          
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
+
+const retrieveTipoDiscos = () => {
+ComputadoraDataService.getTipoDiscos()
+  .then(response => {
+    console.log(response.data);
+    setTipoDiscos([{type:"Tipo de disco"}].concat(response.data));          
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
+
+const retrieveCapacidadDisco = () => {
+ComputadoraDataService.getCapacidadDiscos()
+  .then(response => {
+    console.log(response.data);
+    setCapacidadDiscos([{capacity:"Capacidad del disco"}].concat(response.data));          
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
+
+
+const refreshList = () => {
+retrieveComputadoras();
+};
+
+const find = (query, by) => {
+ComputadoraDataService.find(query, by)
+  .then(response => {
+    setComputadoras(response.data.computadoras);
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
+
+
+
+const findByBrand = () => {
+find(buscarMarca, "brand")
+};
+
+const findByRAM = () => {
+if (buscarRAM == "RAM"){
+  refreshList();
+}else{
+  find(buscarRAM, "RAM")
+}
+};
+
+const findBySO = () => {
+if (buscarSO == "Sistema operativo"){
+  refreshList();
+}else{
+  find(buscarSO, "operatingSystem")
+}
+};
+
+const findByTipoDisco = () => {
+if (buscarTipoDisco == "Tipo de disco"){
+  refreshList();
+}else{
+  find(buscarTipoDisco, "type")
+}
+};
+
+const findByCapacidadDisco = () => {
+if (buscarCapacidadDisco == "Capacidad del disco"){
+  refreshList();
+}else{
   
-    useEffect(() => {
-      retrieveComputadoras();
+}
+};
 
-    }, []);
+  const onChangeSearchPrecioMin = e => {
+    const buscarMin = e.target.value;
+    setBuscarPrecioMin(buscarMin);
+  };
+  const onChangeSearchPrecioMax = e => {
+    const buscarMax = e.target.value;
+    setBuscarPrecioMax(buscarMax);
+  };
+
+  const onChangeSearchMarca = e => {
+    const buscarMarca = e.target.value;
+    setBuscarMarca(buscarMarca);
+  };
+
+  const onChangeSearchRAM = e => {
+    const buscarRAM = e.target.value;
+    setBuscarRAM(buscarRAM);
+  };
+
+  const onChangeSearchSO = e => {
+    const buscarSO = e.target.value;
+    setBuscarSO(buscarSO);
+  };
+
+  const onChangeSearchType = e => {
+    const buscarTipoDisco = e.target.value;
+    setBuscarTipoDisco(buscarTipoDisco);
+  };
+
+  const onChangeSearchCapacity = e => {
+    const buscarCapacidadDisco = e.target.value;
+    setBuscarCapacidadDisco(buscarCapacidadDisco);
+  };
+
   
-    const onChangeSearchName = e => {
-      const buscarNombre = e.target.value;
-      setBuscarNombre(buscarNombre);
-    };
-    
- 
-    const onChangeSearchMarca = e => {
-      const buscarMarca = e.target.value;
-      setBuscarMarca(buscarMarca);
-    };
+function filtricos(post){ 
 
-    const onChangeSearchRAM = e => {
-      const buscarRAM = e.target.value;
-      setBuscarRAM(buscarRAM);
-    };
-
-    const retrieveComputadoras = () => {
-        ComputadoraDataService.getAll()
-        .then(response => {
-          console.log(response.data);
-          setComputadoras(response.data.computadoras);
-          
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    };
+  const retrieveComputadoras = () => {
+      ComputadoraDataService.getAll()
+      .then(response => {
+        setComputadoras(response.data.computadoras);
+        
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
   
-    const refreshList = () => {
-      retrieveComputadoras();
-    };
+  const retrieveRAMs = () => {
+    ComputadoraDataService.getRAMs()
+      .then(response => {
+        console.log(response.data);
+        setRAMs(["RAM"].concat(response.data));          
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const retrieveSOs = () => {
+    ComputadoraDataService.getSOs()
+      .then(response => {
+        console.log(response.data);
+        setSOs(["Sistema operativo"].concat(response.data));          
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const retrieveTipoDiscos = () => {
+    ComputadoraDataService.getTipoDiscos()
+      .then(response => {
+        console.log(response.data);
+        setTipoDiscos([{type:"Tipo de disco"}].concat(response.data));          
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  const retrieveCapacidadDisco = () => {
+    ComputadoraDataService.getCapacidadDiscos()
+      .then(response => {
+        console.log(response.data);
+        setCapacidadDiscos([{capacity:"Capacidad del disco"}].concat(response.data));          
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+let a=""
+let flag=0
+
   
-    const find = (query, by) => {
-      ComputadoraDataService.find(query, by)
-        .then(response => {
-          console.log(response.data);
-          setComputadoras(response.data.computadoras);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    };
-  
+  const refreshList = () => {
+    retrieveComputadoras();
+  };
+if(buscarRAM!="RAM"){
+  a=a+"post.RAM == buscarRAM "
+  flag=1
+}
+if(buscarSO!="Sistema operativo"){
+  if(flag==1){
+    a=a+"&& "
+  }
+  a=a+"post.operatingSystem == buscarSO"
+  flag=1
+}
+if(buscarTipoDisco != "Tipo de disco"){
+  if(flag==1){
+    a=a+"&& "
+  }
+  a=a+"post.disks.type == buscarTipoDisco"
+  flag=1
+}
+if(buscarCapacidadDisco!="Capacidad del disco"){
+if(flag==1){
+  a=a+"&& "
+}
+a=a+"post.disks.capacity == buscarCapacidadDisco"
+flag=1
+}
+
+if(flag==0){
+  refreshList();
+}
 
 
-    const findByName = () => {
-      find(buscarNombre, "name")
-    };
+};
 
 
-    const findByBrand = () => {
-      find(buscarMarca, "brand")
-    };
+  const find = (query, by) => {
+    ComputadoraDataService.find(query, by)
+      .then(response => {
+        setComputadoras(response.data.computadoras);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
-    const findByRAM = () => {
+
+
+  const findByBrand = () => {
+    find(buscarMarca, "brand")
+  };
+
+  const findByRAM = () => {
+    if (buscarRAM == "RAM"){
+      refreshList();
+    }else{
       find(buscarRAM, "RAM")
-    };
+    }
+  };
+
+  const findBySO = () => {
+    if (buscarSO == "Sistema operativo"){
+      refreshList();
+    }else{
+      find(buscarSO, "operatingSystem")
+    }
+  };
+
+  const findByTipoDisco = () => {
+    if (buscarTipoDisco == "Tipo de disco"){
+      refreshList();
+    }else{
+      find(buscarTipoDisco, "type")
+    }
+  };
+
+  const findByCapacidadDisco = () => {
+    if (buscarCapacidadDisco == "Capacidad del disco"){
+      refreshList();
+    }else{
+      
+    }
+  };
+return eval(a)
+ }
+
+const findByAll = () =>  {
+
+let posts=computadoras.filter(filtricos)
+setComputadorasMostar(posts)
+
+  const findByAll = () =>{
+    if (buscarRAM == "RAM" && buscarSO == "Sistema operativo" && buscarTipoDisco == "Tipo de disco" && buscarCapacidadDisco == "Capacidad del disco"){
+      refreshList();
+    }else{
+      
+    }
+  }
+}
+
+
+  function getCheckboxesSeleccionadas(nombre){
+    var boxes = document.getElementsByName(nombre);
+    var result =[];
+    for (var i=0; i<boxes.length;i++){
+      if (boxes[i].checked){
+        result.push(boxes[i].value);
+      }
+    }
+    console.log(result);
+    return result;
+  };
+
+
+function getCheckboxesSeleccionadas(nombre){
+var boxes = document.getElementsByName(nombre);
+var result =[];
+for (var i=0; i<boxes.length;i++){
+  if (boxes[i].checked){
+    result.push(boxes[i].value);
+  }
+  
+  const findByPrice = () =>{
+}
+console.log(result);
+return result;
+};
+
+const findByPrice = () =>{
+
+var price = buscarMin + " "+ buscarMax
+find(price,"price")
+  };
+
+function pruebaBoton(){
+console.log("HOla jose")
+  };
+
+    var price = buscarMin + " "+ buscarMax
+    find(price,"price")
+    
   
     return (
       <div>
@@ -260,5 +594,5 @@ const ComputadorasList = props => {
       </div>
     );
   };
-  
+};
   export default ComputadorasList;
