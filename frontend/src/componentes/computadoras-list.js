@@ -182,48 +182,56 @@ const findByCapacidadDisco = () => {
 
 
 function filtricos(post){ 
-
+  
   let a=""
   let flag=0
 
-  if(buscarRAM!="RAM"){
+  if(buscarRAM!="RAM" && buscarRAM.length!=0){
+    
     a=a+"post.RAM == buscarRAM "
     flag=1
   }
-  if(buscarSO!="Sistema operativo"){
+  
+  if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
     if(flag==1){
-      a=a+"&& "
+      a=a+" && "
     }
     a=a+"post.operatingSystem == buscarSO"
     flag=1
   }
-  if(buscarTipoDisco != "Tipo de disco"){
+
+  if(buscarTipoDisco != "Tipo de disco" && buscarTipoDisco.length!=0){
     if(flag==1){
-      a=a+"&& "
+      a=a+" && "
     }
     a=a+"post.disks.type == buscarTipoDisco"
     flag=1
   }
-if(buscarCapacidadDisco!="Capacidad del disco"){
-  if(flag==1){
-    a=a+"&& "
+  if(buscarCapacidadDisco!="Capacidad del disco" && buscarCapacidadDisco.length!=0){
+    console.log("Entras aca?")
+    if(flag==1){
+      a=a+" && "
+    }
+    a=a+"post.disks.capacity == buscarCapacidadDisco"
+    flag=1
   }
-  a=a+"post.disks.capacity == buscarCapacidadDisco"
-  flag=1
-}
 
   if(flag==0){
-    refreshList();
+    a="computadoras"
   }
   
+  console.log(a)
   return eval(a)
 }
 
 const findByAll = () =>  {
-  
+  console.log("PC 1")
+  console.log(computadorasMostar)
   let posts=computadoras.filter(filtricos)
   setComputadorasMostar(posts)
-
+  console.log("PC 2")
+  console.log(computadoras)
+  console.log(posts)
 }
 
 
