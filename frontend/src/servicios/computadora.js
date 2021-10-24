@@ -10,8 +10,15 @@ class ComputadoraDataService {
   }
 
   find(query, by = "name", page = 0) {
-    return http.get(`?${by}=${query}&page=${page}`);
-  } 
+    console.log("Entro al find ")
+    return http.get(`?${by}=${query}&page=${page}`); /*La query es el valor y by es el nombre del atributo (la columna)
+    Todo eso forma parte de la req
+    No soporta objetos complejos*/
+  }
+
+  findPotente(query, page=0){
+    return http.get()
+  }
 
   createReview(data) {
     return http.post("/comentario", data);
@@ -29,7 +36,21 @@ class ComputadoraDataService {
     return http.get(`/computadora`);
   }
 
+  getRAMs(id){
+    return http.get(`/RAM`);
+  }
 
+  getSOs(id){
+    return http.get('/operatingSystem')
+  }
+
+  getTipoDiscos(id){
+    return http.get('/diskType')
+  }
+
+  getCapacidadDiscos(id){
+    return http.get('/diskCapacity')
+  }
 
 }
 

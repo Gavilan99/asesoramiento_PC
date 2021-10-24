@@ -1,527 +1,380 @@
 import React, { useState, useEffect } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
+import Teams from "./Teams-Icono.png";
 import robot4 from "../imagenes/robot4.png";
 import compu from "../imagenes/compu.jpg";
-
-
+import computadora from "../servicios/computadora";
 
 
 const ComputadorasList = props => {
-  const [computadoras, setComputadoras] = useState([]);
-  const [computadorasMostar,setComputadorasMostar] = useState([]);
-  const [buscarMarca, setBuscarMarca ] = useState("");
-  const [buscarRAM, setBuscarRAM ] = useState("");
-  const [RAMs, setRAMs] = useState(["RAM"]);
+    const [computadoras, setComputadoras] = useState([]);
+    const [computadorasMostar,setComputadorasMostar] = useState([]);
+    const [buscarMarca, setBuscarMarca ] = useState("");
+    const [buscarRAM, setBuscarRAM ] = useState("");
+    const [RAMs, setRAMs] = useState(["RAM"]);
+    const [buscarSO, setBuscarSO ] = useState("");
+    const [SOs, setSOs] = useState(["operatingSystem"]);
+    const [buscarTipoDisco, setBuscarTipoDisco ] = useState("");
+    const [TipoDiscos, setTipoDiscos] = useState(["type"]);
+    const [buscarCapacidadDisco, setBuscarCapacidadDisco ] = useState("");
+    const [CapacidadDiscos, setCapacidadDiscos] = useState(["capacity"]);
+    const [buscarMin, setBuscarPrecioMin ] = useState("");
+    const [buscarMax, setBuscarPrecioMax ] = useState("");
+    const [buscarComb,setBuscarComb] = useState("");
 
-  const ComputadorasList = props => {
-  const [buscarMax, setBuscarPrecioMax ] = useState("");
-  const [buscarComb,setBuscarComb] = useState("");
-
+/*AGREGAR MAS BUSCAR POR...*/
 
   
-
-  
-
 useEffect(() => {
-retrieveComputadoras();
-retrieveRAMs();
-retrieveSOs();
-retrieveTipoDiscos();
-retrieveCapacidadDisco();
+  retrieveComputadoras();
+  retrieveRAMs();
+  retrieveSOs();
+  retrieveTipoDiscos();
+  retrieveCapacidadDisco();
 }, []);
 
 
 const onChangeSearchPrecioMin = e => {
-const buscarMin = e.target.value;
-setBuscarPrecioMin(buscarMin);
+  const buscarMin = e.target.value;
+  setBuscarPrecioMin(buscarMin);
 };
 const onChangeSearchPrecioMax = e => {
-const buscarMax = e.target.value;
-setBuscarPrecioMax(buscarMax);
+  const buscarMax = e.target.value;
+  setBuscarPrecioMax(buscarMax);
 };
 
 const onChangeSearchMarca = e => {
-const buscarMarca = e.target.value;
-setBuscarMarca(buscarMarca);
+  const buscarMarca = e.target.value;
+  setBuscarMarca(buscarMarca);
 };
 
 const onChangeSearchRAM = e => {
-//const buscarRAM = e.target.value;
-setBuscarRAM(e.target.value);
+  //const buscarRAM = e.target.value;
+  setBuscarRAM(e.target.value);
 };
 
 const onChangeSearchSO = e => {
-const buscarSO = e.target.value;
-setBuscarSO(e.target.value);
+  const buscarSO = e.target.value;
+  setBuscarSO(e.target.value);
 };
 
 const onChangeSearchType = e => {
-const buscarTipoDisco = e.target.value;
-setBuscarTipoDisco(buscarTipoDisco);
+  const buscarTipoDisco = e.target.value;
+  setBuscarTipoDisco(buscarTipoDisco);
 };
 
 const onChangeSearchCapacity = e => {
-const buscarCapacidadDisco = e.target.value;
-setBuscarCapacidadDisco(buscarCapacidadDisco);
+  const buscarCapacidadDisco = e.target.value;
+  setBuscarCapacidadDisco(buscarCapacidadDisco);
 };
 
 
 
 const retrieveComputadoras = () => {
-  ComputadoraDataService.getAll()
-  .then(response => {
-    setComputadoras(response.data.computadoras);
-    setComputadorasMostar(response.data.computadoras)
-    
-  })
-  .catch(e => {
-    console.log(e);
-  });
+    ComputadoraDataService.getAll()
+    .then(response => {
+      setComputadoras(response.data.computadoras);
+      setComputadorasMostar(response.data.computadoras)
+      
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 const retrieveRAMs = () => {
-ComputadoraDataService.getRAMs()
-  .then(response => {
-    console.log(response.data);
-    setRAMs(["RAM"].concat(response.data));          
-  })
-  .catch(e => {
-    console.log(e);
-  });
+  ComputadoraDataService.getRAMs()
+    .then(response => {
+      console.log(response.data);
+      setRAMs(["RAM"].concat(response.data));          
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 const retrieveSOs = () => {
-ComputadoraDataService.getSOs()
-  .then(response => {
-    console.log(response.data);
-    setSOs(["Sistema operativo"].concat(response.data));          
-  })
-  .catch(e => {
-    console.log(e);
-  });
+  ComputadoraDataService.getSOs()
+    .then(response => {
+      console.log(response.data);
+      setSOs(["Sistema operativo"].concat(response.data));          
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 const retrieveTipoDiscos = () => {
-ComputadoraDataService.getTipoDiscos()
-  .then(response => {
-    console.log(response.data);
-    setTipoDiscos([{type:"Tipo de disco"}].concat(response.data));          
-  })
-  .catch(e => {
-    console.log(e);
-  });
+  ComputadoraDataService.getTipoDiscos()
+    .then(response => {
+      console.log(response.data);
+      setTipoDiscos([{type:"Tipo de disco"}].concat(response.data));          
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 const retrieveCapacidadDisco = () => {
-ComputadoraDataService.getCapacidadDiscos()
-  .then(response => {
-    console.log(response.data);
-    setCapacidadDiscos([{capacity:"Capacidad del disco"}].concat(response.data));          
-  })
-  .catch(e => {
-    console.log(e);
-  });
+  ComputadoraDataService.getCapacidadDiscos()
+    .then(response => {
+      console.log(response.data);
+      setCapacidadDiscos([{capacity:"Capacidad del disco"}].concat(response.data));          
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 
 const refreshList = () => {
-retrieveComputadoras();
+  retrieveComputadoras();
 };
 
 const find = (query, by) => {
-ComputadoraDataService.find(query, by)
-  .then(response => {
-    setComputadoras(response.data.computadoras);
-  })
-  .catch(e => {
-    console.log(e);
-  });
+  ComputadoraDataService.find(query, by)
+    .then(response => {
+      setComputadoras(response.data.computadoras);
+    })
+    .catch(e => {
+      console.log(e);
+    });
 };
 
 
 
 const findByBrand = () => {
-find(buscarMarca, "brand")
+  find(buscarMarca, "brand")
 };
 
 const findByRAM = () => {
-if (buscarRAM == "RAM"){
-  refreshList();
-}else{
-  find(buscarRAM, "RAM")
-}
+  if (buscarRAM == "RAM"){
+    refreshList();
+  }else{
+    find(buscarRAM, "RAM")
+  }
 };
 
 const findBySO = () => {
-if (buscarSO == "Sistema operativo"){
-  refreshList();
-}else{
-  find(buscarSO, "operatingSystem")
-}
+  if (buscarSO == "Sistema operativo"){
+    refreshList();
+  }else{
+    find(buscarSO, "operatingSystem")
+  }
 };
 
 const findByTipoDisco = () => {
-if (buscarTipoDisco == "Tipo de disco"){
-  refreshList();
-}else{
-  find(buscarTipoDisco, "type")
-}
+  if (buscarTipoDisco == "Tipo de disco"){
+    refreshList();
+  }else{
+    find(buscarTipoDisco, "type")
+  }
 };
 
 const findByCapacidadDisco = () => {
-if (buscarCapacidadDisco == "Capacidad del disco"){
-  refreshList();
-}else{
-  
-}
+  if (buscarCapacidadDisco == "Capacidad del disco"){
+    refreshList();
+  }else{
+    
+  }
 };
 
-  const onChangeSearchPrecioMin = e => {
-    const buscarMin = e.target.value;
-    setBuscarPrecioMin(buscarMin);
-  };
-  const onChangeSearchPrecioMax = e => {
-    const buscarMax = e.target.value;
-    setBuscarPrecioMax(buscarMax);
-  };
 
-  const onChangeSearchMarca = e => {
-    const buscarMarca = e.target.value;
-    setBuscarMarca(buscarMarca);
-  };
-
-  const onChangeSearchRAM = e => {
-    const buscarRAM = e.target.value;
-    setBuscarRAM(buscarRAM);
-  };
-
-  const onChangeSearchSO = e => {
-    const buscarSO = e.target.value;
-    setBuscarSO(buscarSO);
-  };
-
-  const onChangeSearchType = e => {
-    const buscarTipoDisco = e.target.value;
-    setBuscarTipoDisco(buscarTipoDisco);
-  };
-
-  const onChangeSearchCapacity = e => {
-    const buscarCapacidadDisco = e.target.value;
-    setBuscarCapacidadDisco(buscarCapacidadDisco);
-  };
-
-  
 function filtricos(post){ 
-
-  const retrieveComputadoras = () => {
-      ComputadoraDataService.getAll()
-      .then(response => {
-        setComputadoras(response.data.computadoras);
-        
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
   
-  const retrieveRAMs = () => {
-    ComputadoraDataService.getRAMs()
-      .then(response => {
-        console.log(response.data);
-        setRAMs(["RAM"].concat(response.data));          
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
+  let a=""
+  let flag=0
 
-  const retrieveSOs = () => {
-    ComputadoraDataService.getSOs()
-      .then(response => {
-        console.log(response.data);
-        setSOs(["Sistema operativo"].concat(response.data));          
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
-  const retrieveTipoDiscos = () => {
-    ComputadoraDataService.getTipoDiscos()
-      .then(response => {
-        console.log(response.data);
-        setTipoDiscos([{type:"Tipo de disco"}].concat(response.data));          
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
-  const retrieveCapacidadDisco = () => {
-    ComputadoraDataService.getCapacidadDiscos()
-      .then(response => {
-        console.log(response.data);
-        setCapacidadDiscos([{capacity:"Capacidad del disco"}].concat(response.data));          
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-let a=""
-let flag=0
-
+  if(buscarRAM!="RAM" && buscarRAM.length!=0){
+    
+    a=a+"post.RAM == buscarRAM "
+    flag=1
+  }
   
-  const refreshList = () => {
-    retrieveComputadoras();
-  };
-if(buscarRAM!="RAM"){
-  a=a+"post.RAM == buscarRAM "
-  flag=1
-}
-if(buscarSO!="Sistema operativo"){
-  if(flag==1){
-    a=a+"&& "
+  if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
+    if(flag==1){
+      a=a+" && "
+    }
+    a=a+"post.operatingSystem == buscarSO"
+    flag=1
   }
-  a=a+"post.operatingSystem == buscarSO"
-  flag=1
-}
-if(buscarTipoDisco != "Tipo de disco"){
-  if(flag==1){
-    a=a+"&& "
+
+  if(buscarTipoDisco != "Tipo de disco" && buscarTipoDisco.length!=0){
+    if(flag==1){
+      a=a+" && "
+    }
+    a=a+"post.disks.type == buscarTipoDisco"
+    flag=1
   }
-  a=a+"post.disks.type == buscarTipoDisco"
-  flag=1
-}
-if(buscarCapacidadDisco!="Capacidad del disco"){
-if(flag==1){
-  a=a+"&& "
-}
-a=a+"post.disks.capacity == buscarCapacidadDisco"
-flag=1
-}
-
-if(flag==0){
-  refreshList();
-}
-
-
-};
-
-
-  const find = (query, by) => {
-    ComputadoraDataService.find(query, by)
-      .then(response => {
-        setComputadoras(response.data.computadoras);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
-
-
-
-  const findByBrand = () => {
-    find(buscarMarca, "brand")
-  };
-
-  const findByRAM = () => {
-    if (buscarRAM == "RAM"){
-      refreshList();
-    }else{
-      find(buscarRAM, "RAM")
+  if(buscarCapacidadDisco!="Capacidad del disco" && buscarCapacidadDisco.length!=0){
+    console.log("Entras aca?")
+    if(flag==1){
+      a=a+" && "
     }
-  };
+    a=a+"post.disks.capacity == buscarCapacidadDisco"
+    flag=1
+  }
 
-  const findBySO = () => {
-    if (buscarSO == "Sistema operativo"){
-      refreshList();
-    }else{
-      find(buscarSO, "operatingSystem")
-    }
-  };
-
-  const findByTipoDisco = () => {
-    if (buscarTipoDisco == "Tipo de disco"){
-      refreshList();
-    }else{
-      find(buscarTipoDisco, "type")
-    }
-  };
-
-  const findByCapacidadDisco = () => {
-    if (buscarCapacidadDisco == "Capacidad del disco"){
-      refreshList();
-    }else{
-      
-    }
-  };
-return eval(a)
- }
+  if(flag==0){
+    a="computadoras"
+  }
+  
+  console.log(a)
+  return eval(a)
+}
 
 const findByAll = () =>  {
-
-let posts=computadoras.filter(filtricos)
-setComputadorasMostar(posts)
-
-  const findByAll = () =>{
-    if (buscarRAM == "RAM" && buscarSO == "Sistema operativo" && buscarTipoDisco == "Tipo de disco" && buscarCapacidadDisco == "Capacidad del disco"){
-      refreshList();
-    }else{
-      
-    }
-  }
+  console.log("PC 1")
+  console.log(computadorasMostar)
+  let posts=computadoras.filter(filtricos)
+  setComputadorasMostar(posts)
+  console.log("PC 2")
+  console.log(computadoras)
+  console.log(posts)
 }
-
-
-  function getCheckboxesSeleccionadas(nombre){
-    var boxes = document.getElementsByName(nombre);
-    var result =[];
-    for (var i=0; i<boxes.length;i++){
-      if (boxes[i].checked){
-        result.push(boxes[i].value);
-      }
-    }
-    console.log(result);
-    return result;
-  };
 
 
 function getCheckboxesSeleccionadas(nombre){
-var boxes = document.getElementsByName(nombre);
-var result =[];
-for (var i=0; i<boxes.length;i++){
-  if (boxes[i].checked){
-    result.push(boxes[i].value);
+  var boxes = document.getElementsByName(nombre);
+  var result =[];
+  for (var i=0; i<boxes.length;i++){
+    if (boxes[i].checked){
+      result.push(boxes[i].value);
+    }
   }
-  
-  const findByPrice = () =>{
+  console.log(result);
+  return result;
 }
-console.log(result);
-return result;
-};
 
 const findByPrice = () =>{
 
-var price = buscarMin + " "+ buscarMax
-find(price,"price")
-  };
+  var price = buscarMin + " "+ buscarMax
+  find(price,"price")
+};
 
 function pruebaBoton(){
-console.log("HOla jose")
-  };
+  console.log("HOla jose")
+}
 
-    var price = buscarMin + " "+ buscarMax
-    find(price,"price")
+
     
   
     return (
+      
+      
       <div>
         <div className="row pb-1">
-        
+      
+          <div className="input-group col-lg-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar por Marca"
+              value={buscarMarca}
+              onChange={onChangeSearchMarca}
+            />
+            <div className="input-group-append">
+            
+            </div>
+            
+          </div>
+
+
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchRAM}>
+              {RAMs.map(RAM => {
+                return (
+                  <option value={RAM}> {RAM.substr(0,20)} </option>
+                )
+              })}
+            </select>
+            
+          </div>
+
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchSO}>
+              {SOs.map(SO => {
+                return (
+                  <option value={SO}> {SO.substr(0,20)} </option>
+                )
+              })}
+            </select>
+           
+          </div>
+
+
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchType}>
+              {TipoDiscos.map(type => {
+                return (
+                  <option value={type.type}> {String(type.type).substr(0,20)} </option>
+                )
+              })}
+            </select>
+            
+          </div>
+
+
+          <div className="input-group col-lg-4">
+                      
+            <select onChange={onChangeSearchCapacity}>
+              {CapacidadDiscos.map(capacity => {
+                return (
+                  <option value={capacity.capacity}> {String(capacity.capacity).substr(0,20)} </option>
+                )
+              })}
+            </select>
+            
+          </div>
+
+
+
+        <div>
+        <img src={Teams} height="20" alt="Its getting bigger!" />
+         Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
+         Discord <input type="checkbox" name="App" value="Discord"/>
+
     
-        <div className="input-group col-lg-4 md-5">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por Marca"
-            value={buscarMarca}
-            onChange={onChangeSearchMarca}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByBrand}
-            >
-              Buscar
-            </button>
-          </div>
         </div>
-
-
+        
         <div className="input-group col-lg-4">
+          Filtrar por precio
           <input
             type="text"
-            className="form-control"
-            placeholder="Buscar por  RAM"
-            value={buscarRAM}
-            onChange={onChangeSearchRAM}
+            placeholder="Min"
+            value={buscarMin}
+            onChange={onChangeSearchPrecioMin}
           />
+          $
+          <input
+          type="text"
+          placeholder="Max"
+          value={buscarMax}
+          onChange={onChangeSearchPrecioMax}
+          />
+          $
           <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
+            
           </div>
         </div>
 
-
-
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por Tipo de Disco"
-            value={buscarNombre}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
-          </div>
+        <div className="input-group-append">
+              <button
+                className="btn btn-outline-secondary"
+                type="button"
+                onClick= {findByAll}
+              >
+                Buscar
+              </button>
         </div>
-
-
-
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por tamaño del disco"
-            value={buscarNombre}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
-
-        <div className="input-group col-lg-4">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar por Sistema Operativo"
-            value={buscarNombre}
-            onChange={onChangeSearchName}
-          />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={findByRAM}
-            >
-              Buscar
-            </button>
-          </div>
-        </div>
-
 
        </div>
+
+   
 
 
 
@@ -529,7 +382,7 @@ console.log("HOla jose")
 
         <div className="row">
         
-          {computadoras.map((computadora) => {
+          {computadorasMostar.map((computadora) => {
             const name = `${computadora.name}`;
             return (
             
@@ -594,5 +447,5 @@ console.log("HOla jose")
       </div>
     );
   };
-};
+  
   export default ComputadorasList;
