@@ -10,6 +10,7 @@ import Autocad from "../assets/Autocad.png";
 import Zoom from "../assets/Zoom.png";
 import Skype from "../assets/Skype.png";
 import "../estilos/estiloPagina.css"
+import { Link } from "react-router-dom";
 
 
 
@@ -28,8 +29,12 @@ class Encuesta extends React.Component{
         "¿La usas para estudiar?", //5
         "Necesitas alguna de estas aplicaciones?", //6
 
-    ], respuestas:[], computadoras: []
+    ], respuestas:[,,[],], computadoras: []
   };
+  ComputadoraDataService.getAll()
+  .then(response => {
+    this.state.computadoras=response.data.computadoras;
+  });
 
 
     
@@ -38,7 +43,8 @@ class Encuesta extends React.Component{
     this.almacenarResultado= this.almacenarResultado.bind(this);
     this.traerComputadora = this.traerComputadora.bind(this);
     this.getCheckboxesSeleccionadas = this.getCheckboxesSeleccionadas.bind(this);
-    
+    this.filtrar = this.filtrar.bind(this);
+    this.pertenecenTodos = this.pertenecenTodos.bind(this);
     
     
   }
@@ -57,6 +63,86 @@ class Encuesta extends React.Component{
   */
 
   //Para saltear una pregunta hay que aumentar el numero pregunta y asegurarse de traer las computadoras
+
+  pertenecenTodos(base, sub){
+    var diff = sub.filter(function(x) { return base.indexOf(x) < 0 })
+    return diff.length==0;
+  }
+
+  filtrar(post){ 
+  // 1: trabajas 2: Apps de trabajo 3: Jugas Video juegos
+  // 4: apps VideoJuegos 5: Estudias 6: apps Estudio
+    let a=""
+    let flag=0
+  
+    if(this.state.respuestas[1] == "Trabajo"){
+      if (post.Usos){
+        a=a+"post.Usos.includes('Trabajo')"
+      }
+      else {
+        a= a + "false";
+      }
+      flag=1;
+    }
+    if (this.state.respuestas[2].length!=0) {
+      if(flag==1){
+        a=a+" && "
+      }
+      console.log(post);
+      console.log(post.Aplicaciones); //BORRAR
+      if (post.Aplicaciones){
+        a= a+ this.pertenecenTodos(post.Aplicaciones, this.state.respuestas[2]);
+      }
+      else { 
+        a= a + "false"
+      }
+      flag=1;
+
+    }
+    if(this.state.respuestas[3] == "Videojuegos"){
+      if(flag==1){
+        a=a+" && "
+      }
+      if (post.Usos){
+        a=a+"post.Usos.includes('Videojuegos')"
+      }
+      else {a= a + "false";}
+      flag=1
+    }
+    /*
+    
+    if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
+      if(flag==1){
+        a=a+" && "
+      }
+      a=a+"post.operatingSystem == buscarSO"
+      flag=1
+    }
+  
+    if(buscarTipoDisco != "Tipo de disco" && buscarTipoDisco.length!=0){
+      if(flag==1){
+        a=a+" && "
+      }
+      a=a+"post.disks.type == buscarTipoDisco"
+      flag=1
+    }
+    if(buscarCapacidadDisco!="Capacidad del disco" && buscarCapacidadDisco.length!=0){
+      console.log("Entras aca?")
+      if(flag==1){
+        a=a+" && "
+      }
+      a=a+"post.disks.capacity == buscarCapacidadDisco"
+      flag=1
+    } */
+  
+    if(flag==0){
+      a="1==1"
+    }
+    
+    console.log(a)
+    return eval(a)
+  }
+
 
   almacenarResultado(valor){
     this.state.respuestas[this.state.nroPregunta]= valor;
@@ -97,13 +183,11 @@ class Encuesta extends React.Component{
 
   traerComputadora(){
     this.setState({finalizada: true});
-    console.log("Esta es la marca: " + this.state.respuestas[1]);
-    ComputadoraDataService.find(this.state.respuestas[1],"brand")
-    .then(
-      (response)=> this.setState({computadoras: response.data.computadoras})
-    );
-    console.log("La computadoras es");
-    console.log(this.state.computadoras);
+    console.log("Entro a buscar las computadoras (traerComputadoras)");
+    console.log(this.state.computadoras)
+    this.state.computadoras = this.state.computadoras.filter(this.filtrar);
+    console.log("Filtado");
+    console.log(this.state.computadoras)
 
   }
 
@@ -139,46 +223,6 @@ class Encuesta extends React.Component{
             </section>
           </div>
       );
-    /*}else if (this.state.nroPregunta==0){
-      return (
-
-        <div className="App-sayname">
-          <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
-            </div>
-          <div className="col-6">
-            <br/>
-            <h5>Pregunta {this.state.nroPregunta+1}</h5>
-            <br/>
-            <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
-            <div>
-            <br/>
-            <input type="radio"name="Uso" value="Programacion"/>
-            Programacion
-            <br></br>
-            <br></br>
-
-            <input type="radio"name="Uso" value = "Jugar"/>
-            Jugar
-            <br></br>
-            <br></br>
-
-            <input type="radio"name="Uso" value="Diseño"/>
-            Diseño
-            <br></br>
-            <br></br>
-            <button
-                id="botonEncuesta"
-                type="button"
-                onClick={() => {this.almacenarResultado(this.getRadioSeleccionado()); this.incPregunta()}}
-              >Enviar </button>
-            </div>
-           
-
-          </div>
-          </div>
-          </div>
-      );*/
     }else if  (this.state.nroPregunta==1){
       return (
         <div className="App-sayname">
@@ -187,7 +231,7 @@ class Encuesta extends React.Component{
             </div>
           <div className="col-6">
           <br/>
-            <h5>Pregunta {this.state.nroPregunta+1}</h5>
+            <h5>Pregunta {this.state.nroPregunta + 1}</h5>
             <br/>
             <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <br/>
@@ -195,7 +239,7 @@ class Encuesta extends React.Component{
             <button
                 id="botonEncuesta"
                 type="button"
-                onClick={() => {this.almacenarResultado("Lenovo"); this.incPregunta();}} //ARREGLAR ESTO
+                onClick={() => {this.almacenarResultado("Trabajo"); this.incPregunta();}} //ARREGLAR ESTO
               >Si </button>
               
               <button
@@ -261,31 +305,8 @@ class Encuesta extends React.Component{
       </div>
       </div>
       )
-
-      /*
-      return(
-      <div className="App-sayname">
-          <div>
-            <h2>Pregunta</h2>
-            <br/>
-            <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
-            <div>
-            <button
-                className="Boton de Genshin Si"
-                type="button"
-                onClick={() => {this.almacenarResultado("Genshin"); this.incPregunta();}}
-              >Hehe </button>
-              <button
-                className="Boton de Genshin No"
-                type="button"
-                onClick={() => {this.almacenarResultado("NoGenshin"); this.incPregunta()}}
-              >¿Al que? </button>
-            </div>
-            <img src={Chocola} height="500" alt="Its getting bigger!" />
-          </div>
-        </div>
-      )*/
-    }else if (this.state.nroPregunta==3){
+    }
+    else if (this.state.nroPregunta==3){
       return(
         <div className="App-sayname">
         <div class="row">
@@ -300,13 +321,13 @@ class Encuesta extends React.Component{
                 className="Boton de Videojuegos Si"
                 type="button"
                 id="botonEncuesta"
-                onClick={() => {this.almacenarResultado("Videojuegos-Si"); this.incPregunta();}}
+                onClick={() => {this.almacenarResultado("Videojuegos"); this.incPregunta();}}
               >Si </button>
               <button
                 className="Boton de Videojuegos No"
                 type="button"
                 id="botonEncuesta"
-                onClick={() => {this.almacenarResultado("Videojuegos-No"); this.incPregunta(2)}}
+                onClick={() => {this.almacenarResultado(""); this.incPregunta(2)}}
               >No </button>
             </div>
             
@@ -325,22 +346,22 @@ class Encuesta extends React.Component{
           <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
-           <input type="checkbox" name="App" value="Teams"/> League of Legends 
+           <input type="checkbox" name="App" value="League of Legends"/> League of Legends 
            <br/>
            <br/>
-           <input type="checkbox" name="App" value="Discord"/> Genshin
+           <input type="checkbox" name="App" value="Genshin Impact"/> Genshin Impact
            <br/>
            <br/>
-           <input type="checkbox" name="App" value="Zoom"/> GTAV
+           <input type="checkbox" name="App" value="GTAV"/> GTAV
            <br/>
            <br/>
-           <input type="checkbox" name="App" value="Skype"/> CS GO 
+           <input type="checkbox" name="App" value="CS GO"/> CS GO 
            <br/>
            <br/>
-           <input type="checkbox" name="App" value="Photoshop"/> Valorant
+           <input type="checkbox" name="App" value="Valorant"/> Valorant
            <br/>
            <br/>
-           <input type="checkbox" name="App" value="Autocad"/> Battlefield
+           <input type="checkbox" name="App" value="Battlefield"/> Battlefield
           </div>
           <div>
           <button
@@ -355,33 +376,8 @@ class Encuesta extends React.Component{
       </div>
       </div>
       )
-
-      /*
-      return (
-      <div className="App-sayname">
-      <div>
-        <h2>Pregunta Nro {this.state.nroPregunta}</h2>
-        <br/>
-        <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
-        <div>
-        <img src={Teams} height="20" alt="Its getting bigger!" />
-        Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
-         Discord <input type="checkbox" name="App" value="Discord"/>
-        </div>
-        <div>
-        <button
-            className="Boton de Checkbox"
-            type="button"
-            onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta();this.traerComputadora();}}
-          >Aceptar </button>
-        </div>
-        <img src={Chocola} height="500" alt="Its getting bigger!" />
-      </div>
-    </div>
-    )
-    */
-
-    }else if (this.state.nroPregunta==5){
+    }
+    else if (this.state.nroPregunta==5){
       return (
         <div className="App-sayname">
           <div class="row">
@@ -396,7 +392,7 @@ class Encuesta extends React.Component{
                 className="Boton de Estudiar"
                 type="button"
                 id="botonEncuesta"
-                onClick={() => {this.almacenarResultado("Lenovo"); this.incPregunta();}}
+                onClick={() => {this.almacenarResultado("Estudio"); this.incPregunta();}}
               >Si </button>
               <button
                 className="Boton de No Trabajar"
@@ -457,16 +453,15 @@ class Encuesta extends React.Component{
               onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta(); this.traerComputadora();}}
             >Aceptar </button>
           </div>
-          
         </div>
       </div>
-      </div>
+    </div>
       )
 
     }else if (this.state.finalizada && this.state.computadoras.length==0){
       console.log(this.state.computadoras);
       return (
-      <div><h2>Estoy buscando en mi base!</h2></div>
+      <div><h2>Oh no! parece que coincidencias! :(</h2></div>
       );
 
     }else if (this.state.finalizada && this.state.computadoras.length!=0) {
@@ -481,24 +476,37 @@ class Encuesta extends React.Component{
             <div className="card">
               <div className="card-body">
 
-                <h5 className="card-title">{this.state.computadoras[0].name}</h5>
-
-
                 <p className="card-text">
+                < img src={this.state.computadoras[0].imagenUrl}  class ="d-block w-100 right" />
                   <strong>Nombre: </strong>{this.state.computadoras[0].name}<br/>
                   <strong>Marca: </strong>{this.state.computadoras[0].brand}<br/>
                   <strong>RAM: </strong>{this.state.computadoras[0].RAM}<br/>
                   <strong>Precio: </strong>{this.state.computadoras[0].price}<br/>
+
+                  <Link to={"/computadoras/"+this.state.computadoras[0]._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
+                     Ver Reseña
+                    </Link>
+                    <a target="_blank" href={"https://www.google.com/maps/place/" + this.state.computadoras[0].ubicacion} className="btn  btn-outline-info col-lg-5 mx-1 mb-1">
+                      Ver Mapa</a>
+
+                    <a target="_blank" href={this.state.computadoras[0].url} className="btn  btn-outline-secondary col-lg-5 mx-1 mb-1">
+                      Ver Tienda</a>
+
+                    <Link to={"/computadoras/"+this.state.computadoras[0]._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
+                     Favorito
+                    </Link>
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
       )
 
     }else {
-      return(<div><h1></h1></div>)
+      return(<div><h1>No encontre nada</h1></div>)
     }
     
     

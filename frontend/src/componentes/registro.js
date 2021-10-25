@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import ComputadoraDataService from "../servicios/computadora";
-import "../estilos/estiloPagina.css"
 
 
-const Login = props => {
+const Registro = props => {
 
   const initialUserState = {
     usuario: "",
     contraseña: "",
+    repetircontraseña: "",
   };
 
   const [user, setUser] = useState(initialUserState);
@@ -17,23 +17,29 @@ const Login = props => {
     setUser({ ...user, [name]: value });
   };
 
-  const login = () => {
-    ComputadoraDataService.getUsuario(user.usuario, user.contraseña)
-      .then(response => {
-        if (response.data.usuario === "Invalido"){
-          alert("El usuario o contraseña es incorrecto")
+  const registro = () => {
+    if(user.contraseña === user.repetircontraseña){
+        ComputadoraDataService.getNombreUsuario(user.usuario)
+    .then(response => {
+        if (response.data.user.length > 0 && response.data.user[0].usuario === user.usuario){
+          alert(`El nombre de usuario ${user.usuario} ya existe. Ingrese uno distinto.`)
         }
         else{
-          const loguear = {
-            usuario: response.data.user[0].usuario,
-            contraseña: response.data.user[0].contraseña,
-          }
-          props.login(loguear)
-          props.history.push('/');
+          ComputadoraDataService.postUsuario(user)
+          .then(respuesta =>{
+            props.history.push('/login'); //te lleva a loguearte
+          })  
+          .catch(er => {
+            console.log(er);
+          });
         }
     }).catch(e => {
       console.log(e);
     });
+    }
+    else {
+        alert("Las contraseñas son distintas.") //puso otra contraseña en confirmar contraseña
+    }
   }
 
   return (
@@ -63,9 +69,21 @@ const Login = props => {
             name="contraseña"
           />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="id">Repetir contraseña</label>
+          <input
+            type="text"
+            className="form-control"
+            id="repetircontraseña"
+            value={user.repetircontraseña}
+            onChange={handleInputChange}
+            name="repetircontraseña"
+          />
+        </div>
         <br/>
-        <button onClick={login} class="botonesLogin">
-          Login
+        <button onClick={registro} class="botonesLogin">
+          Registro
         </button>
 
       </div>
@@ -73,4 +91,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default Registro;

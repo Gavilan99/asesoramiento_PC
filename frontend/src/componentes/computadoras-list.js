@@ -21,7 +21,7 @@ const ComputadorasList = props => {
     const [CapacidadDiscos, setCapacidadDiscos] = useState(["capacity"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
-    const [buscarComb,setBuscarComb] = useState("");
+    //const [buscarComb,setBuscarComb] = useState("");
 
 /*AGREGAR MAS BUSCAR POR...*/
 
@@ -252,6 +252,11 @@ function pruebaBoton(){
   console.log("HOla jose")
 }
 
+const putFavorito = (user, computadora) => {
+  ComputadoraDataService.putFavorito(user, computadora);
+  alert("Agregado a Favoritos!")
+}
+
 
     
   
@@ -414,9 +419,17 @@ function pruebaBoton(){
                     <a target="_blank" href={computadora.url} className="btn  btn-outline-secondary col-lg-5 mx-1 mb-1">
                       Ver Tienda</a>
 
-                    <Link to={"/computadoras/"+computadora._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
-                     Favorito
-                    </Link>
+                      {
+                        props.user ? (
+                          <div 
+                            className="btn btn-primary col-lg-5 mx-1 mb-1"
+                            type = "button"
+                            onClick = {() => putFavorito(props.user.usuario, computadora)}
+                          >
+                            Favorito
+                          </div>
+                        ) : (<p></p>)
+                      }
                       
                     </div>
 

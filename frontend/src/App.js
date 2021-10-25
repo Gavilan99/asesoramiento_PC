@@ -10,6 +10,9 @@ import Login from "./componentes/login";
 import Encuesta from "./componentes/encuesta";
 import About from "./componentes/about";
 import "./estilos/estiloPagina.css"
+import Usuarios from "./componentes/usuarios";
+import Registro from "./componentes/registro";
+import CambioContraseña from "./componentes/cambioContraseña";
 
 function App() {
   
@@ -18,10 +21,12 @@ function App() {
 
   /*crea funciones de login y logout*/
   async function login(user = null) {
-    setUser(user);}
+    setUser(user);
+  }
 
   async function logout() {
-    setUser(null)}
+    setUser(null);
+  }
 
 
 
@@ -59,11 +64,22 @@ function App() {
         </Link>
       </li>
 
+      { user ? (
+      <li id="nav-item">
+        <Link to={`/usuarios`} className = "nav-link">
+          Mis Datos
+        </Link>
+      </li>
+    ) : (
+      <li></li>
+    )
+    }
+
 
       <li id="nav-item" >
         { user ? (
           <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
-            Logout {user.name}
+            Logout {user.usuario}
           </a>
         ) : (            
         <Link to={"/login"} className="nav-link">
@@ -71,6 +87,14 @@ function App() {
         </Link>
         )}
       </li>
+
+      {user ? (<li></li>) : (
+        <li id="nav-item">
+          <Link to={"/registro"} className="nav-link">
+            Registrar
+          </Link>
+        </li>
+      )}
 
 
     </div>
@@ -82,11 +106,16 @@ function App() {
   <div className="container mt-3">
 
     <Switch>
-      <Route exact path={["/", "/computadoras"]} component={ComputadorasList} />
+      <Route exact 
+        path={["/", "/computadoras"]}
+        render={(props) => (
+          <ComputadorasList {...props} user={user} />
+        )}
+      />
       <Route 
         path="/computadoras/:id/comentario"
         render={(props) => (
-          <AgregarComentario{...props} user={user} />
+          <AgregarComentario {...props} user={user} />
         )}
       />
       <Route 
@@ -114,6 +143,25 @@ function App() {
           <About {...props} user={user} />
         )}
       />
+
+      <Route
+      path = "/usuarios"
+      render={(props) => (
+          <Usuarios {...props} user={user} />
+        )}
+      />
+      <Route
+      path = "/registro"
+      render={(props) => (
+          <Registro {...props} user={user} /> 
+        )}
+      />
+      <Route 
+      path="/cambioContraseña"
+      render={(props) => (
+          <CambioContraseña {...props} usuario={user} />
+        )}
+     />
 
     </Switch>
   </div>
