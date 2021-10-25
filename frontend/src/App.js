@@ -8,6 +8,8 @@ import Computadora from "./componentes/computadoras";
 import ComputadorasList from "./componentes/computadoras-list";
 import Login from "./componentes/login";
 import Encuesta from "./componentes/encuesta";
+import About from "./componentes/about";
+import "./estilos/estiloPagina.css"
 
 function App() {
   
@@ -28,7 +30,7 @@ function App() {
 
 
 
-  <nav className="navbar navbar-expand navbar-dark bg-dark"> 
+  <nav className="navbar navbar-expand navbar-dark " id="navbar"> 
     
   
 
@@ -36,7 +38,8 @@ function App() {
     <div className="navbar-nav mr-auto">
 
 
-    <li className="nav-item">
+    
+    <li id="nav-item" >
         <Link to={"/encuesta"} className="nav-link">
           Encuesta
         </Link>
@@ -44,14 +47,20 @@ function App() {
       </li>
 
       
-      <li className="nav-item">
+      <li id="nav-item">
         <Link to={"/computadoras"} className="nav-link">
           Computadoras
         </Link>
       </li>
 
+      <li id="nav-item">
+        <Link to={"/about"} className="nav-link">
+          Acerca de
+        </Link>
+      </li>
 
-      <li className="nav-item" >
+
+      <li id="nav-item" >
         { user ? (
           <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
             Logout {user.name}
@@ -99,6 +108,12 @@ function App() {
         )}
       />
       
+      <Route 
+        path="/about"
+        render={(props) => (
+          <About {...props} user={user} />
+        )}
+      />
 
     </Switch>
   </div>

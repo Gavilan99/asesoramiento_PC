@@ -225,13 +225,8 @@ function filtricos(post){
 }
 
 const findByAll = () =>  {
-  console.log("PC 1")
-  console.log(computadorasMostar)
   let posts=computadoras.filter(filtricos)
   setComputadorasMostar(posts)
-  console.log("PC 2")
-  console.log(computadoras)
-  console.log(posts)
 }
 
 
@@ -265,7 +260,7 @@ function pruebaBoton(){
       
       <div>
         <div className="row pb-1">
-      
+       
           <div className="input-group col-lg-4">
             <input
               type="text"
