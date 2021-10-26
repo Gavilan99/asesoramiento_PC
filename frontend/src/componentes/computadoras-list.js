@@ -11,6 +11,7 @@ const ComputadorasList = props => {
     const [computadoras, setComputadoras] = useState([]);
     const [computadorasMostar,setComputadorasMostar] = useState([]);
     const [buscarMarca, setBuscarMarca ] = useState("");
+    const [Marcas, setMarcas ] = useState(["brand"]);
     const [buscarRAM, setBuscarRAM ] = useState("");
     const [RAMs, setRAMs] = useState(["RAM"]);
     const [buscarSO, setBuscarSO ] = useState("");
@@ -32,6 +33,7 @@ useEffect(() => {
   retrieveSOs();
   retrieveTipoDiscos();
   retrieveCapacidadDisco();
+  retrieveMarcas();
 }, []);
 
 
@@ -88,6 +90,17 @@ const retrieveRAMs = () => {
     .then(response => {
       console.log(response.data);
       setRAMs(["RAM"].concat(response.data));          
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+const retrieveMarcas = () => {
+  ComputadoraDataService.getMarcas()
+    .then(response => {
+      console.log(response.data);
+      setMarcas(["Marca"].concat(response.data));          
     })
     .catch(e => {
       console.log(e);
@@ -186,12 +199,21 @@ function filtricos(post){
   let a=""
   let flag=0
 
+
   if(buscarRAM!="RAM" && buscarRAM.length!=0){
     
     a=a+"post.RAM == buscarRAM "
     flag=1
   }
   
+  if(buscarMarca!="Marca" && buscarMarca.length!=0){
+    if(flag==1){
+      a=a+" && "
+    }
+    a=a+"post.brand == buscarMarca"
+    flag=1
+  }
+
   if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
     if(flag==1){
       a=a+" && "
@@ -267,17 +289,16 @@ const putFavorito = (user, computadora) => {
         <div className="row pb-1">
        
           <div className="input-group col-lg-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar por Marca"
-              value={buscarMarca}
-              onChange={onChangeSearchMarca}
-            />
-            <div className="input-group-append">
-            
-            </div>
-            
+          <select onChange={onChangeSearchMarca}>
+              {console.log("Puta")}
+              {console.log(Marcas)}
+              {Marcas.map(marca => {
+                return (
+                  <option value={marca}> {marca.substr(0,20)} </option>
+                )
+              })}
+            </select>
+                      
           </div>
 
 
