@@ -11,6 +11,7 @@ const ComputadorasList = props => {
     const [computadoras, setComputadoras] = useState([]);
     const [computadorasMostar,setComputadorasMostar] = useState([]);
     const [buscarMarca, setBuscarMarca ] = useState("");
+    const [Marcas, setMarcas ] = useState(["brand"]);
     const [buscarRAM, setBuscarRAM ] = useState("");
     const [RAMs, setRAMs] = useState(["RAM"]);
     const [buscarSO, setBuscarSO ] = useState("");
@@ -21,6 +22,7 @@ const ComputadorasList = props => {
     const [CapacidadDiscos, setCapacidadDiscos] = useState(["capacity"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
+    const [buscarApps, setBuscarApps] = useState([]);
     //const [buscarComb,setBuscarComb] = useState("");
 
 /*AGREGAR MAS BUSCAR POR...*/
@@ -32,6 +34,7 @@ useEffect(() => {
   retrieveSOs();
   retrieveTipoDiscos();
   retrieveCapacidadDisco();
+  retrieveMarcas();
 }, []);
 
 
@@ -50,7 +53,6 @@ const onChangeSearchMarca = e => {
 };
 
 const onChangeSearchRAM = e => {
-  //const buscarRAM = e.target.value;
   setBuscarRAM(e.target.value);
 };
 
@@ -69,7 +71,22 @@ const onChangeSearchCapacity = e => {
   setBuscarCapacidadDisco(buscarCapacidadDisco);
 };
 
+const onChangeSearchApps = e =>{
+  const app = e.target.value;
+  setBuscarApps(getCheckboxesSeleccionadas("App"));
+}
 
+
+const retrieveMarcas = () => {
+  ComputadoraDataService.getMarcas()
+  .then(response => {
+    console.log(response.data);
+    setMarcas(["Marca"].concat(response.data));
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};
 
 const retrieveComputadoras = () => {
     ComputadoraDataService.getAll()
@@ -86,7 +103,6 @@ const retrieveComputadoras = () => {
 const retrieveRAMs = () => {
   ComputadoraDataService.getRAMs()
     .then(response => {
-      console.log(response.data);
       setRAMs(["RAM"].concat(response.data));          
     })
     .catch(e => {
@@ -180,6 +196,10 @@ const findByCapacidadDisco = () => {
   }
 };
 
+function pertenecenTodos(base, sub){
+  var diff = sub.filter(function(x) { return base.indexOf(x) < 0 })
+  return diff.length==0;
+}
 
 function filtricos(post){ 
   
@@ -191,6 +211,30 @@ function filtricos(post){
     a=a+"post.RAM == buscarRAM "
     flag=1
   }
+  if (buscarMarca!= "Marca" && buscarMarca.length!=0){
+    if(flag==1){
+      a= a+" && "
+    }
+    a=a+"post.brand == buscarMarca"
+    flag=1
+  }
+
+  if (buscarMin!="" || buscarMax!=""){
+    if(flag==1){
+      a=a+" && "
+    }
+    if (buscarMin!="" && buscarMax!=""){
+      
+      a = a + "parseInt(post.price,10) >= parseInt(buscarMin,10) && parseInt(post.price,10) <= parseInt(buscarMax,10)"
+    }
+    else if (buscarMax==""){
+      a = a + "parseInt(post.price,10) >= parseInt(buscarMin,10)";
+    }
+    else {
+      a = a + "parseInt(post.price,10) <= parseInt(buscarMax,10)"
+    }
+    flag = 1
+  }
   
   if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
     if(flag==1){
@@ -199,7 +243,13 @@ function filtricos(post){
     a=a+"post.operatingSystem == buscarSO"
     flag=1
   }
-
+  if (buscarApps.length!=0){
+    if(flag==1){
+      a=a+" && "
+    }
+    a = a + "pertenecenTodos(post.aplicaciones,buscarApps)";
+    flag = 1;
+  }
   if(buscarTipoDisco != "Tipo de disco" && buscarTipoDisco.length!=0){
     if(flag==1){
       a=a+" && "
@@ -208,7 +258,6 @@ function filtricos(post){
     flag=1
   }
   if(buscarCapacidadDisco!="Capacidad del disco" && buscarCapacidadDisco.length!=0){
-    console.log("Entras aca?")
     if(flag==1){
       a=a+" && "
     }
@@ -238,7 +287,6 @@ function getCheckboxesSeleccionadas(nombre){
       result.push(boxes[i].value);
     }
   }
-  console.log(result);
   return result;
 }
 
@@ -249,7 +297,6 @@ const findByPrice = () =>{
 };
 
 function pruebaBoton(){
-  console.log("HOla jose")
 }
 
 const putFavorito = (user, computadora) => {
@@ -267,16 +314,14 @@ const putFavorito = (user, computadora) => {
         <div className="row pb-1">
        
           <div className="input-group col-lg-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar por Marca"
-              value={buscarMarca}
-              onChange={onChangeSearchMarca}
-            />
-            <div className="input-group-append">
-            
-            </div>
+            <select onChange={onChangeSearchMarca}>
+              {console.log(Marcas)}
+              {Marcas.map(marca => {
+                return (
+                  <option value={marca}> {marca.substr(0,20)} </option>
+                )
+              })}
+            </select>
             
           </div>
 
@@ -335,8 +380,8 @@ const putFavorito = (user, computadora) => {
 
         <div>
         <img src={Teams} height="20" alt="Its getting bigger!" />
-         Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
-         Discord <input type="checkbox" name="App" value="Discord"/>
+         Microsoft Teams <input type="checkbox" name="App" value="Microsoft Teams" onChange={onChangeSearchApps}/>
+         Discord <input type="checkbox" name="App" value="Discord" onChange={onChangeSearchApps}/>
 
     
         </div>
@@ -366,7 +411,7 @@ const putFavorito = (user, computadora) => {
               <button
                 className="btn btn-outline-secondary"
                 type="button"
-                onClick= {findByAll}
+                onClick= {()=>{findByAll();}}
               >
                 Buscar
               </button>

@@ -12,6 +12,7 @@ router.route("/RAM").get(ComputadorasController.apiGetComputadorasRAMs)
 router.route("/operatingSystem").get(ComputadorasController.apiGetComputadorasSO)
 router.route("/diskType").get(ComputadorasController.apiGetComputadorasDiskType)
 router.route("/diskCapacity").get(ComputadorasController.apiGetComputadorasDiskCapacity)
+router.route("/brand").get(ComputadorasController.apiGetComputadorasMarca)
 
 router
     .route("/comentario")
