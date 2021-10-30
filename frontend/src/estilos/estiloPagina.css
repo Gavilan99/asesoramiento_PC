@@ -1,0 +1,56 @@
+  #iconomail{
+    background-color: #1a237e;
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  #robotAcostado{
+    height:400px;
+    margin-left: 950px;
+  }
+  
+  #nav-item{
+    font-family: Verdana;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  #navbar{
+    background-color:#1a237e;
+    color:white
+  }
+
+  #botonEncuesta{
+    background-color: #1a237e;
+    color:white;
+    width:200px;
+    height:50px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 10px;
+  }
+
+  .botonesLogin {
+    background-color: #1a237e;
+    color:white;
+    width:100px;
+    height:50px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 10px;
+  }
+
+  #Marvin{
+    margin-left: 600px;
+  }
+
+  h2 {
+    color: #1a237e;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 50px;
+  }

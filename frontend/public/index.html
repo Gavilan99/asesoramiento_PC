@@ -19,6 +19,22 @@
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+
+    <style>
+      body {
+        background-image:url();
+      }
+  
+      h2 {
+        color: #1a237e;
+        font-family: Copperplate, fantasy;
+        font-size: 50px;
+      }
+      p{
+        font-size: 20px;
+      }
+    </style>
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -44,4 +60,17 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    window.watsonAssistantChatOptions = {
+        integrationID: "3e164a22-c7bb-4d54-ae3b-317357d3a510", // The ID of this integration.
+        region: "us-south", // The region your integration is hosted in.
+        serviceInstanceID: "5aeae40a-1e14-4239-a497-7dde77c95b09", // The ID of your service instance.
+        onLoad: function(instance) { instance.render(); }
+      };
+    setTimeout(function(){
+      const t=document.createElement('script');
+      t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js"
+      document.head.appendChild(t);
+    });
+  </script>
 </html>

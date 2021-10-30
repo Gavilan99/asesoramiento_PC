@@ -23,8 +23,8 @@ const AgregarComentario = props => {
     const saveReview = () => {
       var data = {
         text: comentario,
-        name: props.user.name,
-        user_id: props.user.id,
+        name: props.user.usuario,
+        user_id: props.user.contraseña,
         computadora_id: props.match.params.id
       };
   

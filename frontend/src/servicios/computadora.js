@@ -16,9 +16,6 @@ class ComputadoraDataService {
     No soporta objetos complejos*/
   }
 
-  findPotente(query, page=0){
-    return http.get()
-  }
 
   createReview(data) {
     return http.post("/comentario", data);
@@ -29,7 +26,7 @@ class ComputadoraDataService {
   }
 
   deleteReview(id, userId) {
-    return http.delete(`/comentario?id=${id}`);
+    return http.delete(`/comentario?id=${id}&userId=${userId}`);
   }
 
   getComputadora(id) {
@@ -38,6 +35,10 @@ class ComputadoraDataService {
 
   getRAMs(id){
     return http.get(`/RAM`);
+  }
+
+  getMarcas(id){
+    return http.get(`/brand`);
   }
 
   getSOs(id){
@@ -50,6 +51,30 @@ class ComputadoraDataService {
 
   getCapacidadDiscos(id){
     return http.get('/diskCapacity')
+  }
+
+  getFavoritos(user) {
+    return http.get(`/favoritos?user=${user}`);
+  }
+
+  putFavorito(user, computadora){
+    return http.put(`/favoritos?user=${user}`, computadora);
+  }
+
+  getUsuario(usuario, contraseña){ //user va a ser un json conteniendo usuario y contraseña
+    return http.get(`/login?usuario=${usuario}&contrasena=${contraseña}`);
+  }
+
+  getNombreUsuario(usuario){
+    return http.get(`/registro?usuario=${usuario}`);
+  }
+
+  postUsuario(usuario){
+    return http.post(`/registro`, usuario);
+  }
+
+  cambioContraseña(contraseñas){
+    return http.put(`/registro`, contraseñas);
   }
 
 }

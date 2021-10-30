@@ -58,7 +58,7 @@ export default class ComentariosController {
     static async apiDeleteComentario(req, res, next){
         try{
             const comentarioId = req.query.id
-            const userId = req.body.user_id
+            const userId = req.query.userId
             console.log(comentarioId)
             const reviewResponse = await ReviewsDAO.deleteComentario(
                 comentarioId,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
 
@@ -8,9 +8,8 @@ const Usuarios = props => {
     const [computadoras, setComputadoras] = useState([]);
 
     const retrieveFavoritos = () => {
-        ComputadoraDataService.getFavoritos(usuario.name)
+        ComputadoraDataService.getFavoritos(usuario.usuario)
         .then(response => {
-          console.log(response.data.computadoras);
           setComputadoras(response.data.computadoras);
         })
         .catch(e => {
@@ -24,10 +23,17 @@ const Usuarios = props => {
                 <h3>Mis Datos</h3>
             </div>
             <div>
-                <h6>Usuario: {usuario.name}</h6>
-                <h6>Contaseña: {"*".repeat(usuario.id.length)}</h6>
+                <h6>Usuario: {usuario.usuario}</h6>
+                <h6>Contraseña: {"*".repeat(usuario.contraseña.length)}</h6>
+                <br/>
+                {props.user ? (
+                    <Link to={"/cambioContraseña"} className="btn btn-primary col-lg-5 mx-1 mb-1">
+                        Cambiar contraseña
+                    </Link>
+                ) : (<p></p>)}
             </div>
             <div>
+                <br/>
                 <h3>Favoritos</h3>
                 
                 <div className="row">

@@ -11,6 +11,7 @@ const ComputadorasList = props => {
     const [computadoras, setComputadoras] = useState([]);
     const [computadorasMostar,setComputadorasMostar] = useState([]);
     const [buscarMarca, setBuscarMarca ] = useState("");
+    const [Marcas, setMarcas ] = useState(["brand"]);
     const [buscarRAM, setBuscarRAM ] = useState("");
     const [RAMs, setRAMs] = useState(["RAM"]);
     const [buscarSO, setBuscarSO ] = useState("");
@@ -21,7 +22,7 @@ const ComputadorasList = props => {
     const [CapacidadDiscos, setCapacidadDiscos] = useState(["capacity"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
-    const [buscarComb,setBuscarComb] = useState("");
+    //const [buscarComb,setBuscarComb] = useState("");
 
 /*AGREGAR MAS BUSCAR POR...*/
 
@@ -32,6 +33,7 @@ useEffect(() => {
   retrieveSOs();
   retrieveTipoDiscos();
   retrieveCapacidadDisco();
+  retrieveMarcas();
 }, []);
 
 
@@ -88,6 +90,17 @@ const retrieveRAMs = () => {
     .then(response => {
       console.log(response.data);
       setRAMs(["RAM"].concat(response.data));          
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
+const retrieveMarcas = () => {
+  ComputadoraDataService.getMarcas()
+    .then(response => {
+      console.log(response.data);
+      setMarcas(["Marca"].concat(response.data));          
     })
     .catch(e => {
       console.log(e);
@@ -186,12 +199,21 @@ function filtricos(post){
   let a=""
   let flag=0
 
+
   if(buscarRAM!="RAM" && buscarRAM.length!=0){
     
     a=a+"post.RAM == buscarRAM "
     flag=1
   }
   
+  if(buscarMarca!="Marca" && buscarMarca.length!=0){
+    if(flag==1){
+      a=a+" && "
+    }
+    a=a+"post.brand == buscarMarca"
+    flag=1
+  }
+
   if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
     if(flag==1){
       a=a+" && "
@@ -225,13 +247,8 @@ function filtricos(post){
 }
 
 const findByAll = () =>  {
-  console.log("PC 1")
-  console.log(computadorasMostar)
   let posts=computadoras.filter(filtricos)
   setComputadorasMostar(posts)
-  console.log("PC 2")
-  console.log(computadoras)
-  console.log(posts)
 }
 
 
@@ -257,6 +274,11 @@ function pruebaBoton(){
   console.log("HOla jose")
 }
 
+const putFavorito = (user, computadora) => {
+  ComputadoraDataService.putFavorito(user, computadora);
+  alert("Agregado a Favoritos!")
+}
+
 
     
   
@@ -265,19 +287,18 @@ function pruebaBoton(){
       
       <div>
         <div className="row pb-1">
-      
+       
           <div className="input-group col-lg-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Buscar por Marca"
-              value={buscarMarca}
-              onChange={onChangeSearchMarca}
-            />
-            <div className="input-group-append">
-            
-            </div>
-            
+          <select onChange={onChangeSearchMarca}>
+              {console.log("Puta")}
+              {console.log(Marcas)}
+              {Marcas.map(marca => {
+                return (
+                  <option value={marca}> {marca.substr(0,20)} </option>
+                )
+              })}
+            </select>
+                      
           </div>
 
 
@@ -420,9 +441,17 @@ function pruebaBoton(){
                     <a target="_blank" href={computadora.url} className="btn  btn-outline-secondary col-lg-5 mx-1 mb-1">
                       Ver Tienda</a>
 
-                    <Link to={"/computadoras/"+computadora._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
-                     Favorito
-                    </Link>
+                      {
+                        props.user ? (
+                          <div 
+                            className="btn btn-primary col-lg-5 mx-1 mb-1"
+                            type = "button"
+                            onClick = {() => putFavorito(props.user.usuario, computadora)}
+                          >
+                            Favorito
+                          </div>
+                        ) : (<p></p>)
+                      }
                       
                     </div>
 

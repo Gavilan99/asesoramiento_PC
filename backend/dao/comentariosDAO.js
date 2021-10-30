@@ -1,4 +1,5 @@
 import mongodb from "mongodb"
+import bcrypt from "bcryptjs"
 const ObjectId = mongodb.ObjectId
 
 let comentarios
@@ -50,6 +51,7 @@ export default class ReviewsDAO{
 
     static async deleteComentario(comentarioId, userId){
         try {
+            console.log(userId)
             const deleteResponse = await comentarios.deleteOne({
                 _id: ObjectId(comentarioId),
                 user_id: userId,

@@ -35,7 +35,7 @@ const Computadora = props => {
 
   
   const deleteReview = (reviewId, index) => {
-    ComputadoraDataService.deleteReview(reviewId, props.user.id)
+    ComputadoraDataService.deleteReview(reviewId, props.user.contraseña)
       .then(response => {
         setComputadora((prevState) => {
           prevState.comentarios.splice(index, 1)
@@ -116,7 +116,7 @@ const Computadora = props => {
                        </p>
 
 
-                       {props.user && props.user.id == comentario.user_id &&
+                       {props.user && props.user.contraseña == comentario.user_id &&
                           <div className="row">
                             <a onClick={() => deleteReview(comentario._id, index)} className="btn btn-primary col-lg-5 mx-1 mb-1">Delete</a>
                             <Link to={{
