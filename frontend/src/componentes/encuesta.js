@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Chocola from "../assets/Chocola.png";
 import ChocolaHappy from "../assets/ChocolaHappy.png";
+import gi from "../assets/gi.gif"
+import gi2 from "../assets/gi2.gif"
 import ComputadoraDataService from "../servicios/computadora";
 import Teams from "../assets/Teams-Icono.png";
 import Discord from "../assets/Discord.png";
@@ -154,7 +156,7 @@ class Encuesta extends React.Component{
                 onClick={() => {this.almacenarResultado(""); this.incPregunta(2);}}
               >No </button>
             </div>
-            <img src={ChocolaHappy} height="500" alt="Its getting bigger!" />
+            <img src={gi2} height="500" alt="Its getting bigger!" />
   
           </div>
           </div>
@@ -317,7 +319,7 @@ class Encuesta extends React.Component{
                 onClick={() => {this.almacenarResultado(""); this.incPregunta(2); this.traerComputadora();}}
               >No </button>
             </div>
-            <img src={ChocolaHappy} height="500" alt="Its getting bigger!" />
+            <img src={gi} height="500" alt="Its getting bigger!" />
   
           </div>
           </div>

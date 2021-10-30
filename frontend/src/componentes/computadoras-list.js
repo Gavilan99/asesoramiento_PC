@@ -390,7 +390,7 @@ function pruebaBoton(){
                  
              
                <div className="card text  ">
-              
+               
                  <div className="card-body text-dark">
                     <h5 className="card-title center">{computadora.name}</h5>
                     <p className="card-text-right">
@@ -399,6 +399,7 @@ function pruebaBoton(){
                       <strong>Marca: </strong>{computadora.brand}<br/>
                       <strong>RAM: </strong>{computadora.RAM}<br/>
                       <strong>Precio: </strong>{computadora.price}<br/>
+                      
                     </p>
 
 
@@ -434,6 +435,7 @@ function pruebaBoton(){
 
 
                 </div>
+                
               
 
             );

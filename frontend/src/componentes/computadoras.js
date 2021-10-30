@@ -3,9 +3,11 @@ import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
 import robot4 from "../imagenes/robot4.png";
 import robot1 from "../imagenes/robot1.png";
-
-import { Carousel } from 'react-bootstrap';
+import Figure from 'react-bootstrap/Figure'
+import Placeholder from 'react-bootstrap/Placeholder'
 import "bootstrap/dist/css/bootstrap.min.css";
+import Badge from 'react-bootstrap/Badge';
+
 
 const Computadora = props => {
   const initialComputadoraState = {
@@ -65,47 +67,34 @@ const Computadora = props => {
         <div>
           
 
-        <p className= "comentario" >
-        {computadora.name}
-        </p> 
-
-
-        <div>
-        <Carousel>
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={robot1} class ="d-block w-100 right"
-      alt="First slide"
-    />
-    <Carousel.Caption>
-      <h3>First slide label</h3>
-    
-    </Carousel.Caption>
-  </Carousel.Item>
-  <Carousel.Item>
-    <img
-      className="d-block w-100"
-      src={robot4} class ="d-block w-100 right"
-      alt="Second slide"
-    />
-
-    <Carousel.Caption>
-      <h3>Second slide label</h3>
       
-    </Carousel.Caption>
-  </Carousel.Item>
+          <>
+  <Placeholder xs={12} />
+  
+  <Placeholder xs={12} bg="success"  />
+  <Placeholder xs={12} bg="danger" />
+  <Placeholder xs={12} bg="warning" />
  
-</Carousel>
+</>
+      
+
+<h2>
+    {computadora.name} <Badge bg="secondary"></Badge>
+  </h2>
+        <div>
+     
 
 
           </div>
 
-      
-
+         
+          <h5> Marca:  {computadora.brand}</h5>
+          <h5> Modelo:  {computadora.model}</h5>
           <h5> RAM:  {computadora.RAM}</h5>
           <h5> Sistema Operativo:  {computadora.operatingSystem}</h5>
-          <h5> Marca:  {computadora.brand}</h5>
+          <h5> Tienda :  {computadora.ubicacion}</h5>
+
+    
         
           <Link to={"/computadoras/" + props.match.params.id + "/comentario"} className="btn btn-primary">
             Add Review
@@ -150,7 +139,7 @@ const Computadora = props => {
             )}
 
           </div>
-          < img src={robot1}   /> 
+         
 
         </div>
       ) : (
