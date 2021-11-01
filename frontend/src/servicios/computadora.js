@@ -77,6 +77,11 @@ class ComputadoraDataService {
     return http.put(`/registro`, contraseñas);
   }
 
+  alterarLikes(likes){
+    console.log("Hola");
+    return http.put(`/likes`,likes);     
+  }
+
 }
 
 export default new ComputadoraDataService();

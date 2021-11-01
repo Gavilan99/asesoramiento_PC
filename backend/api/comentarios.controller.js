@@ -71,4 +71,16 @@ export default class ComentariosController {
             res.status(500).json({error: e.message})
         }
     }
+
+    static async apiUpdateLikes(req, res, next){
+        try {
+            const likes = req.likes
+            console.log("Hola estoy en comentario controller");
+            ReviewsDAO.updateLikes(likes)
+
+            res.json({status: "success"})
+        } catch (e) {
+            res.status(500).json({error: e.message})
+        }
+    }
 }
