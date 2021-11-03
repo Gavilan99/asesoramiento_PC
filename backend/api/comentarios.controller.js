@@ -74,9 +74,9 @@ export default class ComentariosController {
 
     static async apiUpdateLikes(req, res, next){
         try {
-            const likes = req.likes
+            const likes = req.body
             console.log("Hola estoy en comentario controller");
-            ReviewsDAO.updateLikes(likes)
+            await ReviewsDAO.updateLikes(likes)
 
             res.json({status: "success"})
         } catch (e) {

@@ -67,9 +67,10 @@ export default class ReviewsDAO{
 
     static async updateLikes(likes){
         try {
-            comentarios.updateOne(
-                {_id: ObjectId(likes._id)}
-                ,{ "$inc": { "likes" : 1 } }
+            console.log(likes.nombre)
+            await comentarios.updateOne(
+                {_id: ObjectId(likes.nombre)}
+                ,{ $inc: { "likes" : 1 } }
             )
         } catch (e) {
             return {error: e}
