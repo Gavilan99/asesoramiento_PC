@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Teams from "./Teams-Icono.png";
 import robot4 from "../imagenes/robot4.png";
 import compu from "../imagenes/compu.jpg";
-import computadora from "../servicios/computadora";
+
 
 
 const ComputadorasList = props => {

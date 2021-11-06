@@ -33,5 +33,6 @@ router.route("/registro")
     .post(UsuariosController.apiPostUsuario)
     .put(UsuariosController.apiPutContraseña)
 
-
+router.route("/likes")
+    .put(ComentariosController.apiUpdateLikes)
 export default router;
