@@ -83,8 +83,8 @@ class Encuesta extends React.Component{
     let flag=0
   
     if(this.state.respuestas[1] == "Trabajo"){
-      if (post.Usos){
-        a=a+"post.Usos.includes('Trabajo')"
+      if (post.usos){
+        a=a+"post.usos.includes('Trabajo')"
       }
       else {
         a= a + "false";
@@ -96,52 +96,25 @@ class Encuesta extends React.Component{
         a=a+" && "
       }
       console.log(post);
-      console.log(post.Aplicaciones); //BORRAR
-      if (post.Aplicaciones){
-        a= a+ this.pertenecenTodos(post.Aplicaciones, this.state.respuestas[2]);
+      console.log(post.aplicaciones); //BORRAR
+      if (post.aplicaciones){
+        a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[2]);
       }
       else { 
         a= a + "false"
       }
       flag=1;
-
     }
     if(this.state.respuestas[3] == "Videojuegos"){
       if(flag==1){
         a=a+" && "
       }
-      if (post.Usos){
-        a=a+"post.Usos.includes('Videojuegos')"
+      if (post.usos){
+        a=a+"post.usos.includes('Videojuegos')"
       }
       else {a= a + "false";}
       flag=1
     }
-    /*
-    
-    if(buscarSO!="Sistema operativo" && buscarSO.length!=0){
-      if(flag==1){
-        a=a+" && "
-      }
-      a=a+"post.operatingSystem == buscarSO"
-      flag=1
-    }
-  
-    if(buscarTipoDisco != "Tipo de disco" && buscarTipoDisco.length!=0){
-      if(flag==1){
-        a=a+" && "
-      }
-      a=a+"post.disks.type == buscarTipoDisco"
-      flag=1
-    }
-    if(buscarCapacidadDisco!="Capacidad del disco" && buscarCapacidadDisco.length!=0){
-      console.log("Entras aca?")
-      if(flag==1){
-        a=a+" && "
-      }
-      a=a+"post.disks.capacity == buscarCapacidadDisco"
-      flag=1
-    } */
-  
     if(flag==0){
       a="1==1"
     }
@@ -277,7 +250,7 @@ class Encuesta extends React.Component{
           <br/>
 
           
-          <input type="checkbox" name="App" value="Teams"/> <img src={Teams} height="20" alt="Its getting bigger!" /> Microsoft Teams 
+          <input type="checkbox" name="App" value="Microsoft Teams"/> <img src={Teams} height="20" alt="Its getting bigger!" /> Microsoft Teams 
           <br/>
           <br/>
 
