@@ -6,19 +6,21 @@ import Marvin_Levitando from "../assets/Marvin_Levitando.png";
 import Marvin_Like from "../assets/Marvin_Like.png";
 import Marvin_Manos_Cintura from "../assets/Marvin_Manos_Cintura.png";
 import Marvin_Presentando from "../assets/Marvin_Presentando.png";
-import Marvin_Presentando_Rotado from "../assets/Marvin_Presentando_Rotado.png";
+import Marvin_Presentando_Rotado from "../assets/Marvin_Presentando_Rotado2.png";
 import Marvin_X_X from "../assets/Marvin_X_X.png";
+import Marvin_U_U from "../assets/Marvin_U_U.png";
 
-import ComputadoraDataService from "../servicios/computadora";
 import Teams from "../assets/Teams-Icono.png";
 import Discord from "../assets/Discord.png";
 import Photoshop from "../assets/Photoshop.png";
 import Autocad from "../assets/Autocad.png";
 import Zoom from "../assets/Zoom.png";
 import Skype from "../assets/Skype.png";
-import "../estilos/estiloPagina.css"
-import { Link } from "react-router-dom";
 
+import "../estilos/estiloPagina.css"
+
+import { Link } from "react-router-dom";
+import ComputadoraDataService from "../servicios/computadora";
 
 
 class Encuesta extends React.Component{
@@ -179,8 +181,8 @@ class Encuesta extends React.Component{
       return (
         
 
-        <div className="App-sayname">
-          <section className="container">
+        <div className="App-sayname" id="centradoVertical">
+          <section className="container" >
           <div class="row">
             <div className="col-6"><img src={Marvin_Levitando} height="500" alt="Its getting bigger!" />
             </div>
@@ -239,7 +241,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
         <div className="col-6">
         <br/>
@@ -290,7 +292,7 @@ class Encuesta extends React.Component{
       return(
         <div className="App-sayname">
         <div class="row">
-          <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
+          <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
             <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -319,7 +321,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
           <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -361,7 +363,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
             <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -391,7 +393,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
           <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -441,18 +443,35 @@ class Encuesta extends React.Component{
     }else if (this.state.finalizada && this.state.computadoras.length==0){
       console.log(this.state.computadoras);
       return (
-      <div><h2>Oh no! parece que coincidencias! :(</h2></div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12" id="centrado">
+              <h2>Oh no! No pude encontrar una computadora ideal en mi base de datos </h2>
+            </div>
+            <div class="col-12" id="centrado">
+              <img src={Marvin_U_U} height="500" alt="Its getting bigger!" />
+            </div>
+          </div>
+          
+        </div>
+      
       );
 
     }else if (this.state.finalizada && this.state.computadoras.length!=0) {
       console.log(this.state.computadoras);
       return (
-      <div>
+      <div class="container">
+      <div class="row">
+
+      <div class="col-6">
         <h1>Encontre tu computadora ideal:</h1>
-        {this.state.computadoras[0].name}
+        <img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
+      </div>        
+     
+      <div class="col-6">
 
       <div className="row">
-          <div className="col-lg-4 pb-1">
+          <div className="col-lg-8 pb-1">
             <div className="card">
               <div className="card-body">
 
@@ -482,6 +501,9 @@ class Encuesta extends React.Component{
         </div>
       </div>
 
+      
+      </div>
+      </div>
 
       )
 

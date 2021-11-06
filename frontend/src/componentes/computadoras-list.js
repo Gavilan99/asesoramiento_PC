@@ -77,17 +77,6 @@ const onChangeSearchApps = e =>{
 }
 
 
-const retrieveMarcas = () => {
-  ComputadoraDataService.getMarcas()
-  .then(response => {
-    console.log(response.data);
-    setMarcas(["Marca"].concat(response.data));
-  })
-  .catch(e => {
-    console.log(e);
-  });
-};
-
 const retrieveComputadoras = () => {
     ComputadoraDataService.getAll()
     .then(response => {

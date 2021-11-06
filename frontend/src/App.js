@@ -9,8 +9,10 @@ import ComputadorasList from "./componentes/computadoras-list";
 import Login from "./componentes/login";
 import Encuesta from "./componentes/encuesta";
 import About from "./componentes/about";
+
 import "./estilos/estiloPagina.css"
 //import "./estilos/estilonav.css"
+
 import Usuarios from "./componentes/usuarios";
 import Registro from "./componentes/registro";
 import CambioContraseña from "./componentes/cambioContraseña";
@@ -31,83 +33,84 @@ function App() {
   }
 
  
+  
 
   return (
 
 
-  <div>
+  <div >
 
 
-
-  <nav className="navbar navbar-expand navbar-dark " id="navbar"> 
+    
+  <nav className="navbar navbar-expand navbar-dark " id="navbar" > 
     
   
 
 
     <div className="navbar-nav mr-auto">
-
+    
 
     
-    <li id="nav-item" >
-        <Link to={"/encuesta"} className="nav-link">
-          Encuesta
-        </Link>
-        
-      </li>
-
-      
-      <li id="nav-item">
-        <Link to={"/computadoras"} className="nav-link">
-          Computadoras
-        </Link>
-      </li>
-
-      <li id="nav-item">
-        <Link to={"/about"} className="nav-link">
-          Acerca de
-        </Link>
-      </li>
-
-      { user ? (
-      <li id="nav-item">
-        <Link to={`/usuarios`} className = "nav-link">
-          Mis Datos
-        </Link>
-      </li>
-    ) : (
-      <li></li>
-    )
-    }
-
-
       <li id="nav-item" >
-        { user ? (
-          <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
-            Logout {user.usuario}
-          </a>
-        ) : (            
-        <Link to={"/login"} className="nav-link">
-          Login
-        </Link>
-        )}
-      </li>
+          <Link to={"/encuesta"} className="nav-link">
+            Encuesta
+          </Link>
+          
+        </li>
 
-      {user ? (<li></li>) : (
+        
         <li id="nav-item">
-          <Link to={"/registro"} className="nav-link">
-            Registrar
+          <Link to={"/computadoras"} className="nav-link">
+            Computadoras
           </Link>
         </li>
-      )}
+
+        <li id="nav-item">
+          <Link to={"/about"} className="nav-link">
+            Acerca de
+          </Link>
+        </li>
+
+        { user ? (
+        <li id="nav-item">
+          <Link to={`/usuarios`} className = "nav-link">
+            Mis Datos
+          </Link>
+        </li>
+      ) : (
+        <li></li>
+      )
+      }
 
 
+        <li id="nav-item" >
+          { user ? (
+            <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
+              Logout {user.usuario}
+            </a>
+          ) : (            
+          <Link to={"/login"} className="nav-link">
+            Login
+          </Link>
+          )}
+        </li>
+
+        {user ? (<li></li>) : (
+          <li id="nav-item">
+            <Link to={"/registro"} className="nav-link">
+              Registrar
+            </Link>
+          </li>
+        )}
+
+          
     </div>
   </nav>   
 
 
 
 
-  <div className="container mt-3">
+  <div className="container mt-3" >
 
     <Switch>
       <Route exact 
