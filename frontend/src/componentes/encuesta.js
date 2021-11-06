@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import Chocola from "../assets/Chocola.png";
-import ChocolaHappy from "../assets/ChocolaHappy.png";
 import Marvin_contento from "../assets/marvin_contento.png";
+
+import Marvin_Error from "../assets/Marvin_Error.png";
+import Marvin_Levitando from "../assets/Marvin_Levitando.png";
+import Marvin_Like from "../assets/Marvin_Like.png";
+import Marvin_Manos_Cintura from "../assets/Marvin_Manos_Cintura.png";
+import Marvin_Presentando from "../assets/Marvin_Presentando.png";
+import Marvin_Presentando_Rotado from "../assets/Marvin_Presentando_Rotado.png";
+import Marvin_X_X from "../assets/Marvin_X_X.png";
+
 import ComputadoraDataService from "../servicios/computadora";
 import Teams from "../assets/Teams-Icono.png";
 import Discord from "../assets/Discord.png";
@@ -202,7 +209,7 @@ class Encuesta extends React.Component{
         <div className="App-sayname">
           <section className="container">
           <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Levitando} height="500" alt="Its getting bigger!" />
             </div>
             <div className="col-6">
               <br/>
@@ -227,7 +234,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
           <br/>
@@ -259,7 +266,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
             </div>
         <div className="col-6">
         <br/>
@@ -310,7 +317,7 @@ class Encuesta extends React.Component{
       return(
         <div className="App-sayname">
         <div class="row">
-          <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+          <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
             <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -339,7 +346,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
           <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -381,7 +388,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
             <h5>Pregunta {this.state.nroPregunta+1}</h5>
@@ -411,7 +418,7 @@ class Encuesta extends React.Component{
       return (
         <div className="App-sayname">
           <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            <div className="col-6"><img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
           <h5>Pregunta {this.state.nroPregunta+1}</h5>

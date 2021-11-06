@@ -10,9 +10,11 @@ import Login from "./componentes/login";
 import Encuesta from "./componentes/encuesta";
 import About from "./componentes/about";
 import "./estilos/estiloPagina.css"
+//import "./estilos/estilonav.css"
 import Usuarios from "./componentes/usuarios";
 import Registro from "./componentes/registro";
 import CambioContraseña from "./componentes/cambioContraseña";
+
 
 function App() {
   
@@ -28,9 +30,11 @@ function App() {
     setUser(null);
   }
 
-
+ 
 
   return (
+
+
   <div>
 
 
