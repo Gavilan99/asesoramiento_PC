@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Teams from "./Teams-Icono.png";
 import robot4 from "../imagenes/robot4.png";
 import compu from "../imagenes/compu.jpg";
+import "../estilos/estiloFiltros.css"
 
 
 
@@ -320,80 +321,82 @@ const putFavorito = (user, computadora) => {
       
       
       <div>
-        <div className="row pb-1">
-       
-          <div className="input-group col-lg-4">
-            <select onChange={onChangeSearchMarca}>
-              {console.log(Marcas)}
-              {Marcas.map(marca => {
-                return (
-                  <option value={marca}> {marca.substr(0,20)} </option>
-                )
-              })}
-            </select>
+        
+          <div >
+          <div className="row" >
+            <div className="dropdown"  >
+              <select onChange={onChangeSearchMarca}>
+                {console.log(Marcas)}
+                {Marcas.map(marca => {
+                  return (
+                    <option value={marca}> {marca.substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
+
+            <div className="dropdown">
+                        
+              <select onChange={onChangeSearchRAM}>
+                {RAMs.map(RAM => {
+                  return (
+                    <option value={RAM}> {RAM.substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
+            <div className="dropdown" >
+                        
+              <select onChange={onChangeSearchSO}>
+                {SOs.map(SO => {
+                  return (
+                    <option value={SO}> {SO.substr(0,20)} </option>
+                  )
+                })}
+              </select>
             
+            </div>
+
+
+            <div className="dropdown">
+                        
+              <select onChange={onChangeSearchType}>
+                {TipoDiscos.map(type => {
+                  return (
+                    <option value={type.type}> {String(type.type).substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
+
+            <div className="dropdown">
+                        
+              <select onChange={onChangeSearchCapacity}>
+                {CapacidadDiscos.map(capacity => {
+                  return (
+                    <option value={capacity.capacity}> {String(capacity.capacity).substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
           </div>
 
-
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchRAM}>
-              {RAMs.map(RAM => {
-                return (
-                  <option value={RAM}> {RAM.substr(0,20)} </option>
-                )
-              })}
-            </select>
-            
-          </div>
-
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchSO}>
-              {SOs.map(SO => {
-                return (
-                  <option value={SO}> {SO.substr(0,20)} </option>
-                )
-              })}
-            </select>
-           
-          </div>
-
-
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchType}>
-              {TipoDiscos.map(type => {
-                return (
-                  <option value={type.type}> {String(type.type).substr(0,20)} </option>
-                )
-              })}
-            </select>
-            
-          </div>
-
-
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchCapacity}>
-              {CapacidadDiscos.map(capacity => {
-                return (
-                  <option value={capacity.capacity}> {String(capacity.capacity).substr(0,20)} </option>
-                )
-              })}
-            </select>
-            
-          </div>
-
-
-
+        {/*
         <div>
         <img src={Teams} height="20" alt="Its getting bigger!" />
          Microsoft Teams <input type="checkbox" name="App" value="Microsoft Teams" onChange={onChangeSearchApps}/>
          Discord <input type="checkbox" name="App" value="Discord" onChange={onChangeSearchApps}/>
-
+         
     
-        </div>
+        </div> */}
         
         <div className="input-group col-lg-4">
           Filtrar por precio

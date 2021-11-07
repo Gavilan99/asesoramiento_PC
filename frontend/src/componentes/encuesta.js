@@ -213,7 +213,7 @@ class Encuesta extends React.Component{
             </div>
           <div className="col-6">
           <br/>
-            <h5>Pregunta {this.state.nroPregunta + 1}</h5>
+            {/*<h5>Pregunta {this.state.nroPregunta + 1}</h5>*/}
             <br/>
             <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <br/>
@@ -245,7 +245,7 @@ class Encuesta extends React.Component{
             </div>
         <div className="col-6">
         <br/>
-            <h5>Pregunta {this.state.nroPregunta+1}</h5>
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
@@ -295,7 +295,7 @@ class Encuesta extends React.Component{
           <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
-            <h5>Pregunta {this.state.nroPregunta+1}</h5>
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
             <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
@@ -324,7 +324,7 @@ class Encuesta extends React.Component{
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
-          <h5>Pregunta {this.state.nroPregunta+1}</h5>
+          {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
           <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
@@ -366,7 +366,7 @@ class Encuesta extends React.Component{
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
-            <h5>Pregunta {this.state.nroPregunta+1}</h5>
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
             <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
@@ -396,7 +396,7 @@ class Encuesta extends React.Component{
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
-          <h5>Pregunta {this.state.nroPregunta+1}</h5>
+          {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
           <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
