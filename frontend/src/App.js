@@ -95,6 +95,7 @@ function App() {
           )}
         </li>
 
+        {/*    
         {user ? (<li></li>) : (
           <li id="nav-item">
             <Link to={"/registro"} className="nav-link">
@@ -102,7 +103,7 @@ function App() {
             </Link>
           </li>
         )}
-
+          */}
           
     </div>
   </nav>   

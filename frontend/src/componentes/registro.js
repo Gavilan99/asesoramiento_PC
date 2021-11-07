@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ComputadoraDataService from "../servicios/computadora";
-
+import "../estilos/estiloLogin.css"
+import { Link } from "react-router-dom";
 
 const Registro = props => {
 
@@ -44,50 +45,42 @@ const Registro = props => {
 
   return (
     
-    <div className="submit-form">
-      <div>
-        <div className="form-group">
-          <label htmlFor="user">Usuario</label>
-          <input
-            type="text"
+    
+<div class="login-page">
+      <div class="form" >
+        <div>
+          <input type="text" 
+            placeholder="Nombre"
             className="form-control"
             id="usuario"
             value={user.usuario}
             onChange={handleInputChange}
-            name="usuario"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="id">Contraseña</label>
-          <input
-            type="text"
+            name="usuario"/>
+          <input type="password" 
+            placeholder="Contraseña"
             className="form-control"
             id="contraseña"
             value={user.contraseña}
             onChange={handleInputChange}
-            name="contraseña"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="id">Repetir contraseña</label>
-          <input
-            type="text"
+            name="contraseña"/>
+          <input type="password" 
+            placeholder="Repetir contraseña"
             className="form-control"
             id="repetircontraseña"
             value={user.repetircontraseña}
             onChange={handleInputChange}
-            name="repetircontraseña"
-          />
+            name="repetircontraseña"/>
+          <button onClick={registro} className="botonesLogin" >crear</button>
+          <p class="message">Ya estas registrado? <a href="#"><Link to={"/login"}>
+            Ingresa
+            </Link></a></p>
         </div>
-        <br/>
-        <button onClick={registro} class="botonesLogin">
-          Registro
-        </button>
-
       </div>
     </div>
+
+
+    
+    
   );
 };
 

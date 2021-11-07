@@ -52,7 +52,7 @@ button {
   font-weight: 300;
 }
 
-#hamburger-menu {
+.hamburger-menu {
   height: 4rem;
   width: 3rem;
   cursor: pointer;
