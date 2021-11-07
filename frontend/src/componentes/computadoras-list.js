@@ -5,7 +5,7 @@ import Teams from "./Teams-Icono.png";
 import robot4 from "../imagenes/robot4.png";
 import compu from "../imagenes/compu.jpg";
 import "../estilos/estiloFiltros.css"
-
+import "../estilos/estiloBotonNeon.css"
 
 
 const ComputadorasList = props => {
@@ -398,39 +398,45 @@ const putFavorito = (user, computadora) => {
     
         </div> */}
         
-        <div className="input-group col-lg-4">
-          Filtrar por precio
+        <div className="row">
+          <p></p>
+          <p className="texto dropdown" > Filtrar por precio: </p>
+
           <input
             type="text"
             placeholder="Min"
             value={buscarMin}
             onChange={onChangeSearchPrecioMin}
+            className="dropdown"
           />
-          $
+          <p className="texto dropdown" > $ </p>
           <input
           type="text"
           placeholder="Max"
           value={buscarMax}
           onChange={onChangeSearchPrecioMax}
+          className="dropdown"
           />
-          $
+          <p className="texto dropdown" > $ </p>
           <div className="input-group-append">
             
           </div>
         </div>
 
         <div className="input-group-append">
+          <br/>
               <button
-                className="btn btn-outline-secondary"
+                className="botonBuscar btn-primary"
                 type="button"
                 onClick= {()=>{findByAll();}}
               >
                 Buscar
               </button>
+          
         </div>
 
        </div>
-
+       <br/>
    
 
 

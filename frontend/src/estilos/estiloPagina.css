@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+  
   #iconomail{
     background-color: #1a237e;
     color: white;
@@ -26,7 +28,7 @@
     background: -webkit-linear-gradient(to bottom, #021B79, #0575E6);  
     background: linear-gradient(to bottom,#0575E6,#021B79);
   }
-
+/*
   #botonEncuesta{
     background-color: #1a237e;
     color:white;
@@ -36,7 +38,7 @@
     letter-spacing: 1px;
     text-transform: uppercase;
     margin: 10px;
-  }
+  }*/
 
   .botonesLogin {
     background-color: #1a237e;
@@ -53,20 +55,24 @@
     margin-left: 600px;
   }
 
+h4 {
+  font-family: 'Orbitron', sans-serif;
+}
+
   h2 {
     color: #1a237e;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     font-size: 50px;
   }
+  
 
   #centrado {
     display: table-cell;
-    vertical-align: middle;
     text-align: center;
     vertical-align: middle;
   }
 
-  #centradoVertical{
+  #centradoHorizontal{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -1,4 +1,4 @@
-
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .dropdown{
     display: flex;
@@ -14,87 +14,31 @@
 }
 
 /*Filtro de precio*/
-#time-range {
-    width: 600px;
-    margin: 0 auto;
-    color: #CCCCCC;
-    font-weight: 300;
-}
+.texto{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    /*background: #232526;  
+    background: -webkit-linear-gradient(to bottom, #414345, #232526);  
+    background: linear-gradient(to bottom, #414345, #232526); 
+    */
 
-.slider-time,
-.slider-time2 {
-    font-weight: 400;
-}
+    background: #1e3c72;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-.flat-slider.ui-corner-all,
-.flat-slider .ui-corner-all {
-    border-radius: 0;
-}
 
-.flat-slider.ui-slider {
+    width: 20%;
     border: 0;
-    background: #f7d2cc;
-    border-radius: 6px;
-}
-
-.flat-slider.ui-slider-horizontal {
-    height: 6px;
-}
-
-.flat-slider.ui-slider-vertical {
-    height: 15em;
-    width: 6px;
-}
-
-.flat-slider .ui-slider-handle {
-    width: 22px;
-    height: 22px;
-    background: #fff200;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
-}
-
-.flat-slider.ui-slider-horizontal .ui-slider-handle {
-    top: 50%;
-    margin-top: -11px;
-}
-
-.flat-slider.ui-slider-vertical .ui-slider-handle {
-    left: 50%;
-    margin-left: -11px;
-}
-
-.flat-slider .ui-slider-handle:hover {
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.35);
-}
-
-.flat-slider .ui-slider-range {
-    border: 0;
-    border-radius: 6;
-    background: #f99;
-}
-
-.flat-slider.ui-slider-horizontal .ui-slider-range {
-    top: 0;
-    height: 6px;
-}
-
-.flat-slider.ui-slider-vertical .ui-slider-range {
-    left: 0;
-    width: 6px;
-}
-
-.box {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    text-align: center;
-    border: 1px solid black;
-    border-radius: 3px;
+    padding: 15px;
     color: #FFFFFF;
-    margin: 24px 1px 4px 1px;
+
+    font-size: 14px;
+    cursor: pointer;
 }
- 
+
+.botonBuscar{
+    width:100%;
+    margin:0;
+    padding: 0;
+}

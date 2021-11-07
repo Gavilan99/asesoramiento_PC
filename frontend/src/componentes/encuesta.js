@@ -18,6 +18,7 @@ import Zoom from "../assets/Zoom.png";
 import Skype from "../assets/Skype.png";
 
 import "../estilos/estiloPagina.css"
+import "../estilos/estiloBotonNeon.css"
 
 import { Link } from "react-router-dom";
 import ComputadoraDataService from "../servicios/computadora";
@@ -181,12 +182,12 @@ class Encuesta extends React.Component{
       return (
         
 
-        <div className="App-sayname" id="centradoVertical">
+        <div className="App-sayname">
           <section className="container" >
           <div class="row">
             <div className="col-6"><img src={Marvin_Levitando} height="500" alt="Its getting bigger!" />
             </div>
-            <div className="col-6">
+            <div className="col-6 " >
               <br/>
               <h2> Hola! Soy Marvin</h2>
               <br/>
@@ -194,11 +195,14 @@ class Encuesta extends React.Component{
               <h4>Te voy a hacer unas preguntas para encontrar la computadora ideal para vos. ¿Empezamos? </h4>
               <br/>
               <br/>
+              <p id="centrarBoton">
+                <p></p><p></p>
               <button
                   id="botonEncuesta"
                   type="button"
                   onClick={() => {this.almacenarResultado(this.getRadioSeleccionado()); this.incPregunta()}}
                 >Comenzar </button>
+              </p>
               </div>
             </div>
             </div>
@@ -464,7 +468,7 @@ class Encuesta extends React.Component{
       <div class="row">
 
       <div class="col-6">
-        <h1>Encontre tu computadora ideal:</h1>
+        <h4>Encontre tu computadora ideal:</h4>
         <img src={Marvin_Presentando_Rotado} height="500" alt="Its getting bigger!" />
       </div>        
      
