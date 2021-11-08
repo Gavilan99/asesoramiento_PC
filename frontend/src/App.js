@@ -1,7 +1,9 @@
 
 import React from "react";
 import { Switch, Route, Link } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Navbar } from 'react-bootstrap';
 
 import AgregarComentario from "./componentes/agregarComentario";
 import Computadora from "./componentes/computadoras";
@@ -16,6 +18,8 @@ import "./estilos/estiloPagina.css"
 import Usuarios from "./componentes/usuarios";
 import Registro from "./componentes/registro";
 import CambioContraseña from "./componentes/cambioContraseña";
+import marvinIcon from './assets/marvinIcon2.png';
+import marvinIconBlanco from './assets/marvinIcon2Blanco.png';
 
 
 function App() {
@@ -42,37 +46,38 @@ function App() {
 
 
     
-  <nav className="navbar navbar-expand navbar-dark " id="navbar" > 
+  <nav className="navbar navbar-expand navbar-dark " role="navigation" id="navbar" > 
     
-  
-
-
-    <div className="navbar-nav mr-auto">
+    <div className="navbar-nav  ">
     
-
-    
-      <li id="nav-item" >
-          <Link to={"/encuesta"} className="nav-link">
+      <Navbar.Brand href="/encuesta" > <img
+          alt=""
+          src={marvinIconBlanco}
+          id="icono"
+        />{' '}</Navbar.Brand>
+      <lu className="navbar-nav navbar-center">
+      <li className="nav-item" >
+          <Link to={"/encuesta"} className="nav-link ntext" id="ntext">
             Encuesta
           </Link>
           
         </li>
 
         
-        <li id="nav-item">
+        <li className="nav-item">
           <Link to={"/computadoras"} className="nav-link">
             Computadoras
           </Link>
         </li>
 
-        <li id="nav-item">
+        <li className="nav-item">
           <Link to={"/about"} className="nav-link">
             Acerca de
           </Link>
         </li>
 
         { user ? (
-        <li id="nav-item">
+        <li className="nav-item">
           <Link to={`/usuarios`} className = "nav-link">
             Mis Datos
           </Link>
@@ -81,12 +86,12 @@ function App() {
         <li></li>
       )
       }
-
-
-        <li id="nav-item" >
+      </lu>
+      <ul className="navbar-nav navbar-left">
+        <li className="navbar-left" >
           { user ? (
             <a onClick={logout} className="nav-link" style={{cursor:'pointer'}}>
-              Logout {user.usuario}
+              Logout 
             </a>
           ) : (            
           <Link to={"/login"} className="nav-link">
@@ -94,16 +99,16 @@ function App() {
           </Link>
           )}
         </li>
-
-        {/*    
+      </ul>
+          {/*}
         {user ? (<li></li>) : (
           <li id="nav-item">
             <Link to={"/registro"} className="nav-link">
               Registrar
             </Link>
           </li>
-        )}
-          */}
+        )}*/}
+          
           
     </div>
   </nav>   
