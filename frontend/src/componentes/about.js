@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RobotAcostado from "../imagenes/robot4.png";
-import Marvin_Levitando from "../assets/Marvin_Levitando.png";
+import Marvin_Levitando from "../assets/Marvin_Levitando_Arreglado.png";
 import "../estilos/estiloPagina.css";
 const About = props => {
   

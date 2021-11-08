@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Marvin_contento from "../assets/marvin_contento.png";
 
 import Marvin_Error from "../assets/Marvin_Error.png";
-import Marvin_Levitando from "../assets/Marvin_Levitando.png";
+import Marvin_Levitando from "../assets/Marvin_Levitando_Arreglado.png";
 import Marvin_Like from "../assets/Marvin_Like.png";
 import Marvin_Manos_Cintura from "../assets/Marvin_Manos_Cintura.png";
 import Marvin_Presentando from "../assets/Marvin_Presentando.png";

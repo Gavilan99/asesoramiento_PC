@@ -51,6 +51,7 @@ function App() {
     <div className="navbar-nav  ">
     
       <Navbar.Brand href="/encuesta" > <img
+          onclick="return add(<?php echo $id ?>,'add');"
           alt=""
           src={marvinIconBlanco}
           id="icono"
