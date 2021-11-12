@@ -234,6 +234,8 @@ class Encuesta extends React.Component{
 
   }
 
+
+
   render(){
     /* La estructura divina*/
     
@@ -297,8 +299,6 @@ class Encuesta extends React.Component{
               >No </button>
             </p>
             </div>
-            
-
           </div>
           </div>
           </div>
@@ -340,6 +340,7 @@ class Encuesta extends React.Component{
       </div>
       </div>
       )
+
     }
     else if (this.state.nroPregunta==3){
       return(
@@ -372,7 +373,8 @@ class Encuesta extends React.Component{
         </div>
         </div>
       )
-    }else if (this.state.nroPregunta==4){
+    }
+    else if (this.state.nroPregunta == 4){
       return (
         <div id="contenido">
           <div class="row">
@@ -442,8 +444,6 @@ class Encuesta extends React.Component{
               >No </button>
             </p>
             </div>
-            
-  
           </div>
           </div>
           </div>
@@ -485,7 +485,7 @@ class Encuesta extends React.Component{
               className="Boton de Checkbox Estudiar"
               type="button"
               id="botonEncuesta"
-              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta(); this.traerComputadora();}}
+              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.traerComputadora();}}
             >Aceptar </button>
           </p>
           </div>
@@ -493,6 +493,27 @@ class Encuesta extends React.Component{
       </div>
     </div>
       )
+    }
+    else if (this.state.nroPregunta==9 && !this.state.finalizada){
+      return (
+        <div className="App-sayname">
+          <div class="row">
+            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
+            </div>
+          <div className="col-6">
+          <h5>Pregunta {this.state.nroPregunta+1}</h5>
+          <br/>
+          <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+          <div>
+          <br/>
+
+          
+          <input type="checkbox" name="Uso Variado" value="Cryptomining"/> Cryptomining
+          <br/>
+          <br/>
+          <input type="checkbox" name="Uso Variado" value="Navegacion Web"/> Navegar en la WEB
+          <br/>
+          <br/>
 
     }
     else if (this.state.nroPregunta==7 && !this.state.finalizada){
@@ -676,7 +697,9 @@ class Encuesta extends React.Component{
       
       );
 
-    }else if (this.state.finalizada && this.state.computadoras.length!=0) {
+    }
+    else if (this.state.finalizada && this.state.computadoras.length!=0) {
+      console.log("Estoy en la ultima fase");
       console.log(this.state.computadoras);
       return (
         <div id="contenido">
