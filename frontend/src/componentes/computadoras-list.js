@@ -388,6 +388,9 @@ const putFavorito = (user, computadora) => {
         
         <div className="input-group col-lg-4">
           Filtrar por precio
+          <div>
+
+      </div>
           <input
             type="text"
             placeholder="Min"
