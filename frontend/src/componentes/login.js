@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import "../estilos/estiloPagina.css"
+import "../estilos/estiloLogin.css"
+import { Link } from "react-router-dom";
 
 
 const Login = props => {
@@ -36,40 +38,37 @@ const Login = props => {
     });
   }
 
+ 
   return (
     
-    <div className="submit-form">
-      <div>
-        <div className="form-group">
-          <label htmlFor="user">Usuario</label>
-          <input
-            type="text"
+    
+    <div className="login-page" >
+      <div className="form">
+        <div className="login-form">
+          <input type="text" 
+            placeholder="Nombre"
             className="form-control"
             id="usuario"
             value={user.usuario}
             onChange={handleInputChange}
-            name="usuario"
-          />
-        </div>
+            name="usuario"/>
 
-        <div className="form-group">
-          <label htmlFor="id">Contraseña</label>
-          <input
-            type="text"
+          <input type="password" 
             className="form-control"
             id="contraseña"
+            placeholder="Contraseña"
             value={user.contraseña}
             onChange={handleInputChange}
             name="contraseña"
-          />
+            />
+          <button onClick={login} className="botonesLogin" >login</button>
+          <p class="message">No estas registrado? <a href="#"><Link to={"/registro"}>
+            Crea una cuenta
+            </Link></a></p>
         </div>
-        <br/>
-        <button onClick={login} class="botonesLogin">
-          Login
-        </button>
-
       </div>
     </div>
+    
   );
 };
 

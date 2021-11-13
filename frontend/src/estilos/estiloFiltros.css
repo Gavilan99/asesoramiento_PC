@@ -1,0 +1,44 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.dropdown{
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 20%;
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: "Roboto", arial, sans-serif;
+    
+}
+
+/*Filtro de precio*/
+.texto{
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    /*background: #232526;  
+    background: -webkit-linear-gradient(to bottom, #414345, #232526);  
+    background: linear-gradient(to bottom, #414345, #232526); 
+    */
+
+    background: #1e3c72;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+    width: 20%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.botonBuscar{
+    width:100%;
+    margin:0;
+    padding: 0;
+}
