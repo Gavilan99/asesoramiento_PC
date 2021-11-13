@@ -30,16 +30,25 @@ class Encuesta extends React.Component{
     super(props);
 
     this.state = {nroPregunta: 0, finalizada: false,
+      flagDiseño: false, flagJuegos: false, 
       preguntas:[
         "¿Como vas a usar tu computadora?", //0
-        "¿La usas para trabajar?", //1
-        "¿Utilizas alguna de estas aplicaciones?", //2
+        "¿La usas para diseño grafico?", //1
+        "¿Necesitas alguna de estas aplicaciones de diseño grafico?", //2 []
         "¿Jugas videojuegos?", //3
-        "¿Cuales jugas?", //4
+        "¿Cuales jugas?", //4 []
         "¿La usas para estudiar?", //5
-        "¿alguna de estas aplicaciones?", //6
+        "Necesitas alguna de estas aplicaciones de estudio?", //6 []
+        "¿La necesitas para trabajar?", //7
+        "¿Usas alguna de estas apps para el trabajo?", //8 []
+        "¿La necesitas para alguno de estos usos?", //9
+        "¿Alguna de estas apps te sirve?" //10 []
 
-    ], respuestas:[,,[],], computadoras: []
+    ], respuestas:[0,,[],,[],,[],,[],[],[]], computadoras: [],
+    usos: ["Cryptomining", "Navegacion Web"],
+    appsUso: [["BFGMINER", "EASYMINER", "CGMINER"],["Google Chrome"]],
+    resultUsos: []
+
   };
   ComputadoraDataService.getAll()
   .then(response => {
@@ -55,6 +64,10 @@ class Encuesta extends React.Component{
     this.getCheckboxesSeleccionadas = this.getCheckboxesSeleccionadas.bind(this);
     this.filtrar = this.filtrar.bind(this);
     this.pertenecenTodos = this.pertenecenTodos.bind(this);
+
+    this.alterFlagDiseño = this.alterFlagDiseño.bind(this);
+    this.alterFlagJuegos = this.alterFlagJuegos.bind(this);
+    this.cargarUsosVariados = this.cargarUsosVariados.bind(this);
     
     
   }
@@ -80,14 +93,12 @@ class Encuesta extends React.Component{
   }
 
   filtrar(post){ 
-  // 1: trabajas 2: Apps de trabajo 3: Jugas Video juegos
-  // 4: apps VideoJuegos 5: Estudias 6: apps Estudio
     let a=""
     let flag=0
   
-    if(this.state.respuestas[1] == "Trabajo"){
+    if(this.state.respuestas[1] == "Diseño Grafico"){
       if (post.usos){
-        a=a+"post.usos.includes('Trabajo')"
+        a=a+"post.usos.includes('Diseño Grafico')"
       }
       else {
         a= a + "false";
@@ -112,12 +123,38 @@ class Encuesta extends React.Component{
       if(flag==1){
         a=a+" && "
       }
-      if (post.usos){
-        a=a+"post.usos.includes('Videojuegos')"
+      if (post.aplicaciones){
+        a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[4]);
       }
       else {a= a + "false";}
       flag=1
     }
+    if (this.state.respuestas[5] == "Estudio"){
+      if(flag==1){
+        a=a+" && "
+      }
+      if (post.aplicaciones){
+        a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[6]);
+      }
+      else { 
+        a= a + "false"
+      }
+      flag=1;
+    }
+
+    if (this.state.respuestas[7] == "Trabajo"){
+      if(flag==1){
+        a=a+" && "
+      }
+      if (post.aplicaciones){
+        a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[8]);
+      }
+      else { 
+        a= a + "false"
+      }
+      flag=1;
+    }
+
     if(flag==0){
       a="1==1"
     }
@@ -129,6 +166,13 @@ class Encuesta extends React.Component{
 
   almacenarResultado(valor){
     this.state.respuestas[this.state.nroPregunta]= valor;
+  }
+
+  alterFlagDiseño(){
+    this.setState({flagDiseño: true});
+  }
+  alterFlagJuegos(){
+    this.setState({flagJuegos: true});
   }
 
   incPregunta(n=1){
@@ -164,8 +208,24 @@ class Encuesta extends React.Component{
     return result;
   }
 
+  cargarUsosVariados(){
+    var lista =this.getCheckboxesSeleccionadas("Uso Variado");
+    var result = []
+    for (var i=0; i<lista.length;i++){
+      for (var j=0; j<this.state.usos.length;j++){
+        if (lista[i]==this.state.usos[j]){
+          result = result.concat(this.state.appsUso[j]);
+          break
+        }
+      }
+    }
+    console.log(result);
+    return result;
+  }
+
   traerComputadora(){
     this.setState({finalizada: true});
+    this.incPregunta(100);
     console.log("Entro a buscar las computadoras (traerComputadoras)");
     console.log(this.state.computadoras)
     this.state.computadoras = this.state.computadoras.filter(this.filtrar);
@@ -209,7 +269,8 @@ class Encuesta extends React.Component{
             </section>
           </div>
       );
-    }else if  (this.state.nroPregunta==1){
+    }
+    else if  (this.state.nroPregunta==1){
       return (
         <div id="contenido">
           <div class="row">
@@ -226,7 +287,7 @@ class Encuesta extends React.Component{
             <button
                 id="botonEncuesta"
                 type="button"
-                onClick={() => {this.almacenarResultado("Trabajo"); this.incPregunta();}} //ARREGLAR ESTO
+                onClick={() => {this.almacenarResultado("Diseño Grafico"); this.alterFlagDiseño(); this.incPregunta();}} //ARREGLAR ESTO
               >Si </button>
               
               <button
@@ -242,7 +303,8 @@ class Encuesta extends React.Component{
           </div>
           </div>
       );
-    }else if (this.state.nroPregunta==2){
+    }
+    else if (this.state.nroPregunta==2){
 
       return (
         <div id="contenido">
@@ -255,23 +317,6 @@ class Encuesta extends React.Component{
             <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
-          <br/>
-
-          
-          <input type="checkbox" name="App" value="Microsoft Teams"/> <img src={Teams} height="20" alt="Its getting bigger!" /> Microsoft Teams 
-          <br/>
-          <br/>
-
-          <input type="checkbox" name="App" value="Discord"/>  <img src={Discord} height="20" alt="Its getting bigger!" /> Discord
-          <br/>
-          <br/>
-
-          <input type="checkbox" name="App" value="Zoom"/> <img src={Zoom} height="20" alt="Its getting bigger!" /> Zoom 
-          <br/>
-          <br/>
-
-          <input type="checkbox" name="App" value="Skype"/> <img src={Skype} height="20" alt="Its getting bigger!" /> Skype
-          <br/>
           <br/>
 
           <input type="checkbox" name="App" value="Photoshop"/> <img src={Photoshop} height="20" alt="Its getting bigger!" /> Photoshop
@@ -312,13 +357,13 @@ class Encuesta extends React.Component{
                 className="Boton de Videojuegos Si"
                 type="button"
                 id="botonEncuesta"
-                onClick={() => {this.almacenarResultado("Videojuegos"); this.incPregunta();}}
+                onClick={() => {this.almacenarResultado("Videojuegos");this.alterFlagJuegos(); this.incPregunta();}}
               >Si </button>
               <button
                 className="Boton de Videojuegos No"
                 type="button"
                 id="botonEncuesta"
-                onClick={() => {this.almacenarResultado(""); this.incPregunta(2)}}
+                onClick={() => {this.almacenarResultado(""); (this.state.flagDiseño) ? this.traerComputadora() : this.incPregunta(2)}}
               >No </button>
             </p>
             </div>
@@ -361,7 +406,7 @@ class Encuesta extends React.Component{
               className="Boton de Checkbox Videojuegos"
               type="button"
               id="botonEncuesta"
-              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta();}}
+              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.traerComputadora();}}
             >Aceptar </button>
           </p>
           </div>
@@ -390,10 +435,10 @@ class Encuesta extends React.Component{
                 onClick={() => {this.almacenarResultado("Estudio"); this.incPregunta();}}
               >Si </button>
               <button
-                className="Boton de No Trabajar"
+                className="Boton de No Estudiar"
                 type="button"
                 id="botonEncuesta"
-                onClick={() => {this.almacenarResultado(""); this.incPregunta(2); this.traerComputadora();}}
+                onClick={() => {this.almacenarResultado(""); this.incPregunta(2);}}
               >No </button>
             </p>
             </div>
@@ -403,7 +448,7 @@ class Encuesta extends React.Component{
           </div>
           </div>
       );
-    }else if (this.state.nroPregunta==6){
+    }else if (this.state.nroPregunta==6 && !this.state.finalizada){
       return (
         <div id="contenido">
           <div class="row">
@@ -417,7 +462,7 @@ class Encuesta extends React.Component{
           <br/>
 
           
-          <input type="checkbox" name="App" value="Teams"/> <img src={Teams} height="20" alt="Its getting bigger!" /> Microsoft Teams 
+          <input type="checkbox" name="App" value="Microsoft Teams"/> <img src={Teams} height="20" alt="Its getting bigger!" /> Microsoft Teams 
           <br/>
           <br/>
 
@@ -433,13 +478,6 @@ class Encuesta extends React.Component{
           <br/>
           <br/>
 
-          <input type="checkbox" name="App" value="Photoshop"/> <img src={Photoshop} height="20" alt="Its getting bigger!" /> Photoshop
-          <br/>
-          <br/>
-
-          <input type="checkbox" name="App" value="Autocad"/> <img src={Autocad} height="20" alt="Its getting bigger!" /> Autocad 
-          <br/>
-          <br/>
           </div>
           <div>
           <p id="centrarBoton">
@@ -456,7 +494,170 @@ class Encuesta extends React.Component{
     </div>
       )
 
-    }else if (this.state.finalizada && this.state.computadoras.length==0){
+    }
+    else if (this.state.nroPregunta==7 && !this.state.finalizada){
+      return (
+        <div id="contenido">
+          <div class="row">
+            <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
+            </div>
+          <div className="col-6">
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
+            <br/>
+            <h2 id="centrarBoton">{this.state.preguntas[this.state.nroPregunta]}</h2>
+            <div>
+            <p id="centrarBoton">
+            <button
+                className="Boton de Trabajar"
+                type="button"
+                id="botonEncuesta"
+                onClick={() => {this.almacenarResultado("Trabajo"); this.incPregunta();}}
+              >Si </button>
+              <button
+                className="Boton de No Trabajar"
+                type="button"
+                id="botonEncuesta"
+                onClick={() => {this.almacenarResultado(""); this.incPregunta(2);}}
+              >No </button>
+            </p>
+            </div>
+            
+  
+          </div>
+          </div>
+          </div>
+      );
+    }
+
+  else if (this.state.nroPregunta==8 && !this.state.finalizada){
+    return (
+      <div id="contenido">
+        <div class="row">
+          <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
+          </div>
+        <div className="col-6">
+        {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
+        <br/>
+        <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+        <div>
+        <br/>
+
+        
+        <input type="checkbox" name="App" value="Microsoft Teams"/> <img src={Teams} height="20" alt="Its getting bigger!" /> Microsoft Teams 
+        <br/>
+        <br/>
+
+        <input type="checkbox" name="App" value="Discord"/>  <img src={Discord} height="20" alt="Its getting bigger!" /> Discord
+        <br/>
+        <br/>
+
+        <input type="checkbox" name="App" value="Zoom"/> <img src={Zoom} height="20" alt="Its getting bigger!" /> Zoom 
+        <br/>
+        <br/>
+
+        <input type="checkbox" name="App" value="Skype"/> <img src={Skype} height="20" alt="Its getting bigger!" /> Skype
+        <br/>
+        <br/>
+
+        </div>
+        <div>
+        <p id="centrarBoton">
+        <button
+            className="Boton de Checkbox Trabajar"
+            type="button"
+            id="botonEncuesta"
+            onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta(); this.traerComputadora();}}
+          >Aceptar </button>
+        </p>
+        </div>
+      </div>
+    </div>
+  </div>
+    )
+  }
+  else if (this.state.nroPregunta==9 && !this.state.finalizada){
+    return (
+      <div id="contenido">
+        <div class="row">
+          <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
+          </div>
+        <div className="col-6">
+        {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
+        <br/>
+        <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+        <div>
+        <br/>
+
+        <input type="checkbox" name="Uso Variado" value="Cryptomining"/> Cryptomining
+            <br/>
+            <br/>
+            <input type="checkbox" name="Uso Variado" value="Navegacion Web"/> Navegar en la WEB
+            <br/>
+            <br/>
+
+        </div>
+        <div>
+        <p id="centrarBoton">
+        <button
+            className="Boton de Checkbox Estudiar"
+            type="button"
+            id="botonEncuesta"
+            onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("Uso Variado")); this.setState({resultUsos: this.cargarUsosVariados()}); this.incPregunta();}}
+          >Aceptar </button>
+        </p>
+        </div>
+      </div>
+    </div>
+  </div>
+    )
+  }
+
+  else if (this.state.nroPregunta==10 && !this.state.finalizada && this.state.resultUsos!=0){
+    return (
+      <div id="contenido">
+        <div class="row">
+          <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
+          </div>
+        <div className="col-6">
+        {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
+        <br/>
+        <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
+        <div>
+        <br/>
+        <div>
+          {this.cargarUsosVariados().map( (x) =>{return (
+            <div>
+                <input type="checkbox" name="App Variada" value={x}/> {x}
+                <br/>
+                <br/>
+            </div>)
+          })}
+        </div>
+
+        </div>
+        <div>
+        <p id="centrarBoton">
+        <button
+            className="Boton de Checkbox Uso Variado"
+            type="button"
+            id="botonEncuesta"
+            onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App Variada")); this.traerComputadora();}}
+          >Aceptar </button>
+        </p>
+        </div>
+      </div>
+    </div>
+  </div>
+    )
+  }
+
+  else if (this.state.nroPregunta==10 && !this.state.finalizada && this.state.resultUsos==0){
+    this.traerComputadora();
+    return (<div>Estoy buscando en mi base de datos</div>);
+  }
+
+    
+    else if (this.state.finalizada && this.state.computadoras.length==0){
       console.log(this.state.computadoras);
       return (
         <div id="contenido">
@@ -527,7 +728,7 @@ class Encuesta extends React.Component{
       )
 
     }else {
-      return(<div><h1>No encontre nada</h1></div>)
+      return(<div><h1>Parece que a ocurrido un problema</h1></div>)
     }
     
     
