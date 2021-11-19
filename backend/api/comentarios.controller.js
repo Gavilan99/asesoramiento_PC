@@ -71,4 +71,26 @@ export default class ComentariosController {
             res.status(500).json({error: e.message})
         }
     }
+
+    static async apiAgregarLikes(req, res, next){
+        try {
+            const likes = req.body
+            await ReviewsDAO.agregarLikes(likes)
+
+            res.json({status: "success"})
+        } catch (e) {
+            res.status(500).json({error: e.message})
+        }
+    }
+
+    static async apiSubstraerLikes(req, res, next){
+        try {
+            const likes = req.body
+            await ReviewsDAO.substraerLikes(likes)
+
+            res.json({status: "success"})
+        } catch (e) {
+            res.status(500).json({error: e.message})
+        }
+    }
 }

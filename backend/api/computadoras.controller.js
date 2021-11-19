@@ -77,13 +77,13 @@ export default class ComputadorasController {
         }
     }
 
-    static async apiGetComputadorasMarca(req, res, next) {
-        try {
-          let Marca = await ComputadorasDAO.getMarcas()
-          res.json(Marca)
-        } catch (e) {
-          console.log(`api, ${e}`)
-          res.status(500).json({ error: e })
+    static async apiGetComputadorasMarca(req, res, next){
+        try{
+            let Marca = await ComputadorasDAO.getMarcas()
+            res.json(Marca)
+        } catch (e){
+            console.log(`api, ${e}`)
+            res.status(500).json({error: e})
         }
     }
 

@@ -64,4 +64,28 @@ export default class ReviewsDAO{
             return {error: e}
         }
     }
+
+    static async agregarLikes(likes){
+        try {
+            console.log(likes.nombre)
+            await comentarios.updateOne(
+                {_id: ObjectId(likes.nombre)}
+                ,{ $push: { "likes":likes.usuario } }
+            )
+        } catch (e) {
+            return {error: e}
+        }
+    }
+
+    static async substraerLikes(likes){
+        try {
+            console.log(likes.nombre)
+            await comentarios.updateOne(
+                {_id: ObjectId(likes.nombre)}
+                ,{ $pull: { "likes": likes.usuario } }
+            )
+        } catch (e) {
+            return {error: e}
+        }
+    }
 }

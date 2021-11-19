@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
+import Login from "./login";
 
 const Computadora = props => {
   const initialComputadoraState = {
@@ -42,6 +43,36 @@ const Computadora = props => {
       });
   };
 
+  const darLike =(comentario, index) => {
+    if(props.user){
+      let likeBtn = document.getElementsByClassName("icon")[index];
+      let likeIcon = document.querySelector("#icon");
+      var parametroLikes = {nombre:comentario._id, usuario:props.user.usuario}
+      if(comentario.likes.includes(props.user.usuario)){
+          ComputadoraDataService.substraerLikes(parametroLikes); 
+          console.log(computadora.comentarios[index].likes)
+          var misComentarios = computadora.comentarios.slice()
+          misComentarios.map((item,indice) =>{
+            if(indice===index){
+              var i=item.likes.indexOf(props.user.usuario)
+              item.likes.splice(i,1)
+            }
+          })
+          setComputadora({...computadora, comentarios: misComentarios})
+      }else{
+          ComputadoraDataService.agregarLikes(parametroLikes); 
+          console.log(computadora.comentarios[index].likes)
+          var misComentarios = computadora.comentarios.slice()
+          misComentarios.map((item,indice) =>{
+            if(indice===index){
+              item.likes.push(props.user.usuario)
+            }
+          })
+          setComputadora({...computadora, comentarios: misComentarios})
+      }
+    }
+  }
+
   return (
     <div>
       {computadora ? (
@@ -63,6 +94,20 @@ const Computadora = props => {
                return (
                  <div className="col-lg-4 pb-1" key={index}>
                    <div className="card">
+                   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"></link>
+                   <button class = "like_btn" onClick = {() => darLike(comentario, index)}>
+                     {!props.user || !comentario.likes.includes(props.user.usuario) ? (
+                       <div>
+                          <span class = "icon"><i class ="far fa-thumbs-up"></i></span>
+                          <span id="count"> {comentario.likes.length}</span> Like
+                        </div>
+                      ):(
+                        <div>
+                          <span class = "icon"><i class ="fas fa-thumbs-up"></i></span>
+                          <span id="count"> {comentario.likes.length}</span> Like
+                        </div>
+                      )}
+                    </button>
                      <div className="card-body">
                        <p className="card-text">
                          {comentario.text}<br/>
@@ -103,6 +148,7 @@ const Computadora = props => {
           <p>No computadora selected.</p>
         </div>
       )}
+      <script src="./likeBtn.js"></script>
     </div>
   );
 };

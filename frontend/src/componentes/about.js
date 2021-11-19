@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import RobotAcostado from "../imagenes/robot4.png";
+import Marvin_Levitando from "../assets/Marvin_Levitando_Arreglado.png";
 import "../estilos/estiloPagina.css";
 const About = props => {
   
@@ -35,7 +36,7 @@ const About = props => {
 
        <a  id="iconomail" href="mailto:marvin.encontratupc@gmail.com"> Envianos un mail</a>
 
-       <img id="robotAcostado" src={RobotAcostado}/>
+       <img id="robotAcostado" src={Marvin_Levitando}/>
 
 
           
