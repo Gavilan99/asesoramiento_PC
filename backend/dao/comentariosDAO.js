@@ -25,6 +25,7 @@ export default class ReviewsDAO{
                 date: date,
                 text: comentario,
                 computadora_id: ObjectId(computadoraId),
+                likes: [],
             }
             return await comentarios.insertOne(reviewDoc)
         }

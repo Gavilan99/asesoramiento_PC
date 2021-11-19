@@ -64,6 +64,10 @@ class ComputadoraDataService {
     return http.put(`/favoritos?user=${user}`, computadora);
   }
 
+  deleteFavorito(user, computadora) {
+    return http.delete(`/favoritos?user=${user}&computadora=${computadora}`)
+  }
+
   getUsuario(usuario, contraseña){ //user va a ser un json conteniendo usuario y contraseña
     return http.get(`/login?usuario=${usuario}&contrasena=${contraseña}`);
   }

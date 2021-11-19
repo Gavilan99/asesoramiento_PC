@@ -24,6 +24,7 @@ router
     .route("/favoritos")
     .get(UsuariosController.apiGetFavoritos)
     .put(UsuariosController.apiPutFavoritos)
+    .delete(UsuariosController.apiDeleteFavoritos)
 
 router.route("/login") 
     .get(UsuariosController.apiGetUsuario)
