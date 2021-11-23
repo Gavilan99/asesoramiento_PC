@@ -43,6 +43,22 @@ export default class UsuariosController {
         }
     }
 
+    static async apiDeleteFavoritos(req, res, next){
+        try{
+            const user = req.query.user
+            const computadora = req.query.computadora
+            const reviewResponse = await UsuariosDAO.deleteFavorito({
+                user,
+                computadora,
+            })
+
+            res.json({status: "success"})
+        }
+        catch (e){
+            res.status(500).json({error: e.message})
+        }
+    }
+
     static async apiGetUsuario(req, res, next){
         const usuario = req.query.usuario
         const contraseña = req.query.contrasena

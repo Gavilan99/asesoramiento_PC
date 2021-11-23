@@ -24,6 +24,7 @@ router
     .route("/favoritos")
     .get(UsuariosController.apiGetFavoritos)
     .put(UsuariosController.apiPutFavoritos)
+    .delete(UsuariosController.apiDeleteFavoritos)
 
 router.route("/login") 
     .get(UsuariosController.apiGetUsuario)
@@ -33,6 +34,9 @@ router.route("/registro")
     .post(UsuariosController.apiPostUsuario)
     .put(UsuariosController.apiPutContraseña)
 
-router.route("/likes")
-    .put(ComentariosController.apiUpdateLikes)
+router.route("/agregarLikes")
+    .put(ComentariosController.apiAgregarLikes)
+
+router.route("/substraerLikes")
+    .put(ComentariosController.apiSubstraerLikes)
 export default router;

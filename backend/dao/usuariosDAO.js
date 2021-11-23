@@ -69,6 +69,20 @@ export default class UsuariosDAO {
 
     }
 
+    static async deleteFavorito({
+        user = "",
+        computadora = ""
+    } = {}) {
+        try {
+            const deleteResponse = await usuarios.updateOne({"usuario": {$eq: user}}, {$pull: {"favoritos": {"_id": {$eq: computadora}}}})
+            return deleteResponse
+        }
+        catch (e) {
+            console.error(`Unable to issue delete command, ${e}`)
+            return {error: e}
+        }
+    }
+
     static async getUsuario({ usuario, contraseña } = {}) {
         let user;
         try {

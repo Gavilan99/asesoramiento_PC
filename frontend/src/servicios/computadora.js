@@ -64,6 +64,10 @@ class ComputadoraDataService {
     return http.put(`/favoritos?user=${user}`, computadora);
   }
 
+  deleteFavorito(user, computadora) {
+    return http.delete(`/favoritos?user=${user}&computadora=${computadora}`)
+  }
+
   getUsuario(usuario, contraseña){ //user va a ser un json conteniendo usuario y contraseña
     return http.get(`/login?usuario=${usuario}&contrasena=${contraseña}`);
   }
@@ -80,11 +84,13 @@ class ComputadoraDataService {
     return http.put(`/registro`, contraseñas);
   }
 
-  alterarLikes(likes){
-    console.log("Hola");
-    return http.put(`/likes`,likes);     
+  agregarLikes(likes){
+    return http.put(`/agregarLikes`,likes);     
   }
 
+  substraerLikes(likes){
+    return http.put(`/substraerLikes`,likes);
+  }
 }
 
 export default new ComputadoraDataService();

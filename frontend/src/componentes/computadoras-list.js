@@ -306,13 +306,11 @@ const findByPrice = () =>{
   find(price,"price")
 };
 
-function pruebaBoton(){
-}
-
 const putFavorito = (user, computadora) => {
   ComputadoraDataService.putFavorito(user, computadora);
   alert("Agregado a Favoritos!")
 }
+
 
 
     
@@ -320,9 +318,8 @@ const putFavorito = (user, computadora) => {
     return (
       
       
-      <div>
-        
-          <div >
+      <div>       
+          <div>
           <div className="row" >
             <div className="dropdown"  >
               <select onChange={onChangeSearchMarca}>
