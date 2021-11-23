@@ -454,7 +454,8 @@ const putFavorito = (user, computadora) => {
                  <div className="card-body text-dark">
                     <h5 className="card-title center">{computadora.name}</h5>
                     <p className="card-text-right">
-                    < img src={computadora.imagenUrl}  class ="d-block w-100 right" /> 
+                  
+                  <a target="_blank" href={computadora.imagenUrl}>  < img src={computadora.imagenUrl}  class ="d-block w-100 right" /> </a> 
                       <strong>Nombre: </strong>{name}<br/>
                       <strong>Marca: </strong>{computadora.brand}<br/>
                       <strong>RAM: </strong>{computadora.RAM}<br/>
@@ -472,7 +473,7 @@ const putFavorito = (user, computadora) => {
         
 
                     <Link to={"/computadoras/"+computadora._id} className="btn  btn-outline-primary col-lg-5 mx-1 mb-1">
-                     Ver Reseña
+                     Ver Detalle
                     </Link>
                     <a target="_blank" href={"https://www.google.com/maps/place/" + computadora.ubicacion} className="btn  btn-outline-info col-lg-5 mx-1 mb-1">
                       Ver Mapa</a>

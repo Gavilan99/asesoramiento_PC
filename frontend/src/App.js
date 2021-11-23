@@ -59,7 +59,7 @@ function App() {
       <lu className="navbar-nav navbar-center">
       <li className="nav-item" >
           <Link to={"/encuesta"} className="nav-link ntext" id="ntext">
-            Encuesta
+            Habla con Marvin
           </Link>
           
         </li>

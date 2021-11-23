@@ -77,10 +77,17 @@ const Computadora = props => {
     <div>
       {computadora ? (
         <div>
-          <h5>{computadora.name}</h5>
+          <h2>{computadora.name}</h2>
+          <h4> Descripcion :  {computadora.description}</h4>
+          <h4> Sistema Operativo :  {computadora.operatingSystem}</h4>
+          <h4> RAM :  {computadora.RAM}</h4>
+          <h4> Marca :  {computadora.brand}</h4>
+          <h4> Tienda :  {computadora.ubicacion}</h4>
+          <h4> Usos : </h4>
+          <span>{computadora.usos ? computadora.usos.map(x => <h5>    {x}  </h5>): ""}</span>
+          <br />
 
-          <h5> RAM:  {computadora.RAM}</h5>
-
+      
 
 
           <Link to={"/computadoras/" + props.match.params.id + "/comentario"} className="btn btn-primary">
