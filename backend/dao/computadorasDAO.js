@@ -23,7 +23,7 @@ export default class ComputadorasDAO {
     static async getComputadoras({
         filters = null,
         pagina = 0,
-        computadorasPorPagina = 20,
+        computadorasPorPagina = 1000,
     } = {}) {
         let query
         console.log("Hace la query")

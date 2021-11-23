@@ -3,7 +3,7 @@ import ComputadorasDAO from "../dao/computadorasDAO.js";
 export default class ComputadorasController {
     static async apiGetComputadoras(req, res, next){
         console.log("Entro al filters")
-        const computadorasPorPagina = req.query.computadorasPorPagina ? parseInt(req.query.computadorasPorPagina, 10) : 20
+        const computadorasPorPagina = req.query.computadorasPorPagina ? parseInt(req.query.computadorasPorPagina, 10) : 1000
         const pagina = req.query.pagina ? parseInt(req.query.pagina, 10) : 0
 
         
