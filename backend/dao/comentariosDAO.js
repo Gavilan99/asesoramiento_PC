@@ -64,4 +64,16 @@ export default class ReviewsDAO{
             return {error: e}
         }
     }
+
+    static async updateLikes(likes){
+        try {
+            console.log(likes.nombre)
+            await comentarios.updateOne(
+                {_id: ObjectId(likes.nombre)}
+                ,{ $inc: { "likes" : 1 } }
+            )
+        } catch (e) {
+            return {error: e}
+        }
+    }
 }

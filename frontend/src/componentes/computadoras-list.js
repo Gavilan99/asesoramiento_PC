@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Teams from "./Teams-Icono.png";
 import robot4 from "../imagenes/robot4.png";
 import compu from "../imagenes/compu.jpg";
-import computadora from "../servicios/computadora";
+import "../estilos/estiloFiltros.css"
+import "../estilos/estiloBotonNeon.css"
 
 
 const ComputadorasList = props => {
@@ -22,6 +23,7 @@ const ComputadorasList = props => {
     const [CapacidadDiscos, setCapacidadDiscos] = useState(["capacity"]);
     const [buscarMin, setBuscarPrecioMin ] = useState("");
     const [buscarMax, setBuscarPrecioMax ] = useState("");
+    const [buscarApps, setBuscarApps] = useState([]);
     //const [buscarComb,setBuscarComb] = useState("");
 
 /*AGREGAR MAS BUSCAR POR...*/
@@ -52,7 +54,6 @@ const onChangeSearchMarca = e => {
 };
 
 const onChangeSearchRAM = e => {
-  //const buscarRAM = e.target.value;
   setBuscarRAM(e.target.value);
 };
 
@@ -71,6 +72,10 @@ const onChangeSearchCapacity = e => {
   setBuscarCapacidadDisco(buscarCapacidadDisco);
 };
 
+const onChangeSearchApps = e =>{
+  const app = e.target.value;
+  setBuscarApps(getCheckboxesSeleccionadas("App"));
+}
 
 
 const retrieveComputadoras = () => {
@@ -88,7 +93,6 @@ const retrieveComputadoras = () => {
 const retrieveRAMs = () => {
   ComputadoraDataService.getRAMs()
     .then(response => {
-      console.log(response.data);
       setRAMs(["RAM"].concat(response.data));          
     })
     .catch(e => {
@@ -193,6 +197,10 @@ const findByCapacidadDisco = () => {
   }
 };
 
+function pertenecenTodos(base, sub){
+  var diff = sub.filter(function(x) { return base.indexOf(x) < 0 })
+  return diff.length==0;
+}
 
 function filtricos(post){ 
   
@@ -204,6 +212,30 @@ function filtricos(post){
     
     a=a+"post.RAM == buscarRAM "
     flag=1
+  }
+  if (buscarMarca!= "Marca" && buscarMarca.length!=0){
+    if(flag==1){
+      a= a+" && "
+    }
+    a=a+"post.brand == buscarMarca"
+    flag=1
+  }
+
+  if (buscarMin!="" || buscarMax!=""){
+    if(flag==1){
+      a=a+" && "
+    }
+    if (buscarMin!="" && buscarMax!=""){
+      
+      a = a + "parseInt(post.price,10) >= parseInt(buscarMin,10) && parseInt(post.price,10) <= parseInt(buscarMax,10)"
+    }
+    else if (buscarMax==""){
+      a = a + "parseInt(post.price,10) >= parseInt(buscarMin,10)";
+    }
+    else {
+      a = a + "parseInt(post.price,10) <= parseInt(buscarMax,10)"
+    }
+    flag = 1
   }
   
   if(buscarMarca!="Marca" && buscarMarca.length!=0){
@@ -221,7 +253,13 @@ function filtricos(post){
     a=a+"post.operatingSystem == buscarSO"
     flag=1
   }
-
+  if (buscarApps.length!=0){
+    if(flag==1){
+      a=a+" && "
+    }
+    a = a + "pertenecenTodos(post.aplicaciones,buscarApps)";
+    flag = 1;
+  }
   if(buscarTipoDisco != "Tipo de disco" && buscarTipoDisco.length!=0){
     if(flag==1){
       a=a+" && "
@@ -230,7 +268,6 @@ function filtricos(post){
     flag=1
   }
   if(buscarCapacidadDisco!="Capacidad del disco" && buscarCapacidadDisco.length!=0){
-    console.log("Entras aca?")
     if(flag==1){
       a=a+" && "
     }
@@ -260,7 +297,6 @@ function getCheckboxesSeleccionadas(nombre){
       result.push(boxes[i].value);
     }
   }
-  console.log(result);
   return result;
 }
 
@@ -271,7 +307,6 @@ const findByPrice = () =>{
 };
 
 function pruebaBoton(){
-  console.log("HOla jose")
 }
 
 const putFavorito = (user, computadora) => {
@@ -286,115 +321,122 @@ const putFavorito = (user, computadora) => {
       
       
       <div>
-        <div className="row pb-1">
-       
-          <div className="input-group col-lg-4">
-          <select onChange={onChangeSearchMarca}>
-              {console.log("Puta")}
-              {console.log(Marcas)}
-              {Marcas.map(marca => {
-                return (
-                  <option value={marca}> {marca.substr(0,20)} </option>
-                )
-              })}
-            </select>
-                      
-          </div>
+        
+          <div >
+          <div className="row" >
+            <div className="dropdown"  >
+              <select onChange={onChangeSearchMarca}>
+                {console.log(Marcas)}
+                {Marcas.map(marca => {
+                  return (
+                    <option value={marca}> {marca.substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
 
 
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchRAM}>
-              {RAMs.map(RAM => {
-                return (
-                  <option value={RAM}> {RAM.substr(0,20)} </option>
-                )
-              })}
-            </select>
+            <div className="dropdown">
+                        
+              <select onChange={onChangeSearchRAM}>
+                {RAMs.map(RAM => {
+                  return (
+                    <option value={RAM}> {RAM.substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
+            <div className="dropdown" >
+                        
+              <select onChange={onChangeSearchSO}>
+                {SOs.map(SO => {
+                  return (
+                    <option value={SO}> {SO.substr(0,20)} </option>
+                  )
+                })}
+              </select>
             
+            </div>
+
+
+            <div className="dropdown">
+                        
+              <select onChange={onChangeSearchType}>
+                {TipoDiscos.map(type => {
+                  return (
+                    <option value={type.type}> {String(type.type).substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
+
+            <div className="dropdown">
+                        
+              <select onChange={onChangeSearchCapacity}>
+                {CapacidadDiscos.map(capacity => {
+                  return (
+                    <option value={capacity.capacity}> {String(capacity.capacity).substr(0,20)} </option>
+                  )
+                })}
+              </select>
+              
+            </div>
+
           </div>
 
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchSO}>
-              {SOs.map(SO => {
-                return (
-                  <option value={SO}> {SO.substr(0,20)} </option>
-                )
-              })}
-            </select>
-           
-          </div>
-
-
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchType}>
-              {TipoDiscos.map(type => {
-                return (
-                  <option value={type.type}> {String(type.type).substr(0,20)} </option>
-                )
-              })}
-            </select>
-            
-          </div>
-
-
-          <div className="input-group col-lg-4">
-                      
-            <select onChange={onChangeSearchCapacity}>
-              {CapacidadDiscos.map(capacity => {
-                return (
-                  <option value={capacity.capacity}> {String(capacity.capacity).substr(0,20)} </option>
-                )
-              })}
-            </select>
-            
-          </div>
-
-
-
+        {/*
         <div>
         <img src={Teams} height="20" alt="Its getting bigger!" />
-         Microsoft Teams <input type="checkbox" name="App" value="Teams"/>
-         Discord <input type="checkbox" name="App" value="Discord"/>
-
+         Microsoft Teams <input type="checkbox" name="App" value="Microsoft Teams" onChange={onChangeSearchApps}/>
+         Discord <input type="checkbox" name="App" value="Discord" onChange={onChangeSearchApps}/>
+         
     
-        </div>
+        </div> */}
         
-        <div className="input-group col-lg-4">
-          Filtrar por precio
+        <div className="row">
+          <p></p>
+          <p className="texto dropdown" > Filtrar por precio: </p>
+
           <input
             type="text"
             placeholder="Min"
             value={buscarMin}
             onChange={onChangeSearchPrecioMin}
+            className="dropdown"
           />
-          $
+          <p className="texto dropdown" > $ </p>
           <input
           type="text"
           placeholder="Max"
           value={buscarMax}
           onChange={onChangeSearchPrecioMax}
+          className="dropdown"
           />
-          $
+          <p className="texto dropdown" > $ </p>
           <div className="input-group-append">
             
           </div>
         </div>
 
         <div className="input-group-append">
+          <br/>
               <button
-                className="btn btn-outline-secondary"
+                className="botonBuscar btn-primary"
                 type="button"
-                onClick= {findByAll}
+                onClick= {()=>{findByAll();}}
               >
                 Buscar
               </button>
+          
         </div>
 
        </div>
-
+       <br/>
    
 
 

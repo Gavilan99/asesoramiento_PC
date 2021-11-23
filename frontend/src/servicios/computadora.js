@@ -16,7 +16,6 @@ class ComputadoraDataService {
     No soporta objetos complejos*/
   }
 
-
   createReview(data) {
     return http.post("/comentario", data);
   }
@@ -31,6 +30,10 @@ class ComputadoraDataService {
 
   getComputadora(id) {
     return http.get(`/computadora`);
+  }
+
+  getMarcas(id){
+    return http.get(`/brand`);
   }
 
   getRAMs(id){
@@ -75,6 +78,11 @@ class ComputadoraDataService {
 
   cambioContraseña(contraseñas){
     return http.put(`/registro`, contraseñas);
+  }
+
+  alterarLikes(likes){
+    console.log("Hola");
+    return http.put(`/likes`,likes);     
   }
 
 }

@@ -127,14 +127,14 @@ export default class ComputadorasDAO {
         }
     }
 
-    static async getMarcas() {
+    static async getMarcas(){
         let Marcas = []
         try {
-          Marcas = await computadoras.distinct("brand")
-          return Marcas
-        } catch (e) {
-          console.error(`Unable to get Marcas, ${e}`)
-          return Marcas
+            Marcas = await computadoras.distinct("brand")
+            return Marcas
+        } catch (e){
+            console.error(`Unable to get Marcas, ${e}`)
+            return Marcas
         }
     }
 

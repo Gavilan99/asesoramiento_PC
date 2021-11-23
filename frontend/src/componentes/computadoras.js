@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ComputadoraDataService from "../servicios/computadora";
 import { Link } from "react-router-dom";
-import robot4 from "../imagenes/robot4.png";
-import robot1 from "../imagenes/robot1.png";
-import Figure from 'react-bootstrap/Figure'
-import Placeholder from 'react-bootstrap/Placeholder'
-import "bootstrap/dist/css/bootstrap.min.css";
-import Badge from 'react-bootstrap/Badge';
-
+import Login from "./login";
 
 const Computadora = props => {
   const initialComputadoraState = {
@@ -49,64 +43,52 @@ const Computadora = props => {
       });
   };
 
+  const darLike =(comentario, index) => {
+    const likeBtn = document.querySelector(".like_btn");
+    let likeIcon = document.querySelector("#icon");
+    var parametroLikes = {nombre:comentario._id, usuario:props.user.usuario, likes:1}
+    if(true){
+        likeIcon.innerHTML = `<i class ="fas fa-thumbs-up"></i>`;
+        ComputadoraDataService.alterarLikes(parametroLikes); //CAMBIAR URGENTE, CONTRASEñA???
+        console.log(computadora.comentarios[index].likes)
+        var misComentarios  = computadora.comentarios.slice()
+        misComentarios.map((item, indice) => {
+          if (indice === index) {
+            item.likes = item.likes + 1
+          }	
+})  
+        setComputadora({...computadora, comentarios: misComentarios})
+    } else{
+        likeIcon.innerHTML = `<i class ="far fa-thumbs-up"></i>`;
+    }
+}
 
-
-
-  function ControlledCarousel() {
-    const [index, setIndex] = useState(0);
-  
-    const handleSelect = (selectedIndex, e) => {
-      setIndex(selectedIndex);
-    };
-  }
-
-  
   return (
     <div>
       {computadora ? (
         <div>
-          
+          <h5>{computadora.name}</h5>
 
-      
-          <>
-  <Placeholder xs={12} />
-  
-  <Placeholder xs={12} bg="success"  />
-  <Placeholder xs={12} bg="danger" />
-  <Placeholder xs={12} bg="warning" />
- 
-</>
-      
-
-<h2>
-    {computadora.name} <Badge bg="secondary"></Badge>
-  </h2>
-        <div>
-     
-
-
-          </div>
-
-         
-          <h5> Marca:  {computadora.brand}</h5>
-          <h5> Modelo:  {computadora.model}</h5>
           <h5> RAM:  {computadora.RAM}</h5>
-          <h5> Sistema Operativo:  {computadora.operatingSystem}</h5>
-          <h5> Tienda :  {computadora.ubicacion}</h5>
 
-    
-        
+
+
           <Link to={"/computadoras/" + props.match.params.id + "/comentario"} className="btn btn-primary">
             Add Review
           </Link>
 
-          <h4> Comentarios  </h4>
+          <h4> Reviews </h4>
           <div className="row">
             {computadora.comentarios.length > 0 ? (
              computadora.comentarios.map((comentario, index) => {
                return (
                  <div className="col-lg-4 pb-1" key={index}>
                    <div className="card">
+                   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"></link>
+                   <button class = "like_btn" onClick = {() => darLike(comentario, index)}>
+                        <span id = "icon"><i class ="far fa-thumbs-up"></i></span>
+                        <span id="count"> {comentario.likes}</span> Like
+                    </button>
                      <div className="card-body">
                        <p className="card-text">
                          {comentario.text}<br/>
@@ -139,7 +121,6 @@ const Computadora = props => {
             )}
 
           </div>
-         
 
         </div>
       ) : (
@@ -148,9 +129,9 @@ const Computadora = props => {
           <p>No computadora selected.</p>
         </div>
       )}
+      <script src="./likeBtn.js"></script>
     </div>
   );
- 
 };
 
 export default Computadora;
