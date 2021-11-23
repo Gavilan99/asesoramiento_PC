@@ -72,6 +72,21 @@ class Encuesta extends React.Component{
     
   }
 
+//useState(parametro) ->Le aplica la funcion(setter) a la constante y setea el valor inicial que es el parametro
+  
+//const [nroPregunta, updatePregunta] = useState(0);
+  //document.getElementById("preguntaHeader").innerHTML=preguntas[nroPregunta];
+
+  /*Necesito: 
+  Obtener el resultado del usuario => obtenerEntrada (Cambia segun las inputs)
+  Guardar el valor del usuario en resultados =>guardarResultado()
+  aumentar el numero de pregunta => incPregunta
+  cambiar la pregunta  => Render() solo con el incPregunta
+  y traer el resultado traerComputadora
+  */
+
+  //Para saltear una pregunta hay que aumentar el numero pregunta y asegurarse de traer las computadoras
+
   pertenecenTodos(base, sub){
     var diff = sub.filter(function(x) { return base.indexOf(x) < 0 })
     return diff.length==0;
@@ -83,7 +98,6 @@ class Encuesta extends React.Component{
   
     if(this.state.respuestas[1] == "Diseño Grafico"){
       if (post.usos){
-        console.log(post.usos.includes('Diseño Grafico'))
         a=a+"post.usos.includes('Diseño Grafico')"
       }
       else {
@@ -95,9 +109,9 @@ class Encuesta extends React.Component{
       if(flag==1){
         a=a+" && "
       }
+      console.log(post);
+      console.log(post.aplicaciones); //BORRAR
       if (post.aplicaciones){
-        console.log(this.state.respuestas[2])
-        console.log(post.aplicaciones)
         a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[2]);
       }
       else { 
@@ -128,18 +142,6 @@ class Encuesta extends React.Component{
       flag=1;
     }
 
-    if (this.state.respuestas[7] == "Trabajo"){
-      if(flag==1){
-        a=a+" && "
-      }
-      if (post.aplicaciones){
-        a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[8]);
-      }
-      else { 
-        a= a + "false"
-      }
-      flag=1;
-    }
     if (this.state.respuestas[10].length!=0){
       if(flag==1){
         a=a+" && "
@@ -152,6 +154,19 @@ class Encuesta extends React.Component{
       }
       flag=1;
 
+    }
+
+    if (this.state.respuestas[7] == "Trabajo"){
+      if(flag==1){
+        a=a+" && "
+      }
+      if (post.aplicaciones){
+        a= a+ this.pertenecenTodos(post.aplicaciones, this.state.respuestas[8]);
+      }
+      else { 
+        a= a + "false"
+      }
+      flag=1;
     }
 
     if(flag==0){
@@ -203,6 +218,7 @@ class Encuesta extends React.Component{
         result.push(boxes[i].value);
       }
     }
+    console.log(result);
     return result;
   }
 
@@ -217,21 +233,25 @@ class Encuesta extends React.Component{
         }
       }
     }
+    console.log(result);
     return result;
   }
 
   traerComputadora(){
     this.setState({finalizada: true});
     this.incPregunta(100);
-    console.log(this.state.computadoras);
+    console.log("Entro a buscar las computadoras (traerComputadoras)");
+    console.log(this.state.computadoras)
     this.state.computadoras = this.state.computadoras.filter(this.filtrar);
+    console.log("Filtado");
+    console.log(this.state.computadoras)
 
   }
 
-
-
   render(){
     /* La estructura divina*/
+    
+        
     if (this.state.nroPregunta==0){
       return (
         
@@ -272,6 +292,7 @@ class Encuesta extends React.Component{
             </div>
           <div className="col-6">
           <br/>
+            {/*<h5>Pregunta {this.state.nroPregunta + 1}</h5>*/}
             <br/>
             <h2 id="centrarBoton">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <br/>
@@ -290,6 +311,8 @@ class Encuesta extends React.Component{
               >No </button>
             </p>
             </div>
+            
+
           </div>
           </div>
           </div>
@@ -304,6 +327,7 @@ class Encuesta extends React.Component{
             </div>
         <div className="col-6">
         <br/>
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
@@ -330,7 +354,6 @@ class Encuesta extends React.Component{
       </div>
       </div>
       )
-
     }
     else if (this.state.nroPregunta==3){
       return(
@@ -339,6 +362,7 @@ class Encuesta extends React.Component{
           <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
             <h2 id="centrarBoton">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
@@ -362,14 +386,14 @@ class Encuesta extends React.Component{
         </div>
         </div>
       )
-    }
-    else if (this.state.nroPregunta == 4){
+    }else if (this.state.nroPregunta==4){
       return (
         <div id="contenido">
           <div class="row">
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
+          {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
           <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
@@ -413,6 +437,7 @@ class Encuesta extends React.Component{
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
             <h2 id="centrarBoton">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
@@ -431,6 +456,8 @@ class Encuesta extends React.Component{
               >No </button>
             </p>
             </div>
+            
+  
           </div>
           </div>
           </div>
@@ -442,6 +469,7 @@ class Encuesta extends React.Component{
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
+          {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
           <br/>
           <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
           <div>
@@ -471,7 +499,7 @@ class Encuesta extends React.Component{
               className="Boton de Checkbox Estudiar"
               type="button"
               id="botonEncuesta"
-              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.traerComputadora();}}
+              onClick={() => {this.almacenarResultado(this.getCheckboxesSeleccionadas("App")); this.incPregunta(); this.traerComputadora();}}
             >Aceptar </button>
           </p>
           </div>
@@ -479,27 +507,6 @@ class Encuesta extends React.Component{
       </div>
     </div>
       )
-    }
-    else if (this.state.nroPregunta==9 && !this.state.finalizada){
-      return (
-        <div className="App-sayname">
-          <div class="row">
-            <div className="col-6"><img src={Marvin_contento} height="500" alt="Its getting bigger!" />
-            </div>
-          <div className="col-6">
-          <h5>Pregunta {this.state.nroPregunta+1}</h5>
-          <br/>
-          <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
-          <div>
-          <br/>
-
-          
-          <input type="checkbox" name="Uso Variado" value="Cryptomining"/> Cryptomining
-          <br/>
-          <br/>
-          <input type="checkbox" name="Uso Variado" value="Navegacion Web"/> Navegar en la WEB
-          <br/>
-          <br/>
 
     }
     else if (this.state.nroPregunta==7 && !this.state.finalizada){
@@ -509,6 +516,7 @@ class Encuesta extends React.Component{
             <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
             </div>
           <div className="col-6">
+            {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
             <br/>
             <h2 id="centrarBoton">{this.state.preguntas[this.state.nroPregunta]}</h2>
             <div>
@@ -542,6 +550,7 @@ class Encuesta extends React.Component{
           <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
+        {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
         <br/>
         <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
         <div>
@@ -587,6 +596,7 @@ class Encuesta extends React.Component{
           <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
+        {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
         <br/>
         <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
         <div>
@@ -623,6 +633,7 @@ class Encuesta extends React.Component{
           <div className="col-6"><img src={Marvin_Manos_Cintura} height="500" alt="Its getting bigger!" />
           </div>
         <div className="col-6">
+        {/*<h5>Pregunta {this.state.nroPregunta+1}</h5>*/}
         <br/>
         <h2 id="preguntaHeader">{this.state.preguntas[this.state.nroPregunta]}</h2>
         <div>
@@ -679,9 +690,7 @@ class Encuesta extends React.Component{
       
       );
 
-    }
-    else if (this.state.finalizada && this.state.computadoras.length!=0) {
-      console.log("Estoy en la ultima fase");
+    }else if (this.state.finalizada && this.state.computadoras.length!=0) {
       console.log(this.state.computadoras);
       return (
         <div id="contenido">
